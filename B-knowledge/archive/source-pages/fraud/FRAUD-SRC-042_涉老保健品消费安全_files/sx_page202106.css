@@ -1,0 +1,84 @@
+div.zxf_pagediv{
+	text-align: center;
+	color: #999999;
+	padding: 30px 0 0;
+}
+div.zxf_pagediv a{
+	text-decoration: none;
+	border: 1px solid #f5f5f5;
+	
+}
+div.zxf_pagediv a:hover {
+	color: #ffffff;
+	border-color: #1073b7;
+	background: #1073b7;
+}
+div.zxf_pagediv span,div.zxf_pagediv a{
+	display: inline-block;
+	box-sizing: border-box;
+	margin-right: 10px;
+	font-size: 14px;
+	color: #7d7d7d;
+}
+div.zxf_pagediv span.current{
+	color: #ffffff;
+	background: #1073b7;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	border-radius: 3px;
+	margin-right: 10px;
+}
+div.zxf_pagediv span b {
+	font-weight: 400;
+}
+.zxfPagenum{
+	color: #666;
+	background: #fff;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	margin-right: 10px;
+	border-radius: 3px;
+}
+.nextbtn,.prebtn,span.disabled{
+	color: #666;
+	background: #fff;
+	width: 53px;
+	height: 30px;
+	line-height: 30px;
+	border-radius: 3px;
+	border: 1px solid #f5f5f5;
+	
+}
+.zxfinput{
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	box-sizing: border-box;
+	border: 1px solid #f5f5f5;
+	margin: 0 10px;
+	border-radius: 3px;
+	color: #666;
+}
+.zxfokbtn{
+	width: 53px;
+	height: 30px;
+	line-height: 30px;
+	border: 1px solid #f5f5f5;
+	cursor:pointer;
+	border-radius: 3px;
+	background: #fff;
+}
+.zxfokbtn:hover{
+	color: #ffffff;
+	border-color: #1073b7;
+	background: #1073b7;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input[type="number"]{
+  -moz-appearance: textfield;
+}

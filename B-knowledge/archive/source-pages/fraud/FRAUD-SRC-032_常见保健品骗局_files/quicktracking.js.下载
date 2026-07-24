@@ -1,0 +1,24 @@
+(function(w, d, s, q) {
+    w[q] =w[q] || [];
+    var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s);
+    j.async=true;
+    j.id='beacon-aplus';
+    j.src='https://o.alicdn.com/QTSDK/quicktracking-sdk/qt_web.umd.js';
+    f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'aplus_queue');
+
+// 设置应用标识和上报域名
+aplus_queue.push({action:'aplus.setMetaInfo', arguments:['appKey','bhtk1hdk3cvnn8x2z0vtcagn']});
+aplus_queue.push({action:'aplus.setMetaInfo', arguments:['trackDomain','https://quickaplus-server-api-cn-zhangjiakou.aliyuncs.com']});
+
+//初始化状态监听
+aplus_queue.push({
+    action: "aplus.aplus_pubsub.subscribe",
+    arguments: ["aplusReady", function(status){
+        if(status === 'complete'){
+            // SDK初始化完成，可以安全上报数据
+//             aplus_queue.push({action:'aplus.setMetaInfo', arguments:['DEBUG', false]}); //调试模式
+        }
+    }]
+});

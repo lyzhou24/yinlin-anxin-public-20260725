@@ -1,0 +1,114 @@
+// $(function(){
+// 	$('.menu-icon').click(function(){
+//     	if($('.search-box').css('display')==('none')){
+//     		$('.search-box').show();
+//     		$('.menu-icon').css('background-image','url(https://file.henan.gov.cn/4500000001/m-resource/close.jpg)');
+//     	}else{
+//     		$('.search-box').hide();
+//     		$('.menu-icon').css('background-image','url(https://file.henan.gov.cn/4500000001/m-resource/menu.png)');
+//     	}
+//     });
+// });
+
+
+/* 访问pc版 */
+$("#backPC").bind("click", function () {
+    var localUrl = window.location.href;
+    localUrl = localUrl.replace(/m./, "www.") + "?pc=t";
+    window.open(localUrl, "_blank");
+});
+// 相关阅读
+if ($('#xggjbox ul').has("li").length <= 0) {
+    $('#xggjbox').remove();
+}
+
+$("body").append("<script src='https://auth.mangren.com/boots/henan.gov.cn/esdToolsInit.js' charset='UTF-8'></script>");
+window.headTool = {
+    init: function () {
+        var mode = this.getCookie("mode");
+        if (mode == 2) {
+            console.log("开启老年版本");
+            $("body").addClass("oldModel");
+        } else {
+            console.log("关闭老年版本");
+            $("body").removeClass("oldModel");
+        }
+        return this;
+    },
+    switchOld: function () {
+        var mode = this.getCookie("mode");
+        if (mode == 2) {
+            this.setCookie("mode", 1)
+            $("body").removeClass("oldModel");
+        } else {
+            this.setCookie("mode", 2)
+            $("body").addClass("oldModel");
+        }
+    },
+    getCookie: function (name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg)) {
+            return unescape(arr[2]);
+        } else {
+            return null;
+        }
+    },
+    setCookie: function (name, value) {
+        var Days = 30;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+    }
+}.init();
+
+window.openOLDModel = function () {
+    $('#toolbarSwitch').trigger('click');
+}
+
+
+window.headTool = {
+    init: function () {
+        var mode = this.getCookie("mode");
+        if (mode == 2) {
+            $("#toolbarOldman").text("关闭长者版")
+            $("body").addClass("oldModel");
+        } else {
+            $("#toolbarOldman").text("进入长者版")
+            $("body").removeClass("oldModel");
+        }
+        return this;
+    },
+    switchOld: function () {
+        var mode = this.getCookie("mode");
+        if (mode == 2) {
+            this.setCookie("mode", 1)
+        } else {
+            this.setCookie("mode", 2)
+        }
+        window.location.reload();
+    },
+    getCookie: function (name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg)) {
+            return unescape(arr[2]);
+        } else {
+            return null;
+        }
+    },
+    setCookie: function (name, value) {
+        var Days = 30;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+    }
+}.init();
+
+$(function () {
+    // 搜索框逻辑
+    $('.menu-icon').click(function () {
+        $('.search-box').show();
+    })
+    $('.search_close').click(function () {
+        $('.search-box').hide();
+    })
+})

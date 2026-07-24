@@ -1,0 +1,32 @@
+.content_attr{color:#666666; padding:6px 12px; background:#f5f5f5; margin:0 4.5%; font-size:14px;  border-bottom:#e5e5e5 1px solid;}
+.content_attr b{font-weight:normal;}
+.content_attr ul li{float: left; position: relative;}
+.content_attr ul li i{/*position: absolute; left: 0; top: 50%; margin-top: -12px;*/ width: auto; height: auto; background:none; vertical-align: middle; display: inline-block;}
+.content_attr ul li.date{ margin-left: -6px;}
+.content_attr ul li.date i{margin-right: 5px}
+.content_attr ul li.ly{margin-left: 20px;}
+.content_attr ul li.ly i{margin-right: 5px}    
+.content_attr ul li.fontsize .l{background:none;}
+.content_attr ul li.fontsize .m{background:none;}
+.content_attr ul li.fontsize .s{background:none;}
+.content_attr ul li.print i{background:none; cursor: pointer;}
+.content_attr ul li.dianzan span{color:#F00; font-size:12px; vertical-align:bottom;}
+.content_attr ul li.dianzan i{background:none; cursor: pointer;}
+.content_attr ul li.jc i{background:none;}
+.content_attr ul li.fx i{background:none; cursor: pointer;}
+.content_attr ul li.fontsize .l:hover{background:none;}
+.content_attr ul li.fontsize .m:hover{background:none;}
+.content_attr ul li.fontsize .s:hover{background:none;}
+.content_attr ul li.print i:hover{background:none;}
+.content_attr ul li.dianzan i:hover{background:none;}
+.content_attr ul li.jc i:hover{background:none;}
+.content_attr ul li.fx i:hover{background:none;}
+.content_attr ul li.llcs i{background:none; margin-right: 5px;}
+@media (max-width: 640px) {
+.content_attr ul li{display: inline-block; float: none;}
+	#yybb_m{display:inline-block;}
+}
+/* XS Portrait */	
+@media (max-width: 480px) {
+.content_attr ul li{float: none;}
+}

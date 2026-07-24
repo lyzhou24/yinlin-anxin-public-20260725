@@ -1,0 +1,38 @@
+	function MenuIcon(node,listIcon1,listIcon2,listIcon3){
+		this.node = node;
+		var _this = this;
+		this.listIcon1 = listIcon1;
+		this.listIcon2 = listIcon2;
+		this.listIcon3 = listIcon3;
+		this._li = $(this.node).find("li");
+		this.insetIcon(this._li,this.listIcon1,this.listIcon2);
+		$(_this._li).click(function(){
+			_this.nodeClick(this)
+		});
+	}
+
+	MenuIcon.prototype.insetIcon = function(list,list1,list2){
+		if(list1.length > list.length || list2.length > list.length){
+			alert("图标多于节点");
+			return 
+		}
+		$(list).each(function(i,item){
+			$(item).find(".iconfont:first").addClass(list1[i]);
+			$(item).find(".iconfont:last").addClass(list2[i]);
+		})
+	}
+
+	MenuIcon.prototype.nodeClick = function(_this){
+		var itemContent = $(_this).find(".item-content"),
+		    siblings = itemContent.siblings(".item").find(".iconfont:last");
+
+		$("li div.item").find("i.iconfont:last").removeClass(this.listIcon3[0]).addClass(this.listIcon2[0]);
+		if(itemContent.css("display") == "none"){
+			$(".item-content").hide(300);
+			siblings.removeClass(this.listIcon2[0]).addClass(this.listIcon3[0]);
+			itemContent.slideDown();
+		}else{
+			itemContent.slideUp();
+			siblings.removeClass(this.listIcon3[0]).addClass(this.listIcon2[0]);
+		}
+	}

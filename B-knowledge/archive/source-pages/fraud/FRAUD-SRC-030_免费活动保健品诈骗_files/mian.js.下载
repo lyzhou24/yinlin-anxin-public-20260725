@@ -1,0 +1,104 @@
+
+// 图片新闻轮播
+$(function(){        
+    var index=0;
+    var slideFlag = true;
+    var length=$(".roll_pic img").length;
+
+    function showImg(i){
+      $(".roll_pic a")
+      .eq(i).stop(true,true).fadeIn(600)
+      .siblings("a").hide();
+
+      $(".roll_num li").removeClass("roll_num_hover");
+      $(".roll_num li").eq(i).addClass("roll_num_hover");
+
+      $(".roll_title a")
+      .eq(i).stop(true,true).fadeIn(600)
+      .siblings("a").hide();
+    }
+    showImg(index);
+    
+    $(".roll_num li").click(function(){
+      index = $(".roll_num li").index(this);
+      showImg(index);
+      slideFlag = false;
+    }); 
+    
+    function autoSlide() {
+      setInterval(function() {
+        if(slideFlag) {
+          showImg((index+1) % length);
+          index = (index+1) % length;
+        }
+        slideFlag = true;
+      }, 3000);
+    }
+    
+    autoSlide();
+    
+  });
+
+// 工作要闻
+function showtab_news(num)
+	{
+		for(var i=1;i<6;i++)
+		{
+			$("#t"+i).hide();
+	        $("#b"+i).removeAttr("class");
+	        $("#bb"+i).hide();
+		}
+		$("#t"+num).show();
+	    $("#b"+num).attr("class","current");
+	    $("#bb"+num).show();
+	}
+
+// 专题专栏
+function showtab_date2(num)
+	{
+		for(var i=1;i<6;i++)
+		{
+			$("#r"+i).hide();
+	        $("#x"+i).removeAttr("class");
+		}
+		$("#r"+num).show();
+	    $("#x"+num).attr("class","roll_num_hover");
+	}
+
+//互动交流切换
+function showtab_works1(num)
+	{
+		for(var i=1;i<6;i++)
+		{
+			$("#k"+i).hide();
+	        $("#w"+i).removeAttr("class");
+		}
+		$("#k"+num).show();
+	    $("#w"+num).attr("class","current");
+	}
+
+//司法行政风采
+function showtab_works2(num)
+	{
+		for(var i=1;i<6;i++)
+		{
+			$("#m"+i).hide();
+	        $("#g"+i).removeAttr("class");
+	        $("#gb"+i).hide();
+		}
+		$("#m"+num).show();
+	    $("#g"+num).attr("class","current");
+	    $("#gb"+num).show();
+	}
+function showtab_sp(num)
+	{
+		for(var i=1;i<6;i++)
+		{
+			$("#qf"+i).hide();
+	        $("#sp"+i).removeAttr("class");
+	        $("#lz"+i).hide();
+		}
+		$("#qf"+num).show();
+	    $("#sp"+num).attr("class","current");
+	    $("#lz"+num).show();
+	}

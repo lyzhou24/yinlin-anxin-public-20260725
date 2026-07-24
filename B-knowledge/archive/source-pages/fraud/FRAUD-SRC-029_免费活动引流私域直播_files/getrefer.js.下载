@@ -1,0 +1,336 @@
+(function () {
+    var sengine = [{
+        name: "google",
+        Rules: ["q", "as_q"],
+        eCode: "UTF-8"
+    }, {
+        name: "baidu",
+        Rules: ["wd", "word"],
+        eCode: "GB2312"
+    }, {
+        name: "bing",
+        Rules: ["q"],
+        eCode: "UTF-8"
+    }, {
+        name: "yahoo",
+        Rules: ["p"],
+        eCode: ""
+    }, {
+        name: "soso",
+        Rules: ["w"],
+        eCode: "GB2312"
+    }, {
+        name: "youdao",
+        Rules: ["q"],
+        eCode: ""
+    }, {
+        name: "sogou",
+        Rules: ["query"],
+        eCode: ""
+    }, {
+        name: "uc",
+        Rules: ["wd"],
+        eCode: "GB2312"
+    }, {
+        name: "ucweb",
+        Rules: ["wd"],
+        eCode: "GB2312"
+    }];
+    Function.prototype.Bind = function () {
+        var __m = this,
+            object = arguments[0],
+            args = new Array();
+        for (var i = 1; i < arguments.length; i++) {
+            args.push(arguments[i])
+        }
+        return function () {
+            return __m.apply(object, args)
+        }
+    };
+    var isIE = false;
+    var userAgent = navigator.userAgent.toLowerCase();
+    if ((userAgent.indexOf('msie') != -1) && (userAgent.indexOf('opera') == -1)) {
+        isIE = true
+    }
+    var IO = function () {
+        this.Init.apply(this, arguments)
+    };
+    IO.prototype = {
+        scriptCharset: 'utf-8',
+        _0: null,
+        Init: function (opts) {
+            this._2(opts)
+        },
+        _2: function (opts) {
+            if (typeof opts != 'undefined') {
+                if (opts['script_charset']) {
+                    this.scriptCharset = opts['script_charset']
+                }
+            }
+        },
+        _3: function () {
+            if (this._0) {
+                try {
+                    this._0.onload = null;
+                    if (this._0.onreadystatechange) {
+                        this._0.onreadystatechange = null
+                    }
+                    this._0.parentNode.removeChild(this._0);
+                    this._0 = null
+                } catch (e) {}
+            }
+        },
+        _1: function (callback) {
+            if (this._0.onreadystatechange) {
+                if (this._0.readyState != 'loaded' && this._0.readyState != 'complete') {
+                    return
+                }
+            }
+            if (typeof callback != 'undefined') callback();
+            this._3()
+        },
+        load: function (url, callback) {
+            this._0 = document.createElement('SCRIPT');
+            this._0.type = "text/javascript";
+            if (isIE) {
+                this._0.onreadystatechange = this._1.Bind(this, callback)
+            } else {
+                this._0.onload = this._1.Bind(this, callback)
+            }
+            this._0.charset = this.scriptCharset;
+            this._0.src = url;
+            var _4 = document.getElementsByTagName("head").item(0);
+            _4.appendChild(this._0)
+        }
+    };
+
+    function UrlBuilder(url) {
+        this.m_Href = url;
+        this.m_Host = null;
+        this.m_Hostname = null;
+        this.m_Port = null;
+        this.m_Protocol = null;
+        this.m_Path = null;
+        this.m_Search = null;
+        this.m_Hash = null;
+        this.m_Params = null;
+        this.Parse(url);
+        this.toString = function () {
+            return '[class UrlBuilder]'
+        }
+    }
+    UrlBuilder.prototype = {
+        Parse: function (url) {
+            var m = url.match(/(\w{3,5}:)\/\/([^\.]+(?:\.[^\.:/]+)+)(?::(\d{1,5}))?\/?/);
+            if (m) {
+                this.m_Protocol = m[1];
+                this.m_Hostname = m[2];
+                this.m_Port = m[3];
+                if (this.m_Port) {
+                    this.m_Host = this.m_Hostname + ':' + this.m_Port
+                } else {
+                    this.m_Host = m[2]
+                }
+                var indexHash = url.indexOf('#');
+                if (indexHash != -1) {
+                    this.m_Hash = url.substr(indexHash)
+                } else {
+                    this.m_Hash = ''
+                }
+                var indexParams = url.indexOf('?');
+                if (indexParams != -1) {
+                    if (indexHash != -1) {
+                        this.m_Search = url.substring(indexParams, indexHash)
+                    } else {
+                        this.m_Search = url.substr(indexParams)
+                    }
+                    this.m_Path = url.substr(indexParams)
+                } else {
+                    this.m_Search = ''
+                }
+                this.m_Success = true;
+                this.m_Params = null;
+                this.m_Href = url
+            }
+        },
+        GetEncoding: function (str) {
+            var m1 = str.match(/(%e[4-9])(%[89ab][0-9a-f]){2}/ig);
+            var m2 = str.match(/(%[89a-f][0-9a-f])/ig);
+            if (m1 == null) m1 = 0;
+            if (m2 == null) m2 = 0;
+            if (m2.length != m1.length * 3) {
+                return "GB2312"
+            }
+            return "UTF-8"
+        },
+        GetValue: function (key) {
+            if (typeof this.m_Params == "undefined" || this.m_Params == null) {
+                this.m_Params = {};
+                if (this.m_Search) {
+                    var search = this.m_Search.substring(1);
+                    var keyValues = search.split('&');
+                    for (var i = 0; i < keyValues.length; ++i) {
+                        var keyValue = keyValues[i];
+                        var index = keyValue.indexOf('=');
+                        if (index != -1) {
+                            this.m_Params[keyValue.substring(0, index)] = keyValue.substr(index + 1)
+                        } else {
+                            this.m_Params[keyValue] = ''
+                        }
+                    }
+                }
+            }
+            if (typeof this.m_Params[key] == "undefined") this.m_Params[key] = "";
+            return this.m_Params[key]
+        },
+        GetValueByCode: function (key, encoding) {
+            if (this.m_Params == null || typeof this.m_Params == "undefined") this.GetValue(key);
+            if (typeof this.m_Params[key] == "undefined") this.m_Params[key] = "";
+            if (this.m_Params[key] != "") {
+                if (encoding == "") encoding = this.GetEncoding(this.m_Params[key]);
+                if (escape(this.m_Params[key]).indexOf("%u") >= 0) {
+                    encoding = "UTF-8";
+                    this.m_Params[key] = encodeURI(this.m_Params[key])
+                }
+            }
+            return [encoding, this.m_Params[key]];
+            switch (encoding.toUpperCase()) {
+                case 'UTF-8':
+                    return [encoding, decodeURI(this.m_Params[key])];
+                    break;
+                case 'UNICODE':
+                    return [encoding, unescape(this.m_Params[key])];
+                    break;
+                case 'GB2312':
+                    return [encoding, this.m_Params[key]];
+                    break;
+                default:
+                    return [encoding, this.m_Params[key]];
+                    break
+            }
+        }
+    };
+
+    function querystring() {
+        this.params = new Object();
+        this.initialize = function () {
+            var param = this.paramstring();
+            if (param.length == 0) return;
+            if (param.substring(0, 1) == '?') param = param.substring(1);
+            param = param.replace(/\+/g, ' ');
+            var args = param.split('&');
+            for (var i = 0; i < args.length; i++) {
+                var value;
+                var pair = args[i].split('=');
+                var name = unescape(pair[0]);
+                if (pair.length == 2) value = unescape(pair[1]);
+                else value = name;
+                this.params[name] = value
+            }
+        };
+        this.get = function (key, defaultval) {
+            return this.params[key] == null ? defaultval : this.params[key]
+        };
+        this.paramstring = function () {
+            var col = document.getElementsByTagName("script");
+            var jsrc = col.item(col.length - 1).src;
+            var i = jsrc.indexOf("?");
+            var words = jsrc.substr(i + 1, jsrc.length);
+            return (words)
+        };
+        this.initialize()
+    }
+
+    function GetSearchWords() {
+        if (!document.createElement) return;
+        var ref = document.referrer;
+        var query = new querystring();
+        var type = query.get('type', '1');
+        var postType = query.get('m', '0');
+        if (postType == "0" && ref.indexOf('?') == -1) return;
+        var so = 0;
+        var soLoad = false;
+        var soName = "";
+        var keywords = "";
+        var keyCode = "";
+        var browserCode = "";
+        var url = new UrlBuilder(ref);
+        browserCode = url.GetValue("ie").toUpperCase();
+        if (browserCode == "UTF8") browserCode = "UTF-8";
+        if (url.m_Success) {
+            var host = url.m_Host.toLowerCase();
+            for (i = 0; i < sengine.length; i++) {
+                if (host.indexOf("." + sengine[i].name + ".") >= 0) {
+                    so = 1;
+                    var ecode = sengine[i].eCode;
+                    for (j = 0; j < sengine[i].Rules.length; j++) {
+                        if (browserCode != "") keywords = url.GetValueByCode(sengine[i].Rules[j], browserCode);
+                        else keywords = url.GetValueByCode(sengine[i].Rules[j], sengine[i].eCode);
+                        keyCode = keywords[0];
+                        keywords = keywords[1];
+                        if (typeof keywords != "undefined" && keywords != "" && keywords != null) {
+                            soName = sengine[i].name;
+                            soLoad = true;
+                            break
+                        }
+                    }
+                }
+                if (soLoad) break
+            }
+        }
+        if (soLoad || postType == "1") {
+            var vName = "objData";
+            var io = new IO();
+            io.scriptCharset = "utf-8";
+            var url = "//cmskey.eastmoney.com/GetStats.aspx?t=" + type + "&so=" + so + "&m=" + postType + "&v=" + vName;
+            var artCode = query.get('code', '');
+            if (artCode != "") url += "&code=" + artCode;
+            if (soLoad) url += "&n=" + soName + "&k=" + keywords + "&kc=" + keyCode;
+            io.load(url + "&ref=" + escape(ref) + "&r=" + Math.random())
+        }
+        // if (ref && ref.indexOf(".hao123.") >= 0) {
+        //     var a = new Image;
+        //     a.src = "http://222.73.65.89/gitnews.gif?r=" + ref;
+        //     a.onload = (a.onerror = function () {
+        //         delete a
+        //     })
+        // }
+    }
+    GetSearchWords()
+})();
+
+// (function () {
+//     var Each = function (elements, callback) {
+//         var i, key;
+//         if (typeof elements.length == 'number') {
+//             for (i = 0; i < elements.length; i++)
+//                 if (callback.call(elements[i], i, elements[i]) === false) return elements;
+//         } else {
+//             for (key in elements)
+//                 if (callback.call(elements[key], key, elements[key]) === false) return elements;
+//         }
+//         return elements
+//     }
+//     var addCollectEvent = function (el, event, fn) {
+//         if (window.addEventListener) {
+//             el.addEventListener(event, fn, false);
+//         } else if (window.attachEvent) {
+//             el.attachEvent('on' + event, function () {
+//                 fn.call(el, window.event);
+//             });
+//         }
+//     };
+//     var _content = document.getElementById('ContentBody');
+//     if (_content) {
+//         var _links = _content.getElementsByTagName("a");
+//         Each(_links, function () {
+//             addCollectEvent(this, "click", function (e) {
+//                 var _collect = new Image();
+//                 _collect.onload = (_collect.onerror = function () {
+//                     delete _collect;
+//                 });
+//                 _collect.src = 'http://222.73.55.179/report/cnt_collect?to=' + this.href + '&name=' + this.innerHTML;
+//             });
+//         });
+//     }
+// })();

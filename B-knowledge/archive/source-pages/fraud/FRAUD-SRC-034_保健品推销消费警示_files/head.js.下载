@@ -1,0 +1,248 @@
+var windowWidth = $(window).width();
+var webid = $('[name="i_webid"]').attr("content");
+var zwfwid = "130802000000000";
+var goHref = "/jrobot/search.do?webid=" + webid + "&category=&q=";
+// 必须
+var hbg = "/picture/46/2404071336007241074.jpg"; //头部背景
+var hlogo_img = "/picture/0/2101261416327249916.png"; //头部logo
+var hsearch_bg = "/picture/46/2112281044155223026.png"; //搜索背景
+var hsearch_btn = "/picture/46/2112281044154174130.png"; //搜索按钮
+var change_btn_normal = "/picture/46/2112281047473967293.jpg"; //手机端默认切换按钮
+var change_btn_selected = "/picture/46/2112281047473743921.png"; //手机端激活切换按钮
+var hcolor = "#0f5497"; //头部文字颜色
+var navbgcolor = "#0f5497";
+var navactivecolor = "#1467b7";
+// 可选 logo右侧图片
+var hfs_img = "";
+document.writeln("<style>");
+document.writeln(
+  ".clear{clear: both;height: 0px;overflow: hidden;}\n" +
+    ".hfl{float:left;}.hfr{float:right;}" +
+    'body{font-size:16px;font-family: "Microsoft YaHei";}' +
+    "input{border: none;outline: none;display: inline-block;vertical-align: top;}" +
+    ".hhead{width: 100%;background: url('" +
+    hbg +
+    "') no-repeat center;height: 184px;}\n" +
+    ".hhead-control{padding-top:18px;width:1200px;margin:0 auto;}\n" +
+    ".hhead-control2{width:1200px;margin:20px auto 0 auto;}\n" +
+    ".hleft{float: left;font-size: 15px;color: " +
+    hcolor +
+    ";margin-top:2px;margin-left: 20px}\n" +
+    ".hleft li{float: left;padding-right:10px;}\n" +
+    ".hleft li span{height: 13px;display: block;float: right;width: 1px;background:" +
+    hcolor +
+    ";margin-left: 10px;margin-top:5px; }\n" +
+    ".hleft li a{color: " +
+    hcolor +
+    ";cursor:pointer;}\n" +
+    ".hgrob{width: 367px;height: 37px;background: url(" +
+    hsearch_bg +
+    ") no-repeat;float: left;}\n" +
+    ".hsearch{outline: none;height: auto;border:none;background: none;margin-left: 20px;color: " +
+    hcolor +
+    ';font-size: 15px;width: 300px;margin-top:0;padding:9px 0;font-family:"微软雅黑"}\n' +
+    ".hsbtn{background: url(" +
+    hsearch_btn +
+    ") no-repeat center center;width: 30px;height: 30px;cursor: pointer;margin-top:3px;}\n" +
+    ".hwx{float: left;margin-left: 24px;margin-top:4px;cursor: pointer;position: relative;}\n" +
+    ".hwx .hsoan{position: absolute;width: 90px;height: 90px;display: none;top:33px;left:-33px;}\n" +
+    ".hwx:hover .hsoan{display: block;}\n" +
+    ".mar60{margin-top:60px;}\n" +
+    ".hlogo{margin-left: 20px;float: left;}\n" +
+    ".hfs{float: left;margin-left:188px;margin-top:-20px;}\n" +
+    ".ckic{display:none;}" +
+    ".hright-select{width:89px;float:left;margin-top:-4px;}" +
+    ".hright-select > div{color:" +
+    hcolor +
+    ";font-size:15px;}" +
+    "#hchaxun{margin-top:-5px;}" +
+    ".hright-select > div >input{vertical-align:middle;}" +
+    "@media screen and (max-width: 768px) {\n" +
+    ".hckic{display: block;width: 34px;height:30px;position: absolute;z-index: 2;right: 0px;top:0px;background: url(" +
+    change_btn_normal +
+    ") no-repeat;background-size:cover; -webkit-background-size:cover;}" +
+    ".hicon{background:url(" +
+    change_btn_selected +
+    ") no-repeat ;background-size:cover;-webkit-background-size:cover; } " +
+    ".hhead-control{display: none}\n" +
+    ".hhead-control2{width:100%;margin-top:0}\n" +
+    ".mar60{margin-top:0px;}\n" +
+    ".hhead{background: url(" +
+    hbg +
+    ") no-repeat center;height: 105px;background-size: cover;-webkit-background-size: cover;}\n" +
+    ".hlogo{margin-top:25px;margin-left: 5px;width: 100%}\n" +
+    ".hlogo img{width: 175px;}\n" +
+    ".hfs{width:80px;}\n" +
+    "}"
+);
+document.writeln("</style>");
+document.writeln("<div class='hckic'></div>");
+document.writeln('<div class="hhead">');
+document.writeln('<div class="hhead-control">');
+document.writeln('<ul class="hleft">');
+document.writeln(
+  "<li><a onclick='toggleToolBar();' >无障碍浏览</a><span></span></li>"
+);
+document.writeln(
+  "<li><a id='zh_click_s' class='zh_click' onclick='zh_tran(\"n\")'>简</a><span></span></li>"
+);
+document.writeln(
+  "<li><a id='zh_click_t' class='zh_click' onclick='zh_tran(\"t\")'>繁</a><span></span></li>"
+);
+document.writeln('<li id="today"></li>');
+document.writeln("</ul>");
+document.writeln("<div class='hright hfr'>");
+document.writeln(
+  "<div class='hright-select'><div><input name=\"hchaxun\" type=\"radio\" checked='checked' value=\"1\"  onclick='selt(1)'> 门户</div>"
+);
+document.writeln(
+  '<div><input name="hchaxun" type="radio" value="2"  onclick=\'selt(2)\'> 政务服务</div></div>'
+);
+document.writeln("<div class='hfl' id='hchaxun'>");
+document.writeln('<div class="hgrob">');
+document.writeln(
+  '<input onkeypress=\'goSearch2(event)\' type="text" class="hsearch hquery" value="请输入关键词查询" autocomplete="off" onfocus="if(this.value==\'请输入关键词查询\'){this.value=\'\'}" onblur="if(this.value==\'\'){this.value=\'请输入关键词查询\'}">'
+);
+document.writeln('<input type="button" onclick=\'goSearch()\' class="hsbtn">');
+document.writeln("</div>");
+document.writeln('<div class="clear"></div>');
+document.writeln("</div>");
+document.writeln("</div>");
+document.writeln('<div class="clear"></div>');
+document.writeln("</div>");
+document.writeln('<div class="hhead-control2">');
+document.writeln(
+  '<div class="hlogo"><a href="/"><img src="' + hlogo_img + '"></a></div>'
+);
+document.writeln("<img class='hfs' " + hfs_img + ">");
+document.writeln("</div>");
+document.writeln("</div>");
+document.writeln('<script src="/module/jslib/gtb/language.js"></script>');
+document.writeln("<style>");
+document.writeln(
+  ".nnav{background: " +
+    navbgcolor +
+    ";font-size: 21px;font-weight: bold;}\n" +
+    ".nnavcontrol{width: 1200px;margin:0 auto;position: relative;}\n" +
+    ".nnavcontrol>li{padding: 0;height: 50px;line-height: 50px;width: 12.28%;float: left;text-align: center;position: relative;}\n" +
+    ".nnavcontrol>li>a{color: #fff;display: block;}\n" +
+    ".nnavcontrol>li.cur{background: " +
+    navactivecolor +
+    ";}\n" +
+    ".nsearchshow{display:none;}" +
+    "@media screen and (max-width: 768px){\n" +
+    ".nnav{position:absolute;left: 0px;top:0px;width: 100%;height: 100%;z-index:1;font-size:16px;background: rgba(0,0,0,0.7);overflow-y: auto;display: none;-webkit-overflow-scrolling : touch;}" +
+    ".nnavcontrol{width: 90%;}\n" +
+    ".nnavcontrol>li{width: 100%;}\n" +
+    ".nnavcontrol>li.cur{background:none;}" +
+    ".nnavcontrol>li.cur>a{color: " +
+    navactivecolor +
+    ";}\n" +
+    ".nsearchshow{display:block;border-radius: 18px;margin-left: auto; border: 1px #fff solid;float: none;margin-top: 30px;background: none;width: 90%;margin-right: auto;}" +
+    ".hsearch{width:80%;color:#fff;}" +
+    "}"
+);
+document.writeln("</style>");
+
+document.writeln('<div class="nnav">');
+document.writeln('<div class="hgrob nsearchshow">');
+document.writeln(
+  '<input onkeypress=\'goSearch2(event)\' type="text" class="hsearch hquery" value="请输入关键词查询" autocomplete="off" onfocus="if(this.value==\'请输入关键词查询\'){this.value=\'\'}" onblur="if(this.value==\'\'){this.value=\'请输入关键词查询\'}">'
+);
+document.writeln('<input type="button" onclick=\'goSearch()\' class="hsbtn">');
+document.writeln("</div>");
+document.writeln('<ul class="nnavcontrol">');
+document.writeln('<li><a href="/">网站首页</a></li>');
+document.writeln('<li><a href="/col/col3912/index.html">双桥概况</a></li>');
+document.writeln('<li><a href="/col/col3901/index.html">双桥要闻</a></li>');
+document.writeln('<li><a href="/col/col3914/index.html">招商投资</a></li>');
+document.writeln('<li><a href="/col/col6462/index.html">政府信息公开</a></li>');
+document.writeln('<li><a href="/col/col3907/index.html">省市要闻</a></li>');
+document.writeln(
+  '<li><a href="/col/col3916/index.html" target="_blank">互动交流</a></li>'
+);
+document.writeln(
+  '<li><a href="http://cdsq.hbzwfw.gov.cn/" target="_blank">政务服务</a></li>'
+);
+document.writeln('<div class="clear"></div>');
+document.writeln("</ul>");
+document.writeln("</div>");
+
+function goSearch() {
+  if (windowWidth < 768) {
+    var query = $(".hquery").eq(1).val();
+  } else {
+    var query = $(".hquery").eq(0).val();
+  }
+  if (query == "请输入关键词查询" || query == "") {
+    alert("请输入您要搜索的内容!");
+  } else {
+    if (webid == 34) {
+      window.open(goHref + encodeURI(encodeURI(query)));
+    } else {
+      window.open(goHref + encodeURI(query));
+    }
+  }
+}
+function goSearch2(event) {
+  if (event.keyCode == "13") {
+    goSearch();
+  }
+}
+function selt(index) {
+  if (index == 1) {
+    goHref = "/jrobot/search.do?webid=" + webid + "&category=&q=";
+  } else if (index == 2) {
+    goHref =
+      "http://www.hbzwfw.gov.cn/zwbjsearchfront/search.do?websiteid=" +
+      zwfwid +
+      "&searchid=12&tpl=8&cateid=18&p=1&q=";
+  }
+}
+function isnArray() {
+  argnr = isnArray.arguments.length;
+  for (var i = 0; i < argnr; i++) {
+    this[i + 1] = isnArray.arguments[i];
+  }
+}
+$(document).ready(function () {
+  var isnDays = new isnArray(
+    "星期一",
+    "星期二",
+    "星期三",
+    "星期四",
+    "星期五",
+    "星期六",
+    "星期日"
+  );
+  isnDays[0] = "星期日";
+  mydate = new Date();
+  myyear = mydate.getFullYear();
+  mymonth = mydate.getMonth() + 1;
+  today = mydate.getDate();
+  $("#today").html(
+    "今天是  " +
+      myyear +
+      "年" +
+      mymonth +
+      "月" +
+      today +
+      "日 " +
+      isnDays[mydate.getDay()]
+  );
+  if (windowWidth > 768) {
+  } else {
+    document.body.addEventListener("touchstart", function () {});
+    $(".hckic").on("touchstart", function () {
+      $(this).toggleClass("hicon");
+      $("body").toggleClass("deadlock");
+      $(".nnav").slideToggle(100);
+    });
+  }
+});
+function showNnav(index) {
+  if (index < $(".nnavcontrol li").length) {
+    $(".nnavcontrol li").removeClass("cur");
+    $(".nnavcontrol li").eq(index).addClass("cur");
+  }
+}

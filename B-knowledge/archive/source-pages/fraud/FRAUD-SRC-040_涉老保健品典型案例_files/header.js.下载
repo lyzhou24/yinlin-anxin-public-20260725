@@ -1,0 +1,63 @@
+document.writeln('<div class="top clearfix">\n' +
+    '            <div class="logo">\n' +
+    '                <a href="/">\n' +
+    '                    <img src="https://tfile.dahe.cn/4101930001/wap/img/logo.png" alt="">\n' +
+    '                </a>\n' +
+    '            </div>\n' +
+    // '            <div class="ss_icon">\n' +
+    // '                <img class="menu-icon" src="https://tfile.dahe.cn/4101930001/wap/img/search.png" alt="">\n' +
+    // '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="search-box" style="display: none;">\n' +
+    '            <div class="search">\n' +
+    '                <form action="/search/" class="cl">\n' +
+    '                    <input class="search-input fl" type="text" name="title" placeholder="请输入关键字">\n' +
+    '                    <input class="search-btn fr" type="submit">\n' +
+    '                </form>\n' +
+    '                <img src="https://tfile.dahe.cn/4101930001/wap/img/search_close.png" class="search_close">\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="nav">\n' +
+    '            <ul class="cl">\n' +
+    '                <li>\n' +
+    '                    <a href="/xwzx/zwxx/">\n' +
+    '                        政务要闻\n' +
+    '                    </a>\n' +
+    '                </li>\n' +
+    '                <li>\n' +
+    '                    <a href="https://m.henan.gov.cn/ywdt/hnyw/">\n' +
+    '                        河南要闻\n' +
+    '                    </a>\n' +
+    '                </li>\n' +
+    '                <li>\n' +
+    '                    <a href="/zwxx/tzgs">\n' +
+    '                        通知公示\n' +
+    '                    </a>\n' +
+    '                </li>\n' +
+    '                <li>\n' +
+    '                    <a href="/zwxx/gkzp">\n' +
+    '                        公开招聘\n' +
+    '                    </a>\n' +
+    '                </li>\n' +
+    '                <li>\n' +
+    '                    <a href="/tzxy/zdcy">\n' +
+    '                        重点产业\n' +
+    '                    </a>\n' +
+    '                </li>\n' +
+    '                <li>\n' +
+    '                    <a href="/tzxy/qyzc">\n' +
+    '                        企业之窗\n' +
+    '                    </a>\n' +
+    '                </li>\n' +
+    '                <li>\n' +
+    '                    <a href="https://zzhkg.hnzwfw.gov.cn/?region=410173000000">\n' +
+    '                        政务服务\n' +
+    '                    </a>\n' +
+    '                </li>\n' +
+    '                <li>\n' +
+    '                    <a href="/zmhd/wszx">\n' +
+    '                        网上咨询\n' +
+    '                    </a>\n' +
+    '                </li>\n' +
+    '            </ul>\n' +
+    '        </div>')

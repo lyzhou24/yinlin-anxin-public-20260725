@@ -1,0 +1,102 @@
+// JavaScript Document
+//回顶部
+$(function(){
+	$("#index_newsTab").idTabs();
+	
+	$(window).scroll(function(){
+		var sc=$(window).scrollTop();
+	    var rwidth=$(window).width();
+		if(sc>0){
+			$(".sidebar_box").fadeIn("slow")
+    	}else{
+			$(".sidebar_box").fadeOut("slow")
+    	};
+    });
+    $(".sidebar_box .li5 .sidebar_a").click(function(){
+	   var sc=$(window).scrollTop();
+	   $('body,html').animate({scrollTop:0},500);
+       return false;
+    });
+	
+	//导航
+	var listHei = $(".index_navbox .ul").height();
+	var listBoxHei = $(".index_navUl").height();
+	if(listHei <= listBoxHei) {
+		$(".index_navmore").css("display", "none");
+	} else {
+		$(".index_navmore").css("display", "block");
+	}
+	$(".index_navmore").click(function(){
+		  if($(this).text() == "更多") {  
+			$(".index_navUl").css("height","auto");
+			$(this).text("收起");
+		  } else {
+			$(".index_navUl").css("height","30px");
+			$(this).text("更多");
+		  }
+		  return false;
+	});
+	
+	//手机导航
+	$("#global_phoneBut").click(function(){
+		if($(".global_phoneNav").hasClass("phone_on")) {
+			$(".global_phoneNav").removeClass('phone_on');
+		} else {
+			$(".global_phoneNav").addClass('phone_on');
+		}
+		
+	});
+	
+	// 新闻页手机导航
+	$("#phone_but").click(function(){
+		if($(".lanm_navlist").hasClass("phone_on")) {
+			$(".lanm_navlist").removeClass('phone_on');
+			$(".lanm_phonenav").slideUp();
+		} else {
+			$(".lanm_navlist").addClass('phone_on');
+			$(".lanm_phonenav").slideDown();
+		}
+		
+	});
+	
+});
+
+
+//吸顶导航
+	$(window).scroll(function(){
+	    var top = $(window).scrollTop(); 
+        if (top >= 10)                      
+        {
+			$(".header").addClass("header_on");
+        }else{
+		    $(".header").removeClass("header_on");
+		}
+
+	});
+
+
+// 判断浏览器是否支持 placeholder
+$(function(){
+if(!placeholderSupport()){  
+    $('[placeholder]').focus(function() {
+        var input = $(this);
+        if (input.val() == input.attr('placeholder')) {
+            input.val('');
+            input.removeClass('placeholder');
+        }
+    }).blur(function() {
+        var input = $(this);
+        if (input.val() == '' || input.val() == input.attr('placeholder')) {
+            input.addClass('placeholder');
+            input.val(input.attr('placeholder'));
+        }
+    }).blur();
+};
+})
+function placeholderSupport() {
+    return 'placeholder' in document.createElement('input');
+}
+
+
+
+

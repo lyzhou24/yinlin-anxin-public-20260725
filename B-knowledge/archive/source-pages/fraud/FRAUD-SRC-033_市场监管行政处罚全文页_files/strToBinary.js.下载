@@ -1,0 +1,123 @@
+document.write("<script src='/statics/js/DES_source.js'></script>");
+document.write("<script src='/statics/js/jquery.dialog.js'></script>");
+document.write("<script src='/statics/js/layer/layer.js'></script>");
+document.write("<link rel='stylesheet' href='/statics/css/dialog.css'/>");
+function cipher() {
+	var date = new Date();
+	var timestamp = date.getTime().toString();
+	var salt =random(24);
+	var year = date.getFullYear().toString();
+	var month = (date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date
+			.getMonth()+1).toString();
+	var day = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate())
+			.toString();
+	var iv = year + month + day;
+	var enc = DES3.encrypt(timestamp, salt, iv).toString();
+	var str = salt + iv + enc;
+	var ciphertext = strTobinary(str);
+	return ciphertext;
+}
+function strTobinary(str) {
+	var result = [];
+	var list = str.split("");
+	for (var i = 0; i < list.length; i++) {
+		if (i != 0) {
+			result.push(" ");
+		}
+		var item = list[i];
+		var binaryStr = item.charCodeAt().toString(2);
+		result.push(binaryStr);
+	};
+	return result.join("");
+}
+function random (size){
+	var str = "",
+	arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+	for(var i=0; i<size; i++){
+		str += arr[Math.round(Math.random() * (arr.length-1))];
+	}
+	return str;
+}
+/**
+ * 防爬接口回调数据处理方法
+ * @param obj
+ * @returns
+ */
+function getData(obj){
+	try{ 
+		obj = $.parseJSON(obj)
+	}catch(e){ 
+		
+	}
+	if(obj.code =="1" && obj.secretKey){
+		var data = DES3.decrypt(obj.result, obj.secretKey);
+		obj.result= $.parseJSON(data);
+		return obj;
+	}
+	if(obj.code =="1" && obj.secretKey==null){
+		return obj;
+	}
+	if(obj.code =="-11"){
+		window.localStorage.setItem("url",obj.result.url);
+		window.localStorage.setItem("parameterMap",JSON.stringify(obj.result.parameterMap));
+		layer.open({
+				title:'访问受限',
+				content: "<div class='popMain'><p><span>输入内容</span><input id='yzm' type='text' placeholder='请输入验证码'/></p><p><span>验证码</span><a style='display:inline-block;width:70%;text-align: left;'><img title='点击更换验证码' id='imgcode' src='/captcha/captchaImage?key=antitheftImageCode'  /><span class='yzmtip'>验证码不能为空</span></a></p></div>",
+				btn:'确定',
+				shade:0.8,
+				btnAlign:'c',
+				area:['400px','200px'],
+				yes:function(){
+					var ciphertext = cipher();
+					var yzm = $("#yzm").val();
+					if(yzm==null || $.trim(yzm)=="" || yzm=="undefined"){
+						$('.yzmtip').show();
+						return false;
+					}
+					var url = window.localStorage.getItem("url");
+					var parameterMap = window.localStorage.getItem("parameterMap");
+					parameterMap=$.parseJSON(parameterMap);
+					parameterMap.yzm=yzm;
+					parameterMap.ciphertext=ciphertext;
+					$.ajax({
+				        type: "post",
+				        async: true,
+				        url: url,
+				        datatype:"json",
+				        data: parameterMap,
+				        success: function(data) {
+				        	try{ 
+				        		data = $.parseJSON(data)
+				        	}catch(e){ 
+				        	}
+				        	if(data.code != -11 || !data.code){
+				        		//window.localStorage.setItem("result",JSON.stringify(data));
+				        		layer.closeAll();
+				        		window.location.reload();
+				        		return ;
+				        	}
+				        	if(data.code == -11 && data.description!=null && data.description!=""){
+				        		$(".yzmtip").html("<font color='red'>"+data.description+"</font>");
+					        	$('.yzmtip').show();
+				        	}
+				        	$("#imgcode").attr("src", "/captcha/captchaImage?key=antitheftImageCode&random="+Math.random());
+				        },
+				        error:function(data){
+				        }
+				    })
+				}
+			})
+	
+	}
+	if(obj.code =="-12"){
+		layer.msg("访问受限");
+	}
+}
+/**
+ * 点击获取验证码
+ */
+$(function(){
+	$(document).on('click','#imgcode',function(){
+		$("#imgcode").attr("src", "/captcha/captchaImage?key=antitheftImageCode&random="+Math.random());
+	});
+})

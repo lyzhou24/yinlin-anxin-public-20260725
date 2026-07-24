@@ -1,0 +1,65 @@
+@CHARSET "UTF-8";
+#pages {
+	width: 100%;
+	clear: both;
+	text-align: center;
+	font-size: 15px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#pages a, #pages span {
+	margin-left: 3px;
+	margin-right: 3px;
+	min-width: 22px;
+	padding-left:5px;
+	padding-right:5px;
+	height: 30px;
+	line-height: 30px;
+	border: 1px solid #DDDDDD;
+	display: inline-block;
+	font-family: "Microsoft YaHei","Helvetica Neue", helvetica, "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+	color: #333;
+}
+#pages font{
+	font-family: "Microsoft YaHei","Helvetica Neue", helvetica, "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+	color: #333;
+}
+#pages a{
+	text-decoration:none;
+}
+#pages a:hover{
+	border: 1px solid #0099FF;
+	background-color: #0099FF;
+	color: #fff;
+}
+
+#pages span {
+	border: 1px solid #0099FF;
+	background-color: #0099FF;
+	color: #fff;
+	font-weight: bold;
+	position: relative;
+	top: 0px;
+}
+
+#pages a.previous {
+	width: 25px;
+	position: relative;
+	top: 0px;
+}
+
+#pages a.next {
+	width: 25px;
+	position: relative;
+	top: 0px;
+}
+#pages-num{
+	width: 32px;
+	height:20px;
+	border: 1px solid #DDDDDD;
+}
+.pages-nodata{
+	margin:30px auto 0 auto;
+	width:150px;
+}

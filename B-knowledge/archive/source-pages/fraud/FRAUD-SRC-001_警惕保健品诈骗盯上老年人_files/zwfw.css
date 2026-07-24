@@ -1,0 +1,139 @@
+@charset "utf-8";
+/* CSS Document */
+/* 政务办事 */
+.zwbs2List{
+	float:left;
+    overflow:hidden;
+    margin-right:-20px;
+	margin-top:10px;
+}
+.zwbs2List li{
+    float:left;
+    width:120px;
+    text-align:center;
+    margin:0 10px 10px 0;
+}
+.zwbs2List a{
+    display:block;
+    height:108px;
+	font-size:16px;
+    overflow:hidden;
+    -webkit-transition:400ms;-o-transition:400ms;-moz-transition:400ms;transition:400ms;
+
+}
+.zwbs2List i{
+    display:block;
+    height:72px;
+    background:url(/global/zwbsicon.png) center -0px no-repeat;
+    -webkit-transition:400ms;-o-transition:400ms;-moz-transition:400ms;transition:400ms;
+}
+.zwbs2List a:hover{
+  
+    color:#fff;
+    text-decoration:none
+}
+
+.zwbs2List .li2 i{
+    background-position:center -160px
+}
+.zwbs2List .li3 i{
+    background-position:center -320px
+}
+.zwbs2List .li4 i{
+    background-position:center -480px
+}
+.zwbs2List .li5 i{
+    background-position:center -640px
+}
+.zwbs2List .li6 i{
+    background-position:center -800px
+}
+
+
+.zwbs2List .li1 a:hover i{
+    background-position:center -80px;
+}
+.zwbs2List .li2 a:hover i{
+    background-position:center -240px;
+}
+.zwbs2List .li3 a:hover i{
+    background-position:center -400px;
+}
+.zwbs2List .li4 a:hover i{
+    background-position:center -560px;
+}
+.zwbs2List .li5 a:hover i{
+	color:#fe7642;
+    background-position:center -720px;
+}
+.zwbs2List .li6 a:hover i{
+    background-position:center -880px;
+}
+
+
+
+.zwbs2Icons a:hover{
+
+    color:#4292f5;
+    text-decoration:none
+}
+.zwbs2Icons .li5 a:hover{
+
+    color:#fe7843;
+    text-decoration:none
+}
+.zwbs2Icons .li6 a:hover{
+
+    color: #fe7843;
+    text-decoration:none
+}
+
+
+
+/* 政务办事 */
+.category-b {width: 100%;
+         margin-top:30px;}
+.category-b li {
+    width: 32%;
+    text-align: center;
+    height: 58px;
+    line-height: 58px;
+    margin-right: 2%;
+    float: left;
+    position: relative;
+}
+.category-b li a {
+    font-size: 18px;
+    font-weight: 700;
+    display: block;
+    color: #fff;
+    background: #7cbce2;
+    border-radius: 5px;
+}
+.category-b li a:hover {
+    background: #478ceb;
+    text-decoration: none;
+}
+.category-b .trigger-on {
+    width: 123px;
+    height: 130px;
+    position: absolute;
+    top: -130px;
+    left: 50%;
+    margin-left: -61px;
+    background: url('/global/zwfw_trigger_bg.png') no-repeat;
+}
+.category-b .trigger-on img {
+    display:block;
+    margin: 10px 14px;
+    width: 95px;
+    height: 95px;
+}
+.category-b .trigger-on {display:none;}
+.category-b .on .trigger-on {display:block;}
+
+.bssearch {width: 770px;float: left;}
+.bssearch input,.bssearch button {height: 55px;box-sizing: border-box;float: left;border: none; outline: none;}
+.bssearch input {width: 85%;background: #f2f2f2;padding: 0 20px; font-size: 16px;}
+.bssearch button {width: 15%;background: #3269B8;}
+.bssearch button span {color: #fff; font-size: 18px;}

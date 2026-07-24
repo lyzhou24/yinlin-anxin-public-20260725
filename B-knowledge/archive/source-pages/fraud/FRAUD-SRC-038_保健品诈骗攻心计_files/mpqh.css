@@ -1,0 +1,5 @@
+.wap2022{display:none}
+@media (max-width: 912px) {
+.pc2022{display: none;}
+.wap2022{display:block}
+}

@@ -1,0 +1,65 @@
+$(function () {
+	//相关附件
+	if ($(".article-attachments ul li").length > 0) {
+		$(".article-attachments").fadeIn("fast");
+	}
+	
+	//相关文章
+	if ($(".article-documents ul li").length > 0) {
+		$(".article-documents").fadeIn("fast");
+	}
+	
+	//来源
+	if($.trim($(".article-attr .ly b").text()) == ""){
+		$(".article-attr .ly b").text(websiteName);
+	}
+
+	//调整字体大小
+	$(".setfontsize i").click(function () {
+		$(this).addClass("on").siblings().removeClass("on");
+		var thisEle = $("#zoomcon").css("font-size");
+		//parseFloat的第二个参数表示转化的进制，10就表示转为10进制
+		var textFontSize = parseFloat(thisEle, 10);
+		var unit = thisEle.slice(-2); //获取单位
+		var cName = $(this).attr("class");
+		if (cName == "l on" && textFontSize < 30) {
+			textFontSize += 2;
+		} else if (cName == "s on" && textFontSize > 12) {
+			textFontSize -= 2;
+		} else if (cName == "m on") {
+			textFontSize = 16;
+		}
+		//设置para的字体大小
+		$("#zoomcon").css("font-size", textFontSize + unit);
+		$("#zoomcon").find("*").css("font-size", textFontSize + unit);
+		$(".article-content").attr("class", "article-content fontsize" + textFontSize);
+	});
+		
+	$('#view').html('');
+	var viewAjaxUrl = "/u/hit/count";
+	// 站点浏览量
+	try{
+		$.ajax({
+			url: viewAjaxUrl,
+			type: "post",
+			data:{
+				hType: 3, //类型（1、站点；2、栏目；3、稿件）
+				hId: manuscriptId  //对象ID
+			},
+			success: function(data){
+				if(data.code=='0'){
+					$('#view').html(data.data)
+				}
+			},
+			error: function(){
+				
+			}
+		}); 
+	}catch(e){}
+	// 文章页table居中
+	if($('table').length>0){
+		$('table').attr('style','')
+		$('table').attr('align','center')
+	}
+	
+});

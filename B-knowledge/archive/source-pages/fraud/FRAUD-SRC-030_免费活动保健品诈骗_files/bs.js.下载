@@ -1,0 +1,27 @@
+﻿$(function() {
+	var js = document.scripts;
+	var jsPath;
+	for(var i=0;i<js.length;i++){
+	  if(js[i].src.indexOf("jwplayer.js") > -1){
+	    jsPath=js[i].src.substring(0,js[i].src.lastIndexOf("/")+1);
+	  }
+	}
+	$("video").each(function(){
+			var id = "video_" + getRandom(100);
+			$(this).hide();
+			$(this).after("<div id='"+id+"' style='width:"+$(this).attr("width")+"px;height:"+$(this).attr("height")+"px'></div>");
+			var videoObject = {
+					container: '#'+id,
+					variable: 'player',
+					loop: true,
+					autoplay: false,//是否自动播放
+					flashplayer:false,
+					video:$(this).attr("src")
+				};
+			
+			var player = new ckplayer(videoObject);
+	});
+});
+function getRandom(n){
+    return Math.floor(Math.random()*n+1)
+}

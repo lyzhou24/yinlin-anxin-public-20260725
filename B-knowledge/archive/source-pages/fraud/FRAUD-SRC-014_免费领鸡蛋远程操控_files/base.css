@@ -1,0 +1,139 @@
+/*全局start*/
+*{margin: 0;padding: 0;border: 0;}
+html,body{background-color: #F5F3F2;}
+body {margin: 0;padding: 0;font:14px "Microsoft Yahei","Hiragino Sans GB",sans-serif;color:#000;}
+a {color: #000;text-decoration: none !important;}
+a:link,a:visited {color: #3b3b3b}
+.hidden {display: none;}
+.Hspace{width:1px; height:12px; overflow:hidden; clear:both;}
+*{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:border-box}
+:before,:after{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box}
+.clear{clear:both;font-size:0;line-height:0;height:0;}
+ul,li{list-style:none;list-style-type: none;}
+.clear{clear:both;}
+img {outline: none;border:none}
+.memorial{ -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: gray;
+    filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+}
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: 'iconfont';  /* Project id 3567107 */
+  src: 
+       url('data:application/x-font-woff2;charset=utf-8;base64,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') format('woff2'),
+       url('//at.alicdn.com/t/c/font_3567107_a5cwugddxjc.woff?t=1685413824393') format('woff'),
+       url('//at.alicdn.com/t/c/font_3567107_a5cwugddxjc.ttf?t=1685413824393') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-sanjiaoxing:before {
+  content: "\e6bd";
+}
+.icon-shezhi:before {
+  content: "\e68f";
+}
+.icon-shaixuan:before {
+  content: "\e74a";
+}
+.icon-weixin:before {
+  content: "\e616";
+}
+.icon-qq:before {
+  content: "\e60a";
+}
+.icon-weibo:before {
+  content: "\e600";
+}
+.icon-share:before {
+  content: "\e60f";
+}
+
+.code-panel {
+  margin: 30px 0;
+  width: 280px;
+}
+ .code-panel .code-img {
+  float: left;
+  display: block;
+  width: 148px;
+  height: 148px;
+}
+
+.code-panel .code-content {
+  float: right;
+}
+
+.code-panel .code-content h4 {
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+.code-panel .code-content p {
+  margin-bottom: 10px;
+  width: 109px;
+  line-height: 22px;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 12px;
+}
+
+.code-panel .code-content p img {
+  position: relative;
+  top: 2px;
+  margin-left: 12px;
+  margin-right: 8px;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+}
+.flex{
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.flex-one{
+  -moz-box-flex:1;
+  -webkit-box-flex:1;
+  box-flex:1;
+  flex: 1;
+}
+@media screen and (min-width:375px) {
+  html {
+    font-size: calc(100% + 2 * (100vw - 375px)/ 39);
+    font-size: calc(16px + 2 * (100vw - 375px)/ 39)
+  }
+}
+@media screen and (min-width:414px) {
+  html {
+    font-size: calc(112.5% + 4 * (100vw - 414px)/ 586);
+    font-size: calc(18px + 4 * (100vw - 414px)/ 586)
+  }
+}
+@media screen and (min-width:600px) {
+  html {
+    font-size: calc(125% + 4 * (100vw - 600px)/ 400);
+    font-size: calc(20px + 4 * (100vw - 600px)/ 400)
+  }
+}
+@media screen and (min-width:1000px) {
+  html {
+    font-size: calc(137.5% + 6 * (100vw - 1000px)/ 1000);
+    font-size: calc(22px + 6 * (100vw - 1000px)/ 1000)
+  }
+}
+

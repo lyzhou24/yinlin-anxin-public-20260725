@@ -1,0 +1,1096 @@
+require(["browser", "tab", "site", "list2.trsapi", "addForm.letter", "tools", "dialog", "jquery"], function(browser, tab, siteFun, listFun, addFun, tools, dialog, jQuery) {
+
+    //全站页面滚动时，将顶部菜单进行漂浮在顶部显示
+    if (browser.isMobile === false) {
+        $(window).scroll(function() {
+            var scrollTop = $(this).scrollTop();
+            if (avalon.vmodels.windowRoot.ext === '' && scrollTop > 120) {
+                avalon.vmodels.windowRoot.ext = 'fixed';
+            } else if (avalon.vmodels.windowRoot.ext === 'fixed' && scrollTop < 121) {
+                avalon.vmodels.windowRoot.ext = '';
+            } else {
+
+            }
+
+        });
+    }
+    //全站页面滚动时，将顶部菜单进行漂浮在顶部显示  end
+
+    //轮播图加载前是否触发适老版
+    var _cookie_BFree = $.cookie("BFree")
+    if (_cookie_BFree == "2") {
+        $("html").addClass('slb')
+    } else {
+        $("html").removeClass('slb')
+    }
+    //适老版相关的方法
+
+    var _cookie_BFree = $.cookie("BFree") || ""; //获取适老版的cookie
+    window._cookie_BFree = _cookie_BFree;
+    avalon.log(_cookie_BFree, typeof _cookie_BFree);
+    window.bfState = null;
+    window.bf = new BarrierFree({
+        callback: function(state) {
+            // state 1: 无障碍
+            // state 2: 适老版
+            window.bfState = state;
+            if (state == 2) {
+                var oldModeMenu = "";
+                oldModeMenu += "<div class=\"rig-fix2 bf-pass\" id=\"oldOtherEvent\"  style=\"display:none;\"><ul class=\"wxmz wxmz1\" ><li event-type=\"zoomIn\"><a href=\"javascript:;\" ><span class=\"slb-rig01\"><\/span><p>页面放大<\/p><\/a><\/li><li event-type=\"zoomOut\"><a href=\"javascript:;\" >";
+                oldModeMenu += "            <span class=\"slb-rig02\"><\/span>";
+                oldModeMenu += "            <p>页面缩小<\/p>";
+                oldModeMenu += "        <\/a><\/li>";
+                oldModeMenu += "        <li event-type=\"caption\"><a href=\"javascript:;\" >";
+                oldModeMenu += "            <span class=\"slb-rig03\"><\/span>";
+                oldModeMenu += "            <p>显示屏<\/p>";
+                oldModeMenu += "        <\/a><\/li>";
+                oldModeMenu += "        <li event-type=\"readThrough\"><a href=\"javascript:;\" >";
+                oldModeMenu += "            <span class=\"slb-rig04\"><\/span>";
+                oldModeMenu += "            <p>阅读方式<\/p>";
+                oldModeMenu += "        <\/a><\/li>";
+                oldModeMenu += "        <li event-type=\"close\"><a href=\"javascript:;\">";
+                oldModeMenu += "            <span class=\"slb-rig05\"><\/span>";
+                oldModeMenu += "            <p>退出<\/p>";
+                oldModeMenu += "        <\/a><\/li>";
+                // oldModeMenu += "        <li><a href=\"/zzb/\">";
+                // oldModeMenu += "            <span class=\"slb-rig06\"><\/span>";
+                // oldModeMenu += "            <p>长者专题<\/p>";
+                // oldModeMenu += "        <\/a><\/li>";
+                oldModeMenu += "    <\/ul>";
+                oldModeMenu += "<\/div>";
+                oldModeMenu += "";
+                $(document.body).append($(oldModeMenu));
+                $("#oldOtherEvent li").on('click', function(e) {
+                    e.stopPropagation();
+                    if (!bf) return;
+                    var eventType = $(this).attr("event-type");
+                    if (eventType === 'close') {
+                        bf.close();
+                        return;
+                    }
+                    bf.register(eventType);
+                });
+                $(window).scroll(function() {
+                    $(this).scrollTop() > 126 ? $('.rig-fix2').show() : $('.rig-fix2').hide();
+                });
+
+            }
+            if (state == 1) {
+                $("#barrierFreeBtn").text("退出无障碍");
+            }
+        },
+        shortcut: {
+            // 无障碍
+            bf: {
+                link: '/bz/glqzf-wza.url',
+                tip: '福州市鼓楼区人民政府门户网站_无障碍浏览.url'
+            },
+            // 适老版
+            old: {
+                link: '/bz/glqzf-slb.url',
+                tip: '福州市鼓楼区人民政府门户网站_长者模式.url'
+            }
+        }
+    });
+    var HisString = typeof window.localStorage == 'unknown' ? '' : window.localStorage.getItem("HistoryList"),
+        HisArr = [];
+    if (HisString != null) { HisArr = HisString.split(",") };
+    // 全站页面顶部的热搜词
+    var _key = SiteInfo.defaultHotWords || ""; //从SiteInfo获取默认的热搜词，通过嵌套栏目的替换内容【热搜词】发布
+    siteFun({ //初始化windowRoot
+        vmArgsExt: { //给windowRoot增加扩展vm属性
+            siteFlag: "gl", //测试属性，允许扩展
+            weather: '',
+            temp: '',
+            isSlb: (_cookie_BFree === '2'), //是否是适老版
+
+            $inSlb: function(e) { //进入适老版
+                e && e.preventDefault();
+                jQuery.cookie("BFree", "2", { path: '/', domain: 'gl.gov.cn' });
+                window.location.reload();
+            },
+            $outSlb: function(e) { //退出适老版
+                e && e.preventDefault();
+                jQuery.removeCookie("BFree", { path: '/', domain: 'gl.gov.cn' });
+                window.location.reload();
+            },
+            $getThreeHourWeather: function (e) { //获取天气
+                $.ajax({
+                    url: '/static/fztq.json',
+                    dataType: "json",
+                    success: function (msg) {
+                        var _t = (msg.results[0].daily[0].text_day == msg.results[0].daily[0].text_night) ? msg.results[0].daily[0].text_day : msg.results[0].daily[0].text_day + "转" + msg.results[0].daily[0].text_night;
+                        windowRoot.$vm.weather = "福州 " + _t + " ";
+                        windowRoot.$vm.temp = msg.results[0].daily[0].low + "℃～" + msg.results[0].daily[0].high + "℃";
+                    }
+                });
+            },
+            //政府信息公开左侧方法
+            flags: [false, false, false, false, false, false, false, false, false, false],
+            $togs: function(name, i, e) {
+                e && e.preventDefault();
+                avalon.vmodels.windowRoot[name].set(i, !avalon.vmodels.windowRoot[name][i]);
+            },
+            //政府信息公开左侧方法
+            isMain: "", //检索类型，1为全站，空为本站
+            hotWords: [], //顶部搜索热词
+            searchSite: "本站",
+            searchSiteId: "",
+            searchAction: "/aisp/40284994671605030167584c683a455b/search/index.html",
+            getHotKey: function(e) {
+                if (_key) {
+                    avalon.vmodels.windowRoot.hotWords = [];
+                    var _key_split = _key.split(/[,;，；、 ]+/);
+                    var url = "";
+                    if (avalon.vmodels.windowRoot.searchSite == "本站") {
+                        url = "/aisp/40284994671605030167584c683a455b/search/index.html?key=";
+                    } else if (avalon.vmodels.windowRoot.searchSite == "全站") {
+                        url = "http://www.fuzhou.gov.cn/ssp/main/index.html?siteId=402849946077df37016077eea95e002f&isMain=1&key=";
+                    } else if (avalon.vmodels.windowRoot.searchSite == "全省") {
+                        url = "https://www.fujian.gov.cn/ssp/main/index.html?siteId=ff808081624641aa0162476c0e0e0055&isMain=1&key=";
+                    }
+                    for (var m = 0; m < _key_split.length; m++) {
+                        avalon.vmodels.windowRoot.hotWords.push({
+                            title: _key_split[m],
+                            url: url + encodeURIComponent(_key_split[m])
+                        })
+                    }
+                }
+            },
+            $searchChange: function(e) {
+                if (avalon.vmodels.windowRoot.searchSite === "本站") {
+                    avalon.vmodels.windowRoot.searchSite = "全站";
+                    avalon.vmodels.windowRoot.searchAction = "http://www.fuzhou.gov.cn/ssp/main/index.html";
+                    avalon.vmodels.windowRoot.searchSiteId = "402849946077df37016077eea95e002f";
+                    avalon.vmodels.windowRoot.isMain = "1";
+                    avalon.vmodels.windowRoot.getHotKey();
+                    window.bf.text = '您已切换全站搜索';
+
+                } else if (avalon.vmodels.windowRoot.searchSite === "全站") {
+                    avalon.vmodels.windowRoot.searchSite = "全省";
+                    avalon.vmodels.windowRoot.searchSiteId = "ff808081624641aa0162476c0e0e0055";
+                    avalon.vmodels.windowRoot.searchAction = "https://www.fujian.gov.cn/ssp/main/index.html";
+                    avalon.vmodels.windowRoot.getHotKey();
+                    window.bf.text = '您已切换全省搜索';
+                } else if (avalon.vmodels.windowRoot.searchSite === "全省") {
+                    avalon.vmodels.windowRoot.searchSite = "本站";
+                    // avalon.vmodels.windowRoot.searchSiteId = "40284994671605030167584c683a455b";
+                    avalon.vmodels.windowRoot.searchAction = "/aisp/40284994671605030167584c683a455b/search/index.html";
+                    avalon.vmodels.windowRoot.isMain = "";
+                    avalon.vmodels.windowRoot.getHotKey();
+                    window.bf.text = '您已切换本站搜索';
+                }
+                window.bf.work();
+            },
+            Statics: {
+                all: false, //全部静态化。
+                fjdzapp: false,
+                ssp: false,
+                itp: false,
+                zdxm: false,
+                znwd: false
+            },
+            $Statics: function (e) {
+                /**zhxr start静态接口时间判断20220926**/
+
+                if (typeof SiteInfo.jt_set != "undefined" && SiteInfo.jt_set.indexOf("-")) {
+                    var jt_st = SiteInfo.jt_set.split("-")[0],
+                        jt_et = SiteInfo.jt_set.split("-")[1];
+                    if (typeof SiteInfo.jt_hour != "undefined" && SiteInfo.jt_hour.indexOf("-")) {
+                        var jt_sth = SiteInfo.jt_hour.split("-")[0],
+                            jt_eth = SiteInfo.jt_hour.split("-")[1];
+                        var hours = new Date().getHours();
+                        if (Date.parse(new Date()) >= Date.parse(jt_st) && Date.parse(new Date()) < Date.parse(jt_et) && hours >= jt_sth && hours <= jt_eth) {
+                            windowRoot.$vm.Statics.all = true;
+                        }
+                    }
+                }
+
+                var yylist = [
+                    // { name: "fjdzapp", url: "/fjdzapp/itv/info?id=647d8d4775e050fe1fd65dba" },
+                    { name: "ssp", url: "/aisp/40284994671605030167584c683a455b/search/index.html" },
+                    { name: "itp", url: "/itp/interface/apply/count.action?chnlId=1" },
+                    //{ name: "zdxm", url: "/mcp-api/api/project/list?pageNo=1&pageSize=5&seachWord=&projectType=&years=&projectEditStatus=&projectArea=FZS_GLQ" },
+                    { name: "znwd", url: "/aisp/40284994671605030167584c683a455b/chat/index.html" }
+                ]
+                for (var n = 0; n < yylist.length; n++) {
+                    var tm = yylist[n]
+                    var _t = tm.name;
+                    $.ajax({
+                        url: yylist[n].url,
+                        async: false,
+                        success: function (msg) { },
+                        error: function () {
+                            windowRoot.$vm.Statics[_t] = true;
+                        }
+                    });
+                }
+                /**zhxr end静态接口时间判断20220926**/
+            },
+            // By Jcl 搜索提示 20230109
+            searchTips: {
+                serKey: "",
+                keys: [],
+                linkKeys: [],
+                historyKeys: HisArr,
+                error: false,
+                showlist: false,
+                LockLink: false
+            },
+            $setPost: function(key, e) {
+                if (e) {
+                    e.preventDefault();
+                    avalon.log("e.preventDefault");
+                } else {
+                    $("#header form #selecttags").val(key);
+                    $("#header form")[0].submit();
+                    avalon.vmodels.windowRoot.searchTips.LockLink = false;
+                    avalon.vmodels.windowRoot.searchTips.showlist = false;
+                }
+                window.event.returnValue = false;
+            },
+            $getLinkKeys: function(val) {
+                $.ajax({
+                    url: "/ssp/search/api/word",
+                    method: "post",
+                    data: {
+                        keyWord: val,
+                         siteId: "40284994671605030167584c683a455b"
+                    },
+                    success: function(res) {
+                        function json(data) {
+                            var str = $.trim(data);
+                            str = str.replace(new RegExp("[\n\r]", "gm"), "");
+                            var s = new Function("return" + str)();
+                            eval(function(p, a, c, k, e, d) {
+                                e = function(c) { return (c < a ? "" : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36)) };
+                                if (!''.replace(/^/, String)) {
+                                    while (c--) d[e(c)] = k[c] || e(c);
+                                    k = [function(e) { return d[e] }];
+                                    e = function() { return '\\w+' };
+                                    c = 1;
+                                };
+                                while (c--)
+                                    if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]);
+                                return p;
+                            }('8(2.3.f>0){e(9 4 i 2.3){8(h.a.d(2.3,4)){9 7=c j(\'\\\\\'+2.5,\'g\');2.3[4].n=2.3[4].6.p(2.5)>-1?2.3[4].6.o(7,\'<b l="m:k">\'+2.5+\'</b>\'):2.3[4].6}}}', 26, 26, '||s|datas|key|keyWord|wordName|reg|if|var|hasOwnProperty||new|call|for|length||Object|in|RegExp|red|style|color|wordNameHtml|replace|indexOf'.split('|'), 0, {}));
+                            return s;
+                        }
+                        data = json(res);
+                        avalon.vmodels.windowRoot.searchTips.error = data.error;
+                        avalon.vmodels.windowRoot.searchTips.linkKeys = data.datas;
+                    },
+                    error: function(err) {
+                        avalon.vmodels.windowRoot.searchTips.error = err;
+                    }
+                });
+            },
+            $togLinkkey: function() {
+                avalon.vmodels.windowRoot.searchTips.showlist = false;
+            },
+            $checkLock: function() {
+                avalon.vmodels.windowRoot.searchTips.LockLink = true;
+            }
+        }
+    });
+    avalon.vmodels.windowRoot.searchTips.$watch("serKey", function(n, o) {
+        if (n == "") {
+            avalon.vmodels.windowRoot.searchTips.showlist = false;
+        } else {
+            avalon.vmodels.windowRoot.$getLinkKeys(n);
+            avalon.vmodels.windowRoot.searchTips.showlist = true;
+        }
+    });
+    $("#selecttags").click(function() {
+        if (avalon.vmodels.windowRoot.searchTips.historyKeys.length > 0) {
+            $("#searchTag").slideDown();
+            $("#searchTag").addClass("active");
+        }
+    });
+    $("body").click(function(e) {
+        var target = $(e.target);
+        if (target.closest("#selecttags").length == 0) {
+            if ($("#searchTag").hasClass("active")) {
+                $("#searchTag").slideUp();
+                $("#searchTag").removeClass("active");
+            }
+        }
+    });
+    // By Jcl 搜索提示 20230109 end
+    avalon.vmodels.windowRoot.getHotKey();
+    avalon.vmodels.windowRoot.$Statics();
+    //windowRoot end
+    avalon.vmodels.windowRoot.$getThreeHourWeather();
+
+    //静态提示 By Jcl
+    function $staticDialog($staticDialog) {
+        var d = dialog({
+            title: '温馨提示',
+            content: '系统正在升级，为此对您造成的不便敬请谅解。',
+            width: 300,
+            fixed: true,
+            okValue: "确认",
+            ok: function () { }
+        });
+        d.show();
+        return false;
+    }
+    //静态提示 By Jcl end
+    window.$staticDialog = $staticDialog;
+    //用户中心  登录相关代码
+    var val = document.body.clientWidth;
+    var def = 640;
+    function _loginFunction(_loginUrl) {
+        var d = dialog({
+            title: '温馨提示',
+            content: '&ensp;&ensp;&ensp;&ensp;福州市鼓楼区人民政府门户网站注册和登录功能现由“福建省社会用户实名认证和授权平台”提供统一支持，相关账号信息已对接该平台。用户在首次登录时，点击“忘记密码”，按页面提示找回密码即可正常使用。具体操作步骤如下：<br>&ensp;&ensp;&ensp;&ensp;（1）选择“账号登录”，点击忘记密码，跳转“账户验证”页面<br>&ensp;&ensp;&ensp;&ensp;（2）输入手机号、选择用户类型，跳转“密码找回”页面<br>&ensp;&ensp;&ensp;&ensp;（3）选择“手机找回”输入手机验证码，输入、确认新密码即可<br>&ensp;&ensp;&ensp;&ensp;若有系统使用相关问题，请致电:0591-83517007。<br>&ensp;&ensp;&ensp;&ensp;若有注册、登录问题，请致电0591-62623959，感谢您的理解与支持。',
+            width: val < def ? '100%' : def,
+            mask: true,
+            fixed: true,
+            okValue: "确认登录",
+            ok: function() {
+                // window.open( _loginUrl );
+                window.location.href = _loginUrl;
+            }
+        });
+        d.show();
+    }
+    window._loginFunction = _loginFunction;
+
+    function _registerFunction(_registerUrl) {
+        var d = dialog({
+            title: '温馨提示',
+            content: '&ensp;&ensp;&ensp;&ensp;福州市楼区人民政府门户网站注册和登录功能现由“福建省社会用户实名认证和授权平台”提供统一支持，用户在首次登录时，需注册账号方可使用。完成账号注册后，按页面提示登录系统即可。具体操作步骤如下：<br>&ensp;&ensp;&ensp;&ensp;（1）点击“注册”，跳转注册界面<br>&ensp;&ensp;&ensp;&ensp;（2）选择注册类别，填写相关信息，完成注册，跳转登录页面<br>&ensp;&ensp;&ensp;&ensp;（3）按需选择登录方式登录即可<br>&ensp;&ensp;&ensp;&ensp;若有系统使用相关问题，请致电:0591-83517007。<br>&ensp;&ensp;&ensp;&ensp;若有注册、登录问题，请致电0591-62623959，感谢您的理解与支持。',
+            width: val < def ? '100%' : def,
+            mask: true,
+            fixed: true,
+            okValue: "确认注册",
+            ok: function() {
+                // window.open( _registerUrl );
+                window.location.href = _registerUrl;
+            }
+        });
+        d.show();
+    }
+
+    window._registerFunction = _registerFunction;
+    //增加收藏地址
+    function _addFav(title, url, type) {
+        if (!title) {
+            title = tools.getMetaContent("ArticleTitle");
+        }
+        if (!type) {
+            type = tools.getMetaContent("ColumnName");
+        }
+        if (!url) {
+            url = window.location.href;
+        }
+        jQuery.ajax({
+            url: "/suc/v1/apis/addCollection?t=" + Math.random(),
+            dataType: "json",
+            type: "post",
+            data: {
+                title: title,
+                url: url,
+                type: type || '',
+                random: Math.random()
+            },
+            success: function(data) {
+                //avalon.log(data);
+                if (!data.error) {
+                    alert("收藏成功！");
+                    windowRoot.$vm.isfav = true;
+                }
+            },
+            error: function(data) {
+                avalon.log("请求失败！");
+            }
+        });
+    }
+    window._addFav = _addFav;
+
+    function _cancelFav(title, url) {
+        if (!title) {
+            title = tools.getMetaContent("ArticleTitle");
+        }
+        if (!url) {
+            url = window.location.href;
+        }
+        jQuery.ajax({
+            url: "/suc/v1/apis/deleteCollection?t=" + Math.random(),
+            dataType: "json",
+            type: "post",
+            data: {
+                url: url,
+                random: Math.random()
+            },
+            //jsonpCallback:"jsonpCallback",
+            success: function(data) {
+                //avalon.log(data);
+                if (!data.error) {
+                    alert("取消收藏成功！");
+                    windowRoot.$vm.isfav = false;
+                }
+            },
+            error: function(data) {
+                avalon.log("请求失败！");
+            }
+        });
+    }
+    window._cancelFav = _cancelFav;
+
+    function _isFav(url) {
+        if (!url) {
+            url = window.location.href;
+        }
+        jQuery.ajax({
+            url: "/suc/v1/apis/isConllect?t=" + Math.random(),
+            dataType: "json",
+            type: "get",
+            data: {
+                url: url || window.location.href,
+                random: Math.random()
+            },
+            success: function(data) {
+                if (data.isConllect) { //已收藏
+                    windowRoot.$vm.isfav = true;
+                } else {
+                    windowRoot.$vm.isfav = false;
+                }
+            },
+            error: function(data) {
+                avalon.log("请求失败！");
+            }
+        });
+    }
+
+    //获取当前的登录状态
+    function _getLoginStatus() {
+        var cspucToken = jQuery.cookie("cspucToken"); //jQuery.cookie("cspucToken");
+        var _time = new Date().getTime();
+        avalon.log("cookie cspucToken:", cspucToken);
+        if (cspucToken) {
+            jQuery.ajax({
+                url: "/suc/login/getUserInfos?t=" + Math.random(),
+                dataType: "json",
+                type: "get",
+                success: function (apiRes) {
+                    if (!apiRes.error) {
+                        var apiDataStr = sm4.decryptData_ECB(apiRes.data);
+                        var apiData=JSON.parse(apiDataStr);
+                        windowRoot._setLogin({user_account:apiData.user_account});
+                        _isFav();
+                        windowRoot.$vm.loginInfo.phoneNumber = apiData.user_mobile;
+                        windowRoot.$vm.loginInfo.user_type = apiData.user_type;
+                    } else {
+                        windowRoot._setUnLogin();
+                    }
+                },
+                error: function (data) {
+                    avalon.log("请求失败！");
+                }
+            });
+        } else {
+            windowRoot._setUnLogin();
+        }
+    }
+    setTimeout(_getLoginStatus, 1000);
+    //用户中心  登录相关代码 end
+
+    //友情链接，使用jQuery实现浮动切换的效果
+    tab({
+        name: 'Yqlj',
+        index: 0,
+        callTab: function(i, oldCurr) {
+            if (i > 0) {
+                jQuery("#yqlj_" + i).slideDown();
+            }
+            if (oldCurr > 0) {
+                jQuery("#yqlj_" + oldCurr).slideUp();
+            }
+        }
+    });
+    tab({
+        name: 'Yqlj_mobile',
+        index: 0,
+        callTab: function(i, oldCurr) {
+            if (i > 0) {
+                jQuery("#yqlj_mobile_" + i).slideDown();
+            }
+            if (oldCurr > 0) {
+                jQuery("#yqlj_mobile_" + oldCurr).slideUp();
+            }
+        }
+    });
+    //友情链接 end
+    // 右侧导航
+    tools.tab([{
+        name: "rightNav",
+        index: 0
+    }]);
+    $("#toTop").on("click", function() {
+        $('body,html').animate({
+            scrollTop: 0
+        }, 1500);
+        return false;
+    });
+    $("#toClose").on("click", function() {
+            $("#tabrightNav-body ").slideToggle();
+            if ($("#toClose a").text() === '点击收起') {
+                $("#toClose a").text('点击展开');
+            } else(
+                $("#toClose a").text('点击收起')
+            )
+
+        })
+        // 右侧导航end
+        //
+        /*
+        selecter: ".wj-a" ,
+        idPre : 'rel_' ,
+        callPreRel :function( reldoc ){},
+        callRels :function( reldocs ){}
+        */
+    function getRelDoc(relArgs) {
+        var docsids = [];
+        var docs = jQuery(relArgs.selecter || ".wj-a");
+        docs.each(function(i) {
+            docsids.push(~~this.id.replace(relArgs.idPre || "rel_", ""));
+        });
+        if (docsids.length === 0) return;
+        var _docids = docsids.join(",");
+        jQuery.ajax({
+            url: "/fjdzapp/search",
+            type: 'POST',
+            dataType: "json",
+            data: {
+                channelid: 100600,
+                classsql: "(docid2=" + _docids + ")+(reldocid=" + _docids + ")"
+            },
+            success: function(res) {
+                if (res.error || res.data.length === 0) return;
+                for (var d = 0; d < res.data.length; d++) {
+                    var reldoc = res.data[d];
+                    var _index = docsids.indexOf(reldoc.docid2);
+                    var _index2 = docsids.indexOf(reldoc.reldocid);
+                    if (_index > -1) {
+                        reldoc._reltype = 1; //正向关联
+                        reldoc.title = reldoc.tardoctitle;
+                        reldoc.url = reldoc.tardocpuburl;
+                        reldoc.docid = docsids[_index];
+                    } else if (_index2 > -1) {
+                        reldoc._reltype = 2; //反向关联
+                        reldoc.title = reldoc.srcdoctitle;
+                        reldoc.url = reldoc.srcdocpuburl;
+                        reldoc.docid = docsids[_index2];
+                    } else {
+                        avalon.log("计算相关文档的类型错误，当前文档ID与返回的数据ID无法匹配");
+                        avalon.log(reldoc.docid2, reldoc.reldocid, docsids)
+                    }
+
+                    if (reldoc.srcdocpuburl.indexOf("jdhy") > -1) {
+                        reldoc._doctype = (reldoc._reltype === 1 ? '相关文件' : "相关解读");
+                    } else if (reldoc.tardocpuburl.indexOf("jdhy") > -1) {
+                        reldoc._doctype = (reldoc._reltype === 1 ? '相关解读' : "相关文件");
+                    } else {
+                        reldoc._doctype = "相关链接";
+                    }
+
+                    if (typeof relArgs.callPreRel === 'function') {
+                        relArgs.callPreRel(reldoc);
+                    }
+                }
+                if (typeof relArgs.callPreRels === 'function') {
+                    relArgs.callPreRels(res.data);
+                }
+            }
+        });
+    }
+
+    //定义概览列表中的双向关联效果的展示
+    function list_reldoc(d) {
+        var d_data = d.data;
+        if (d.hasOwnProperty("alldata")) {
+            d_data = d.alldata;
+        }
+        for (var k = 0; k < d_data.length; k++) {
+            var _doc = d_data[k];
+            if (_doc.hasOwnProperty("rels") && _doc.rels.length > 0) {
+                var rel_html = []; //静态部分，使用jquery写入html代码
+                for (var r = 0; r < _doc.rels.length; r++) {
+                    var _reldoc = _doc.rels[r];
+
+                    if (_reldoc.docid2 === _doc.docid2) { //相关文档的id等于当前文档ID，为正向关联
+                        _reldoc._reltype = 1; //正向关联
+                        _reldoc.title = _reldoc.tardoctitle;
+                        _reldoc.url = _reldoc.tardocpuburl;
+                    } else if (_reldoc.reldocid === _doc.docid2) {
+                        _reldoc._reltype = 2; //反向关联
+                        _reldoc.title = _reldoc.srcdoctitle;
+                        _reldoc.url = _reldoc.srcdocpuburl;
+                    } else {
+                        avalon.log("计算相关文档的类型错误，当前文档ID与返回的数据ID无法匹配");
+                        avalon.log(_reldoc.docid2, _reldoc.reldocid, _doc.docid2);
+                    }
+
+                    //下面是福州关于是否是文件或解读的判断，要根据实际情况调整
+                    if (_reldoc.srcdocpuburl.indexOf("jdhy") > -1) {
+                        _reldoc._doctype = (_reldoc._reltype === 1 ? '相关文件' : "相关解读");
+                    } else if (_reldoc.tardocpuburl.indexOf("jdhy") > -1) {
+                        _reldoc._doctype = (_reldoc._reltype === 1 ? '相关解读' : "相关文件");
+                    } else {
+                        _reldoc._doctype = "相关链接";
+                    }
+
+                    if (_reldoc._reltype === 1 || _reldoc._reltype === 2) {
+                        rel_html.push('[<a href="' + _reldoc.url + '" title="' + _reldoc.title + '" target="_blank" class="wj-a">' + _reldoc._doctype + '</a>]');
+                    }
+                }
+                if (rel_html.length > 0) { //在列表页面的静态部分增加一个span，ID为 rel_*****
+                    jQuery("#rel_" + _doc.docid2).html(rel_html.join(""));
+                }
+            }
+        }
+        return d;
+    }
+
+    window.list_reldoc = list_reldoc;
+    window.getRelDoc = getRelDoc;
+
+    //定义细览中的相关文档  end
+
+});
+
+
+//本站分页条的HTML模板
+avalon.templateCache['pgBar_nd.html'] = '<span>共<em ms-text="recordCount"></em>条，共<em ms-text="pageCount"></em>页</span><div class="fy_tit_l">\n' +
+    '                            <a class="prevStop" ms-if="pageIndex==1" href="javascript:void(0);" ms-click="toPage(1,$event)">首页</a>\n' +
+    '                            <a href="javascript:void(0);" class="prev prevStop" ms-if="pageIndex==1">上一页</a>\n' +
+    '                            <a ms-if="pageIndex>1" href="javascript:void(0);" ms-click="toPage(1,$event)">首页</a>\n' +
+    '                            <a href="javascript:void(0);" ms-if="pageIndex>1" ms-click="toPage(pageIndex-1,$event)" class="prev">上一页</a>\n' +
+    '                            <a ms-repeat="pages" href="javascript:void(0);" ms-click="toPage(el,$event)" ms-class="on:el==pageIndex">{{el}}</a>\n' +
+    '                            <a href="javascript:void(0);" class="next" ms-click="toPage(pageIndex+1,$event)" ms-if="pageIndex<pageCount">下一页</a>\n' +
+    '                            <a href="javascript:void(0);" ms-if="pageIndex<pageCount" ms-click="toPage(pageCount,$event)">尾页</a>\n' +
+    '                            <a href="javascript:void(0);" ms-if="pageIndex==pageCount" class="next nextStop">下一页</a>\n' +
+    '                            <a href="javascript:void(0);" ms-if="pageIndex==pageCount" class="prevStop">尾页</a>\n' +
+    '                        </div><div class="fy_tit_r">跳转到第<input name="" type="text" class="fy_inp" ms-duplex-number="inputNumber" />页<span class="fy_go" ms-click="toPage(inputNumber,$event)">确定</span>\n' +
+    '                        </div><div class="clear"></div>';
+
+avalon.templateCache['pgBar_xxgk.html'] = '<ul class="page_tools">\n' +
+	'                            <li class="prev disabled" ms-if="pageIndex==1"><a href="javascript:void(0);"><em>&lt;&lt;</em>上一页</a></li>\n' +
+	'                            <li class="prev" ms-if="pageIndex>1" ms-click="toPage(pageIndex-1,$event)"><a href="javascript:void(0);"><em>&lt;&lt;</em>上一页</a></li>\n' +
+	'                            <li ms-repeat="pages" ms-click="toPage(el,$event)" ms-class="active:el==pageIndex"><a href="javascript:void(0);">{{el}}</a></li>\n' +
+	'                            <li class="next" ms-if="pageIndex<pageCount"><a href="javascript:void(0);" ms-click="toPage(pageIndex+1,$event)">下一页<em>&gt;&gt;</em></a></li>\n' +
+	'                            <li class="next disabled" ms-if="pageIndex==pageCount"><a href="javascript:void(0);">下一页<em>&gt;&gt;</em></a></li></ul>\n' +
+	'                            <div class="page_go"><form><span class="b-free-read-leaf" tabindex="0">共<em ms-text="pageCount"></em>页，</span>跳转到第<input type="text" class="form_control" ms-duplex-number="inputNumber" />页\n' +
+	'                        <button type="submit" class="fy_go b-free-search-btn" ms-click="toPage(inputNumber,$event)" alt="搜索" >GO</button></form></div>\n' +
+	'                        <div class="clear"></div></div>';
+
+// 无障碍tab无缝切换
+function tabWza(id, className, hdClassName) {
+    var $hdLi = $(id).find(hdClassName || '.hd li')
+    className = className || '.bd .wza-list'
+    var $bdList = $(id).find(className)
+    if ($bdList.length != $hdLi.length) return;
+    $hdLi.each(function(index) {
+        var $a = $(this).find('a:eq(0)')
+        if ($a.length > 0) {
+            $a.focus(function(e) {
+                e = $(this).mouseover()
+                $(this).bind('keydown.wza_tab', function(e) {
+                    if (!e.ctrlKey && !e.altKey && e.keyCode === 9) {
+                        var $curList = $bdList.eq(index)
+                        if ($curList.find('a').length < -1) {
+                            $hdLi.eq(index + 1).find('a:eq(0)').focus()
+                            return false
+                        }
+                        $curList.find('a:eq(0)').focus()
+                        return false
+                    }
+                })
+            })
+            $a.blur(function() {
+                $(this).unbind('keydown.wza_tab')
+            })
+        }
+    })
+    $bdList.each(function(index) {
+        if (index + 1 == $bdList.length) return;
+        var $curList = $(this)
+        var $li = $curList.find('li')
+        var endTabLen = $li.length;
+        $li.eq(endTabLen - 1).find('a:eq(0)').focus(function() {
+            $(this).bind('keydown.wza_tab_leave', function(e) {
+                if (!e.ctrlKey && !e.altKey && e.keyCode === 9) {
+                    $hdLi.eq(index + 1).find('a:eq(0)').focus()
+                    return false;
+                }
+            })
+        })
+        $li.eq(endTabLen - 1).find('a:eq(0)').blur(function() {
+            $(this).unbind('keydown.wza_tab_leave')
+        })
+    })
+}
+
+function tabWza2($bindId, $firstId, $lastId, callback) {
+    $bindId.focus(function(e) {
+        e = $(this).mouseover()
+        $(this).bind('keydown.wza_tab', function(e) {
+            if (!e.ctrlKey && !e.altKey && e.keyCode === 9) {
+                if ($firstId.length > 0) $firstId.focus()
+                return false;
+            }
+        })
+    })
+    $bindId.blur(function() {
+        $(this).unbind('keydown.wza_tab')
+    })
+    if (typeof callback != 'function') return
+    $lastId.focus(function(e) {
+        e = $(this).mouseover()
+        $(this).bind('keydown.wza_tab_leave', function(e) {
+            if (!e.ctrlKey && !e.altKey && e.keyCode === 9) {
+                callback()
+                return false
+            }
+        })
+    })
+    $lastId.blur(function() {
+        $(this).unbind('keydown.wza_tab_leave')
+    })
+}
+
+function tabWza3($bindId, $nextId, eventModel) {
+    eventModel = eventModel || 'wza_tab_leave'
+    eventModel = 'keydown.' + eventModel
+    $bindId.focus(function(e) {
+        e = $(this).mouseover()
+        $(this).bind('keydown.wza_tab_leave', function(e) {
+            if (!e.ctrlKey && !e.altKey && e.keyCode === 9) {
+                $nextId.focus()
+                return false
+            }
+        })
+    })
+    $bindId.blur(function() {
+        $(this).unbind('keydown.wza_tab_leave')
+    })
+}
+// 无障碍tab切换
+// 头部导航无障碍
+$('.nav_2021 li').hover(function() {
+    // if ($(window).scrollTop() > 120) {
+    //     if ($(this).hasClass('active_2021')) {
+    //         $(this).removeClass('active_2021');
+    //     }
+    //     $(this).find('.nav_con_2021').hide();
+    //     return;
+    // }
+    $(this).addClass('active_2021').find('.nav_con_2021').show();
+    $(this).find('.nav_con_2021').show();
+}, function() {
+    // if ($(window).scrollTop() > 120) {
+    //     if ($(this).hasClass('active_2021')) {
+    //         $(this).removeClass('active_2021');
+    //     }
+    //     $(this).find('.nav_con_2021').hide();
+    //     return;
+    // }
+    $(this).removeClass('active_2021').find('.nav_con_2021').hide();
+    $(this).find('.nav_con_2021').hide();
+})
+$('.nav_2021 li').each(function(index) {
+        var $this = $(this)
+        var $liA = $(this).children('a');
+        var $liWrap = $(this).find('.nav_warp_2021');
+        $liA.focus(function(e) {
+            $('.nav_2021 li').eq(index - 1).trigger('mouseleave')
+            e = $this.trigger('mouseover')
+            if ($liWrap.length > 0) {
+                $(this).bind('keydown.wza_tab', function(e) {
+                    if (!e.ctrlKey && !e.altKey && e.keyCode === 9) {
+                        //$liWrap.find('a:eq(0)').focus()
+                        if ($liWrap.find('b').length > 0) {
+                            $liWrap.find('b:eq(0)').focus()
+                        } else {
+                            $liWrap.find('a:eq(0)').focus()
+                        }
+                        return false
+                    }
+                })
+            }
+        })
+        $liA.blur(function() {
+            $(this).unbind('keydown.wza_tab')
+        })
+        var $curA = $liWrap.find('a')
+        var endTabLen = $curA.length - 1;
+        $curA.eq(endTabLen).focus(function() {
+            $(this).bind('keydown.wza_tab_leave', function(e) {
+                if (!e.ctrlKey && !e.altKey && e.keyCode === 9) {
+                    $('.nav_2021 li').eq(index + 1).children('a').focus()
+                    return false;
+                }
+            })
+        })
+        $curA.eq(endTabLen).blur(function() {
+
+            $(this).unbind('keydown.wza_tab_leave')
+        })
+    })
+    //头部导航无障碍
+    // 友情链接无障碍
+var $yqljLi = $('.yqlj_tit1_2021').children('ul').children('li');
+$yqljLi.children('p').attr('tabindex', 0);
+$yqljLi.each(function(index) {
+        var $this = $(this);
+        var $yqljP = $this.children('p');
+        var $link = $this.find('li');
+        var endTabLen = $link.length - 1;
+        var index1 = index + 1;
+        $yqljP.focus(function(e) {
+            if (window.bf.state) {
+                if ($yqljLi.hasClass('on')) {
+                    return;
+                } else {
+                    $yqljLi.find("#yqlj_" + index1).slideDown();
+                }
+                if ($link.length > 0) {
+                    $(this).bind('keydown.wza_tab', function(e) {
+                        if (!e.ctrlKey && !e.altKey && e.keyCode === 9) {
+                            $link.eq(0).find('a:eq(0)').focus();
+                            return false
+                        }
+                    })
+                    $link.eq(endTabLen).find('a:eq(0)').focus(function() {
+                        $(this).bind('keydown.wza_tab_leave', function(e) {
+                            if (!e.ctrlKey && !e.altKey && e.keyCode === 9) {
+                                if (index != $yqljLi.length - 1) {
+                                    $yqljLi.find("#yqlj_" + index1).slideUp();
+                                    return false;
+                                }
+                                return false;
+                            }
+                        })
+                    });
+                }
+            }
+        })
+        $link.eq(endTabLen).find('a:eq(0)').focus(function() {
+            $(this).bind('keydown.wza_tab_leave', function(e) {
+                if (!e.ctrlKey && !e.altKey && e.keyCode === 9) {
+                    if (index != $yqljLi.length - 1) {
+                        $yqljLi.eq(index + 1).children('p').focus()
+                    } else {
+                        avalon.vmodels.tabYqlj.$tog2(index + 1);
+                    }
+                    return false;
+                }
+            })
+        })
+    })
+    // 友情链接无障碍
+$('.picker_2021 .upDown_2021').focus(function(e) {
+    $(this).bind('keydown.wza_tab', function(e) {
+        if (!e.ctrlKey && !e.altKey && !e.shiftKey && (e.keyCode === 38 || e.keyCode === 40)) {
+            $(this).parent('.picker_2021').trigger('click')
+        }
+    })
+});
+$('.picker_2021 .upDown_2021').blur(function() {
+    $(this).unbind('keydown.wza_tab')
+});
+$('.picker_2021 .upDown_2021').blur(function() {
+    $(this).unbind('keydown.wza_tab')
+})
+$('#imgConac').attr('alt', '党政机关');
+$('#_span_jiucuo img').attr('alt', '链接政府网站找错');
+
+
+function slides(domName, on, className) {
+    $(domName).slide({
+        mainCell: '.bd',
+        titCell: className,
+        titOnClassName: on,
+        autoPlay: false,
+        effect: "left"
+    })
+};
+var _zntj_clickCount = 0;
+$(".zntj_bar ul li.on p,.znfw_gb").click(function() {
+    $(".znfw1").toggle();
+    _zntj_clickCount++;
+    if (_zntj_clickCount == 1) {
+        jQuery(".tabs").slide({
+            titCell: ".tabs_hd li",
+            mainCell: ".tabs_bd",
+            effect: "fade",
+            targetCell: ".tabs_hd .more a"
+        });
+    }
+})
+var _zntj1_clickCount = 0;
+$(".corl2-b1").click(function() {
+    $(".znfw2").toggle();
+    _zntj1_clickCount++;
+    if (_zntj1_clickCount == 1) {
+        jQuery(".tabs").slide({
+            titCell: ".tabs_hd li",
+            mainCell: ".tabs_bd",
+            effect: "fade",
+            targetCell: ".tabs_hd .more a"
+        });
+    }
+})
+
+//新头底部脚本
+$(".menu_hov").slide({
+    titCell: ".menu_hd li",
+    mainCell: ".menu_bd",
+    defaultIndex: 0,
+    returnDefault: true,
+    titOnClassName: "active"
+});
+var w = $(document).innerWidth();
+// $(window).scroll(function() {
+
+//     if (w > 992) {
+//         $(this).scrollTop() > 150 ? $('.rig-fix2').show() : $('.rig-fix2').hide();
+//         if (!$('html').hasClass('slb')) {
+//             $(this).scrollTop() > 150 ? $(".header").addClass('fixed') : $(".header").removeClass('fixed');
+//             $(this).scrollTop() > 150 ? $('.page_bg').addClass('fixed_bg') : $('.page_bg').removeClass(
+//                 'fixed_bg');
+//         }
+//     }
+
+// });
+
+
+// 打印
+function $printDetail() {
+    document.getElementsByTagName('body')[0].style.zoom = 0.8;
+    window.print();
+    setTimeout(function () {
+            document.getElementsByTagName('body')[0].style.zoom = 1;
+    });
+}
+
+window.$printDetail = $printDetail;
+
+//新头底部-23gb
+$('.select_dropdown li').on('click', function(e) {
+    var _this = $(this);
+    $(this).parent().parent().prevAll('.input_inner').attr("value", _this.attr('data-value'));
+    $(this).addClass('selected').siblings().removeClass('selected');
+    $('.input_dropdown .input_inner').removeClass('on');
+    $(".select_dropdown").slideUp();
+    e.stopPropagation();
+});
+$(document).bind("click", function() {
+    $('.input_dropdown .input_inner').removeClass('on');
+    $(".select_dropdown").slideUp(); //点击的不是#selected和它的子元素，隐藏下拉菜单
+})
+var w = $(window).innerWidth();
+if (w < 992) {
+    $('.out_links li p').click(function() {
+        $('body').css({
+            "overflow": "hidden"
+        })
+        $(this).next('div').show().css({
+            "position": "fixed",
+            "top": ".1rem"
+        });
+        $(this).parent().siblings().find('div').hide().css({
+            "position": "absolute",
+            "top": "inherit"
+        });
+        $('.out_links_bg').show()
+        $('.out_links_close').show();
+    })
+    $('.out_links_close').click(function() {
+        $('body').css({
+            "overflow": "inherit"
+        })
+        $('.out_links_bg').hide()
+        $('.out_links_close').hide();
+        $(this).prev('ul').find('div').hide();
+    })
+} else {
+    $('.out_links li p').click(function() {
+        $(this).next('div').slideToggle();
+        $(this).parent().siblings().find('div').hide();
+        return false;
+    })
+    $(document).click(function() {
+        $('.out_links>ul>li>div').hide()
+    })
+}
+
+/*
+2025年2月5日 新增js懒加载方法，支持回调
+*/
+;!(function(win){
+    win.loadScripts=function(options){
+        if(options.url){
+            scripts.load(options);
+        }
+        else{
+            alert("请输入需要动态加载js的路径!")
+        }
+
+    }
+    var scripts={};
+    //添加额外的属性
+    scripts.attr=function(ele,obj){
+        if(typeof obj=='object'){
+            for(var name in obj){
+                ele.setAttribute(name,obj[name]);
+            }
+        }else{
+            return;
+        }
+    }
+    scripts.load=function(options){
+
+        var script=options.url,id=options.id,callback=options.callback,_obj=options.attr;
+        if(typeof(script) != "object") var script = [script];
+
+        var HEAD = document.getElementsByTagName("head").item(0) || document.documentElement;
+        var s = new Array(), last = script.length - 1, recursiveLoad = function(i) {
+            // 递归
+            s[i] = document.createElement("script");
+            s[i].setAttribute("type","text/javascript");
+            if(id){
+                s[i].setAttribute("id",id);
+            }
+
+            if(_obj && typeof  _obj=='object'){
+
+                scripts.attr(s[i],_obj);
+            }
+
+            s[i].onload = s[i].onreadystatechange = function() { // Attach handlers for all browsers
+
+                if(!/*@cc_on!@*/0 || this.readyState == "loaded" || this.readyState == "complete") {
+                    this.onload = this.onreadystatechange = null; this.parentNode.removeChild(this);
+                    if(i != last) recursiveLoad(i + 1); else if(typeof(callback) == "function") callback();
+                }
+            }
+            s[i].setAttribute("src",script[i]);
+
+            HEAD.appendChild(s[i]);
+        }
+        recursiveLoad(0);
+    }
+
+}(window))
+
+loadScripts({
+    url:'https://zfwzgl.www.gov.cn/exposure/jiucuo.js',
+    id:'_jiucuo_',
+    attr:{
+        sitecode:document.getElementsByTagName('meta')['SiteIDCode'].content || "3501050001"
+    },
+    callback:function(){}
+})

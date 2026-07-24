@@ -1,0 +1,129 @@
+$(function(){
+  $("video").each(function (index, element) {
+      var videoUrl = $(this).attr("src");
+      var videoCover = $(this).attr("poster");
+      if (videoUrl) {
+          if (videoUrl.split(".").pop() === 'm3u8') {
+              var video = '<video id="my-video' + index + '" class="video-js vjs-big-play-centered" controls preload="auto" width="100%" poster="' + videoCover + '"'
+                  + 'data-setup="{}" src="' + videoUrl + '">'
+                  + '<source src="' + videoUrl + '" type="application/x-mpegURL" />'
+                  + '</video>';
+              $(this).replaceWith(video);
+          } else {
+              var video = '<video id="my-video' + index + '" class="video-js vjs-big-play-centered" controls preload="auto" width="100%" poster="' + videoCover + '"'
+                  + 'data-setup="{}" src="' + videoUrl + '">'
+                  + '<source src="' + videoUrl + '" type="video/mp4" />'
+                  + '<source src="'+ videoUrl +'" type="video/webm" />'
+                  + '<source src="'+ videoUrl +'" type="video/ogg" />'
+                  + '</video>';
+              $(this).replaceWith(video);
+          }
+          var my = 'my-video' + index
+          my = videojs(my);
+          my.on("play", function () {
+              console.log(123)
+              nameAllPause(this.id_)
+              pauseAll()
+          })
+      }
+  });
+  var audios = document.getElementsByTagName("audio");
+  // 暂停函数
+  function pauseAll() {
+      var self = this;
+      console.log(self);
+      [].forEach.call(audios, function (i) {
+          // 将audios中其他的audio全部暂停
+          i !== self && i.pause();
+          console.log(i !== self && i.pause())
+      })
+  }
+  // 给play事件绑定暂停函数
+  [].forEach.call(audios, function (i) {
+      i.addEventListener("play",function(){
+          console.log(i)
+          pauseAll.bind(i)()
+          nameAllPause()
+      }.bind(i));
+  })
+  function nameAllPause(params) {
+      $('.video-js').each(function(index, element) {
+          if($(this).attr('id') !== params || params=== undefined){
+              // console.log(params)
+              my = 'my-video' + index
+              videojs(my).pause();
+              console.log(my)
+              // pauseAll()
+          }
+      })
+  }
+  // ----- 处理方正采编系统小标题样式问题 开始 -----
+  if($('div[class="article"] strong').length > 0) {
+    $('div[class="article"] strong').each(function(index, elem){
+      if (elem.style.cssText.indexOf("19px") >= 0) {
+        elem.style.cssText = elem.style.cssText.replace('19px', '0.38rem');
+      }
+    })
+    $('div[class="article"] strong').each(function(index, elem){
+        if (elem.style.cssText.indexOf("14px") >= 0) {
+            elem.style.cssText = elem.style.cssText.replace('14px', '0.28rem');
+        }
+    })
+  }
+  if($('div[class="article"] span').length > 0) {
+      $('div[class="article"] span').each(function(index,elem){
+        if (elem.style.cssText.indexOf("19px") >= 0) {
+          elem.style.cssText = elem.style.cssText.replace('19px', '0.38rem');
+        }else if(elem.style.cssText.indexOf("14px") >= 0){
+          elem.style.cssText = elem.style.cssText.replace('14px', '0.28rem');
+        }else if(elem.style.cssText.indexOf("15px") >= 0){
+          elem.style.cssText = elem.style.cssText.replace('15px', '0.3rem');
+        }
+      })
+  }
+  if($('div[class="article"] p[label="图片说明"]').length > 0) {
+    $('div[class="article"] p[label="图片说明"]').each(function(index,elem){
+      if (elem.style.cssText.indexOf("14px") >= 0) {
+        elem.style.cssText = elem.style.cssText.replace('14px', '0.28rem');
+        elem.style.cssText = elem.style.cssText.replace('line-height: 24px;', '');
+        elem.style.cssText = elem.style.cssText.replace('line-height:24px;', '');
+      }
+    })
+  }
+  if($('div[class="article"] div[label="图片说明"]').length > 0) {
+    $('div[class="article"] div[label="图片说明"]').each(function(index,elem){
+      if (elem.style.cssText.indexOf("14px") >= 0) {
+        elem.style.cssText = elem.style.cssText.replace('14px', '0.28rem');
+        elem.style.cssText = elem.style.cssText.replace('line-height: 24px;', '');
+        elem.style.cssText = elem.style.cssText.replace('line-height:24px;', '');
+      }
+    })
+  }
+  // ----- 处理方正采编系统小标题样式问题 结束 -----
+
+  (function() {
+    if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
+        handleFontSize();
+    } else {
+        if (document.addEventListener) {
+            document.addEventListener("WeixinJSBridgeReady", handleFontSize, false);
+        } else if (document.attachEvent) {
+            document.attachEvent("WeixinJSBridgeReady", handleFontSize);
+            document.attachEvent("onWeixinJSBridgeReady", handleFontSize);
+        }
+    }
+
+    function handleFontSize() {
+        // 设置网页字体为默认大小
+        WeixinJSBridge.invoke('setFontSizeCallback', {
+            'fontSize': 0
+        });
+        // 重写设置网页字体大小的事件
+        WeixinJSBridge.on('menu:setfont', function() {
+            WeixinJSBridge.invoke('setFontSizeCallback', {
+                'fontSize': 0
+            });
+        });
+    }
+  })();
+});

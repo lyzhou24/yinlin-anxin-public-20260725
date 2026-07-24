@@ -1,0 +1,6 @@
+var jScripts=document.getElementsByTagName("script");
+var jThisScript = jScripts[jScripts.length - 1];
+var jLastUrl = jThisScript.src;
+var jBaseUrl = jLastUrl.substring(0, jLastUrl.lastIndexOf("/"));
+document.write("<script type='text/javascript' src='"+jBaseUrl+"/jquery.min.js'></script>");
+document.write("<script type='text/javascript' src='"+jBaseUrl+"/jquery-migrate.min.js'></script>"); 

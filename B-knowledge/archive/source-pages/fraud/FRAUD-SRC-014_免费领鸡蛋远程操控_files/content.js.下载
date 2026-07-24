@@ -1,0 +1,112 @@
+var indexPage = {
+  initPage: function () {
+    var storyId = $("#storyId").val();
+    var type = $("#liveMask").attr('type');
+    var url = $("#liveMask").attr('url');
+    var storyType = $("#storyType").val();
+    var linkUrl = $("#linkUrl").val();
+    if (storyType == 'LIVE') {
+      if (type == 1 && url) {
+        window.location.href = url;
+      } else {
+        window.location.href = 'https://jhd.xhby.net/share-webui/detail/' + storyId + '?type=byw';
+      }
+    } else if (storyType == 'HREF') {
+      window.location.href = linkUrl;
+    }
+  },
+  initTestPreview: function(){
+    var currentUrl = window.location.href;
+    if (currentUrl.includes('template/preview/') || currentUrl.includes('preview/web/')) {
+      const articleTitleDiv = document.querySelector('.article-title');
+      if (articleTitleDiv) {
+        var newDiv = document.createElement('div');
+        newDiv.className = 'test-preview';
+        newDiv.textContent = '预览';
+        articleTitleDiv.appendChild(newDiv, newDiv);
+      }
+    };
+  },
+  initFrame: function () {
+    $("iframe").each(function (index) {
+      var src = $(this).attr("src");
+      if (src) {
+        var videoWidth = $(this)[0].style.width.split('px')[0];
+        var videoHeight = $(this)[0].style.height.split('px')[0];
+        var cw = $(".article-info").width();
+        $(this).css("width", cw + 'px');
+        $(this).css("height", (videoHeight / videoWidth * cw) + 'px');
+      }
+    });
+  },
+  initShare: function () {
+    $(".icon-weixin").click(function (item) {
+      $("#wxPanel").show();
+      var config = {
+        width: 200,
+        height: 200,
+        text: location.href,
+        correctLevel: 0,
+        render: "canvas"
+      };
+      $(".code").html("");
+      $(".code").qrcode(config)
+    });
+    $(".icon-qq").click(function (item) {
+      $("#qqPanel").show();
+      var config = {
+        width: 200,
+        height: 200,
+        text: location.href,
+        correctLevel: 0,
+        render: "canvas"
+      };
+      $(".code").html("");
+      $(".code").qrcode(config)
+    });
+    $(".share-wx-panel,.share-panel .panel-head img").click(function () {
+      $(".share-panel").hide();
+    })
+    shareRequest(function (res) {
+      var data = res;
+      wx.config({
+        debug: false,
+        appId: data.appId,
+        timestamp: data.timestamp,
+        nonceStr: data.nonceStr,
+        signature: data.signature,
+        jsApiList: [
+          'checkJsApi', 'onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone'
+        ]
+      });
+      var imgUrl = "https://jcdn.xhby.net/dams-res/share/byw_logo.jpeg";
+      try {
+        if ($("#properties").val().indexOf("b_greySharing=true") > -1) {
+          imgUrl = "https://jcdn.xhby.net/dams-res/share/byw_logo_h.jpeg"
+        }
+      } catch (error) { };
+      var params = {
+        title: $("#title").val(),
+        desc: "",
+        link: location.href,
+        imgUrl: imgUrl
+      }
+      wx.ready(function () {
+        // 在这里调用 API
+        wx.onMenuShareAppMessage(params);
+        wx.onMenuShareTimeline(params);
+        wx.onMenuShareQQ(params)
+      });
+    })
+  },
+  init: function () {
+    this.initFrame();
+    this.initPage();
+    this.initShare();
+    this.initTestPreview()
+  }
+};
+indexPage.init();
+window.onresize = function () {
+  indexPage.initFrame()
+}

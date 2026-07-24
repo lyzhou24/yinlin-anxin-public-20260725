@@ -1,0 +1,226 @@
+/*header-swiper*/
+function swiperHeaderIE9($box){
+  var mySwiper = new Swiper($box + ' .swiper-container', {
+	autoplay: 5000,
+	loop: true,
+	//pagination: $box + ' .swiper-pagination',
+	paginationClickable: true,
+	grabCursor: true,
+	calculateHeight: true
+  });
+  $($box + ' .swiper-ctrl-prev').on('click', function (e) {
+	e.preventDefault();
+	mySwiper.swipePrev();
+	return false;
+  });
+  $($box + ' .swiper-ctrl-next').on('click', function (e) {
+	e.preventDefault();
+	mySwiper.swipeNext();
+	return false;
+  });
+}
+function swiperHeaderMain($box){
+    var mySwiper = new Swiper($box +' .swiper-container', {
+      observer: true,  //开启动态检查器，监测swiper和slide
+      observeParents: true,  //监测Swiper 的祖/父元素
+	  effect: 'fade',
+      loop: true,
+	  autoHeight: true,
+      autoplay: {
+        delay :'5000',
+        disableOnInteraction: false,
+        stopOnLastSlide:false
+      },
+      grabCursor: true,
+      /*pagination: {
+        el: $box +' .swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        prevEl: $box +' .swiper-ctrl-prev',
+        nextEl: $box +' .swiper-ctrl-next',
+      },*/
+    });	
+}
+
+$(function(){
+  // 导航选中效果
+  try {
+    var str = $('.crumb').text();
+    var str1 = str.split('/')[1];
+    if (str1 && $.trim(str1) != '') {
+      $('.mainnav ul li').each(function () {
+        if ($.trim($(this).find('span').text()).search($.trim(str1)) > -1) {
+          $(this).addClass('on').siblings().removeClass('on');
+        }
+      });
+    }else{
+	    $('.mainnav ul li.navli0').addClass('on');
+	}
+	
+	var navli = $('.mainnav li');
+	var navST;
+	var navST1;
+	var seq = 0;
+	$(navli).hover(function(){
+		var curItem = $(this);
+		$(navli).removeClass('on');
+		curItem.addClass('on');
+	});
+	seq = navli.index( $('.mainnav .on'));
+	//console.log(seq);
+	//鼠标离开导航后，回复默认.on类位置
+	$('.mainnav').hover(function(){
+	  if(navST1!=null)clearTimeout(navST1);
+	},function(){
+		if(seq != '-1'){
+		  navST1 = setTimeout(function(){
+			navli.removeClass('on').eq(seq).addClass('on');
+		  },500); 
+		}else{
+			navli.removeClass('on');
+		}
+	});
+  } catch (e) {}
+  
+  $('.search-select-title').click(function (e) {
+    $('.search-form-select').toggleClass('search-form-selected');
+    e.stopPropagation();
+  })
+  $(document).click(function () {
+    $('.search-form-select').removeClass('search-form-selected');
+  })
+
+  $('#ztList li').click(function () {
+    var zt = $(this).attr('data-value');
+    $('#ztTxt').val($(this).text());
+	$('#header-search-txt').val('请输入您要搜索的' + $(this).data('text'));
+    $(this).addClass('search-this').siblings().removeClass('search-this');
+	
+  })
+  
+  //站内搜索
+  $('#header-search-txt').bind('focus',function(){
+	$(this).val('');
+  });
+  $('#header-search-txt').bind('blur',function(){
+	if($(this).val() == ''){
+	  $(this).val('请输入您要搜索的' + $('#ztTxt').val());
+	}
+  });
+  //热词
+  
+  
+  if(isie9(1)){
+	  $('#swipercss').attr('href', '/default/xhtml/libs/swiper/idangerous.swiper.css');
+	  $('#swiperjs').attr('src', '/default/xhtml/libs/swiper/idangerous.swiper.min.js');
+	  swiperHeaderIE9('.header');
+  }else{
+	  $('#swipercss').attr('href', '/default/xhtml/libs/swiper/swiper.min.css');
+	  $('#swiperjs').attr('src', '/default/xhtml/libs/swiper/swiper.min.js');
+	  swiperHeaderMain('.header');
+  }
+});
+
+
+
+
+$(function(){
+  	// 固定导航设置
+function setFixMenu(){
+	var a = window.pageYOffset,
+	c = Number($(".header").height());
+	a > c ? $("body").addClass("fixedMenuActive") : $("body").removeClass("fixedMenuActive");
+}
+	//下拉菜单高度设置
+	function drawerMenuHeight(){
+		$(".drawer-hall-over").css({
+			height: $(".header-drawer").height() - $(".drawer-hall-head").outerHeight() - 50
+		});
+	}
+  //手机版头部切换菜单
+  $(".header-toggle-btn").click(function(e){
+	$("body").toggleClass("open-the-drawer");
+	$(".header-drawer").toggleClass("header-drawer-opened");
+	drawerMenuHeight();
+	e.stopPropagation(); 
+});
+
+$(".header-drawer").click(function(e){
+	e.stopPropagation(); 
+});
+
+$(document).click(function(){ 
+	$("body").removeClass("open-the-drawer");
+	$(".header-drawer").removeClass("header-drawer-opened");
+});
+
+setFixMenu();
+  $(window).on("scroll", function () {
+	setFixMenu();
+  });
+  
+  // 固定导航-搜索
+  $(".fixed-header .search-btn").on('click', function () {
+	stopPropagation(); //阻止冒泡
+	if($(".fixed-header").hasClass("showSearch")){
+	  $(".fixed-header").removeClass("showSearch");
+	  $(".fixed-header .search-box").slideUp("fast");
+	  $(".fixed-header .search-btn").show("fast");
+	}else{
+	  $(".fixed-header").addClass("showSearch");
+	  $(".fixed-header .search-box").slideDown("fast");
+	}
+  })
+  $(".fixed-header .search-box").on("click", function (event) {
+	stopPropagation(); //阻止冒泡
+  });
+  $(document).click(function () {
+	stopPropagation(); //阻止冒泡
+	$(".fixed-header").removeClass("showSearch");
+	$(".fixed-header .search-box").slideUp("fast");
+	$(".fixed-header .search-btn").show("fast");
+  });
+  
+  //获取下拉菜单高度
+  $(window).resize(function(){
+	drawerMenuHeight();
+  })
+
+  $('#searchBtn').click(function(){
+	findsearch('searchWord')
+})
+var fixed_inputBox = document.getElementById('searchWord'); //获取输入框元素
+fixed_inputBox.addEventListener('keydown', function(event) { //添加键盘按下事件监听器
+if (event.key === 'Enter') { //判断按下的键是否是Enter
+	//执行相应的事件处理程序
+	findsearch('searchWord');
+}
+});
+	function findsearch(searchid) {
+		console.log(searchid)
+		var searchkey = document.getElementById(searchid).value;
+		if(undefined != searchkey && "" != searchkey && "请输入您要搜索的服务" != searchkey) {
+		window.open("/search5/html/searchResult.html?column=" + encodeURIComponent("全部") + "&searchWord=" + encodeURIComponent(searchkey) + "&left_right_index=0&searchSource=1&siteCode=6502050025")
+		} else {
+		alert("请输入搜索关键字");
+		return false;
+		}
+	}
+	
+	$('#header-search-btn').click(function(){
+		findsearch('header-search-txt')
+	})
+	
+	var inputBox = document.getElementById('header-search-txt'); //获取输入框元素
+	inputBox.addEventListener('keydown', function(event) { //添加键盘按下事件监听器
+	if (event.key === 'Enter') { //判断按下的键是否是Enter
+		//执行相应的事件处理程序
+		findsearch('header-search-txt');
+	}
+	});
+		// 热搜词
+		$('.hotwords a').click(function(){
+			window.open("/search5/html/searchResult.html?column=" + encodeURIComponent("全部") + "&searchWord=" + encodeURIComponent($(this).text()) + "&left_right_index=0&searchSource=1&siteCode=6502050025")
+		})
+})

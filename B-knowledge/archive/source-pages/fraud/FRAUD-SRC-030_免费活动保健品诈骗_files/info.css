@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+.bs-word table {
+	border: 1px solid #ccc;
+	border-collapse: collapse;
+}
+.bs-word table td {
+	border: 1px solid #ccc;
+}

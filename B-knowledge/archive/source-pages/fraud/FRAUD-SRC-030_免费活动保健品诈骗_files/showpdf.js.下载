@@ -1,0 +1,11 @@
+$(function(){
+	$("body").find(".edui-pdf").each(function(){
+		var url = $(this).attr("data-pdf");
+		var name = $(this).text();
+		var iframe = "<iframe src=\""+appUrl+"/front/ui/pdf/web/viewer.html?file="+url+"\" style=\"height: 993px; width: 100%;\" " +
+				"frameborder=\"no\" border=\"0\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"auto\" allowtransparency=\"yes\"></iframe>";
+		$(this).after(iframe);
+		$(this).hide();
+	})
+})	
+	

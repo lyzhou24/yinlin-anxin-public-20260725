@@ -1,0 +1,2152 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+<title>国家药监局政务服务门户境内生产药品上市许可</title>
+<link rel="stylesheet" href="/website/css/haixieui.css?20260716" />
+<link rel="stylesheet" href="/website/css/style.css?20260716" />
+<!-- <link rel="stylesheet" href="/website/css/animate.min.css" /> -->
+
+<!-- 新页面样式 -->
+<link rel="stylesheet" href="/websiteTwo/css/index.css?202505280948-20260716"/>
+<link rel="stylesheet" href="/websiteTwo/css/reset.css?20260716">
+<link rel="stylesheet" href="/websiteTwo/css/public.css?20260716">
+<style type="text/css">
+b.start {
+	display: none;
+}
+[v-cloak] {
+  display: none;
+}
+</style>
+<!–[if lt IE9]> 
+<script type="text/javascript" src="/website/js/html5.js"></script>
+<![endif]–>
+<script type="text/javascript">
+	var BASE_PATH = "";
+</script>
+<script type="text/javascript" src="/website/js/jquery.js"></script>
+<script type="text/javascript" src="/websiteTwo/js/vue-2.6.0.js"></script>
+<!-- <script type="text/javascript" src="/website/js/vue/vue.min.js"></script> -->
+<script type="text/javascript" src="/website/js/lay/layall.js"></script>
+<script type="text/javascript" src="/businReso/js/common.js?202505280948-20260716"></script>
+<script type="text/javascript" src="/website/script/auth.js?202505280948-2026071621"></script>
+<script type="text/javascript" src="/website/js/js.js?20260716"></script>
+<!-- 右侧悬浮栏功能 -->
+<script type="text/javascript">
+	function hxzk_openwin(url) {
+		var newPage = window.open();
+		newPage.location.href = url;
+	}
+	function hxzk_ssologin(systemid, returnUrl) {
+		if (!systemid) {
+			return;
+		}
+		hxzk_openwin("/web/ssologin/" + systemid + "?returnUrl=" + (returnUrl || ''));
+	}
+	function hxzk_systemauth(systemid, returnUrl) {
+		if (!systemid) {
+			return;
+		}
+		hxzk_openwin("/web/systemauth/" + systemid + "?returnUrl=" + (returnUrl || ''));
+	}
+	window.onload = function() {
+		$(".right-wrap").show();
+		var right_wrap = g_hxzk.cookie("right_wrap");
+		right_wrap = !right_wrap ? '0' : right_wrap;
+		if (right_wrap == '0') {
+			$("#wrapBtn img").attr("src", "/website/img/shrink.png");
+			$("#wrapBtn b").text("展开");
+			$(".defaulthide").hide();
+		} else if (right_wrap == '1') {
+			$("#wrapBtn img").attr("src", "/website/img/unfold.png");
+			$("#wrapBtn b").text("收缩");
+			$(".defaulthide").show();
+		}
+		setTimeout(function(){
+			var wrapTop = ($(window).height()-$(".right-wrap").height())*0.78;//20251225 将*0.5改为*0.78，使智能问答图标往下移，防止挡住导航栏的登录
+			$(".right-wrap").css("top",wrapTop);
+			
+			if (right_wrap == '0') {
+				showZnzxTop(document.getElementById("right-wrap").offsetTop);//显示智能问答机器人在上方
+			}else if (right_wrap == '1') {
+				showZnzxBottom(document.getElementById("right-wrap").offsetTop);//显示智能问答机器人在下方
+			}
+		},0);
+
+		$("#wrapBtn").click(function() {
+			var text = $(this).find("b").text();
+			if (text == "收缩") {
+				$(this).find("b").text("展开");
+				$(this).find("img").attr("src", "/website/img/shrink.png")
+				$(".defaulthide").hide();
+				g_hxzk.cookie("right_wrap", "0", {
+					expires : 300,
+					path : "/"
+				});
+			} else {
+				$(this).find("b").text("收缩");
+				$(this).find("img").attr("src", "/website/img/unfold.png")
+				$(".defaulthide").show();
+				g_hxzk.cookie("right_wrap", "1", {
+					expires : 300,
+					path : "/"
+				});
+			}
+			setTimeout(function(){
+				$(".right-wrap").css("top",($(window).height()-$(".right-wrap").height())*0.78);//20251225 将*0.5改为*0.78，使智能问答图标往下移，防止挡住导航栏的登录
+				
+				var right_wrap = g_hxzk.cookie("right_wrap");
+				if (right_wrap == '0') {
+					showZnzxTop(document.getElementById("right-wrap").offsetTop);//显示智能问答机器人在上方
+				}else if (right_wrap == '1') {
+					showZnzxBottom(document.getElementById("right-wrap").offsetTop);//显示智能问答机器人在下方
+				}
+			},0);
+		});
+		/* 底部区域的点击事件 */
+		$('.footer-link').on('click', function(){
+			$(this).find('dt').addClass('active');
+			$(this).find('dd').show();
+		});
+		$('.footer-link').on('mouseleave', function(){
+			$(this).find('dt').removeClass('active');
+			$(this).find('dd').hide();
+		});
+		
+	}
+</script>
+
+	<link rel="stylesheet" href="/websiteTwo/css/index.css?202505280948-20260716"/>
+<style>
+.layui-layer-page .layui-layer-content {
+	width: 95%;
+	margin: 0 auto;
+}
+
+.table {
+	width: 99%;
+}
+
+.ask-wrap h3 {
+	text-align: center;
+}
+
+.ask-wrap .wu {
+	text-align: center;
+}
+
+body {
+    font-family: Roboto, Noto, Helvetica, Arial, sans-serif !important;
+}
+h2{
+	color: #555 !important;
+    margin: 30px 20px !important;
+}
+
+b, strong {
+    font-weight: bolder !important;
+}
+.download-file {
+    text-decoration: underline;
+    color: #0000EE;
+}
+.handleflow-title {
+    width: 30% !important;
+}
+.handleflow-content {
+    width: 20% !important;
+}
+/***
+.tabDiv .hxui-tab-centered.hxui-tab a {
+	width: 5%;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+	text-align: center;
+	padding: 30px 0;
+	margin: 10px 10px;
+	line-height: 1.2;
+	background: #f4f4f4;
+	border-radius: 2px;
+	font-size: 18px;
+}
+
+.tabDiv .hxui-tab a:hover {
+	border-color: #ff0000;
+}
+
+.tabDiv .hxui-tab a.active {
+	color: white;
+	border-color: #ff0000;
+	background-color: #ff0000;
+}
+
+.tabDiv .hxui-tab.hxui-tab-centered a.active:after {
+	border-top: 10px solid #ff0000;
+	left: 42%;
+}
+
+#tabDiv {
+	width: 850px;
+	margin: 0 auto;
+}
+
+#tabDiv #aDiv a {
+	font-size: 16px;
+	padding-bottom: 5px;
+	padding-top: 10px;
+	height: 20px;
+}
+*/
+
+</style>
+
+</head>
+<body class='second-page'>
+<div id="home">
+	<!-- head top -->
+
+<div class="header">
+	<img alt="国家药品监督管理局" src="/websiteTwo/images/logozwfw.png" class="logoimg" onclick="window.location.href='/web/index'"/>
+	<span class="topspan">
+		<a class="topItem" href="http://gjzwfw.www.gov.cn" target="_blank">国家政务服务平台</a> | <a class="topItem" href="http://www.nmpa.gov.cn" target="_blank">国家药品监督管理局</a>
+	</span>
+</div>
+<div class="nav">
+	<div class="navselect">
+		<!-- nav -->
+<ul>
+	<li><a href="/web/index" class="navA">首页</a> <span
+		class=""></span></li>
+	<li><a href="/web/taskdir/corporate" class="navA"> 法人服务 </a> <span
+		class=""></span>
+	<li>
+	<li><a href="/web/taskdir/01" class="navA">行政权力</a> <span
+		class=""></span></li>
+
+	<li><a href="/web/taskdir/20" class="navA">公共服务</a> <span
+		class=""></span></li>
+
+	<li><a href="/web/taskdir/sjsx" class="navA">其他服务</a> <span
+		class=""></span></li>
+	<li><a href="/web/index/contactWay" class="navA">联系我们</a> <span
+		class=""></span></li>
+</ul>
+<div class="denglu">
+	<a href="/web/user/login" target="_blank" class="navA">登录</a>
+</div>
+
+	</div>
+</div>
+
+	<!-- 内容 -->
+	
+<!--内容-->
+<div class="main">
+	<div class="main-wrap response hxui-clearfix">
+		<!--路径-->
+		<h2>境内生产药品上市许可</h2>
+		<!--分类-->
+		<div class="left-tab">
+			<div class="left-tab-tofixed">
+				<b class="tab-title">
+					<i class="hxui-icon material-icons">&#xe87a;</i>
+					办事指南：
+				</b>
+				<ul>
+					<li class="active">
+						<a>基本信息</a>
+					</li>
+					<li id="bllc">
+						<a>办理流程</a>
+					</li>
+					<li>
+						<a>申请材料</a>
+					</li>
+					<li>
+						<a>收费标准</a>
+					</li>
+					<li>
+						<a>结果样本</a>
+					</li>
+					<li>
+						<a>常见问题</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--详情-->
+		<div class="center-details">
+			<div class="details-item" style="display: block;">
+				<table class="table table-bordered">
+					<tbody>
+						<tr>
+							<td class="cell-title">基本编码</td>
+							<td class="cell-content">000172103001</td>
+							<td class="cell-title">业务办理项编码</td>
+							<td class="cell-content">11100000MB0341032Y100017210300101</td>
+						</tr>
+						<tr>
+							<td class="cell-title">事项名称</td>
+							<td class="cell-content" colspan="3">
+								<p>境内生产药品上市许可</p>
+							</td>
+						</tr>
+						<tr>
+							<td class="cell-title">事项类型</td>
+							<td class="cell-content">行政许可</td>
+							<td class="cell-title">行使层级</td>
+							<td class="cell-content">
+								<p>国家级/局（署、会）</p>
+							</td>
+						</tr>
+						<tr>
+							<td class="cell-title">设定依据</td>
+							<td colspan="3" class="cell-content">
+								<p>
+											1.《中华人民共和国疫苗管理法》第十九条、第二十一条 第十九条　在中国境内上市的疫苗应当经国务院药品监督管理部门批准，取得药品注册证书；申请疫苗注册，应当提供真实、充分、可靠的数据、资料和样品。
+对疾病预防、控制急需的疫苗和创新疫苗，国务院药品监督管理部门应当予以优先审评审批。
+第二十一条  国务院药品监督管理部门在批准疫苗注册申请时，对疫苗的生产工艺、质量控制标准和说明书、标签予以核准。……<br/>
+											2.《中华人民共和国药品管理法》第二十四条、第二十五条 第二十四条 在中国境内上市的药品，应当经国务院药品监督管理部门批准，取得药品注册证书……
+第二十五条 国务院药品监督管理部门在审批药品时，对化学原料药一并审评审批，对相关辅料、直接接触药品的包装材料和容器一并审评，对药品的质量标准、生产工艺、标签和说明书一并核准。<br/>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<!-- 20241212 根据客户意见，国家平台无这个字段则不展示 -->
+							<td class="cell-title">权力来源</td>
+							<td colspan="3" class="cell-content">
+								<p>法定本级行使</p>
+							</td>
+						</tr>
+						<tr>
+							<!-- 20241212 根据客户意见，国家平台无这个字段则不展示 -->
+							<td class="cell-title">实施主体</td>
+							<td class="cell-content">国家药品监督管理局</td>
+							<td class="cell-title">实施主体性质</td>
+							<td class="cell-content">法定机关</td>
+						</tr>
+						<tr>
+							<td class="cell-title">实施主体编码</td>
+							<td class="cell-content">11100000MB0341032Y</td>
+							<td class="cell-title">实施编码</td>
+							<td class="cell-content">11100000MB0341032Y1000172103001</td>
+						</tr>
+						
+							<tr>
+								<td class="cell-title">承诺受理时限</td>
+								<td class="cell-content">5个工作日</td>
+								<td class="cell-title">法定审批时限</td>
+								<td class="cell-content">
+										20工作日
+								</td>
+							</tr>
+							<tr>
+								<td class="cell-title">
+										法定审批时限的依据
+																	</td>
+								<td colspan="3" class="cell-content">
+										1.《药品注册管理办法》（国家市场监督管理总局令第27号）第一百条 行政审批决定应当在二十日内作出。<br/>
+										2.《药品注册管理办法》（国家市场监督管理总局令第27号）第九十八条 药品注册检验时限，按照以下规定执行：
+（一）样品检验时限为六十日，样品检验和标准复核同时进行的时限为九十日；（二）药品注册检验过程中补充资料时限为三十日；（三）药品检验机构原则上在审评时限届满四十日前完成药品注册检验相关工作，并将药品标准复核意见和检验报告反馈至药品审评中心。<br/>
+										3.《药品注册管理办法》（国家市场监督管理总局令第27号）第九十六条 ……药品上市许可申请审评时限为二百日，其中优先审评审批程序的审评时限为一百三十日，临床急需境外已上市罕见病用药优先审评审批程序的审评时限为七十日；（三）单独申报仿制境内已上市化学原料药的审评时限为二百日；……（五）药品通用名称核准时限为三十日；（六）非处方药适宜性审核时限为三十日。<br/>
+								</td>
+							</tr>
+							<tr>
+								<td class="cell-title">承诺审批时限</td>
+								<td colspan="3" class="cell-content"> 20工作日 </td>
+							</tr>
+
+						<tr>
+							<td class="cell-title">受理条件</td>
+							<td colspan="3" class="cell-content">
+								<p>
+									申请事项属于本行政机关职权范围，申请材料齐全、符合法定形式，或者申请人按照本行政机关的要求提交全部补正申请材料的，受理行政许可申请。 申请人应当为能够承担相应法律责任的企业或者药品研制机构等。境外申请人应当指定中国境内的企业法人办理相关药品注册事项。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td class="cell-title">是否收费</td>
+							<td colspan="3" class="cell-content">是</td>
+						</tr>
+						<tr>
+							<td class="cell-title">收费依据</td>
+							<td colspan="3" class="cell-content">
+										<p>
+													1.《中华人民共和国药品管理法实施条例》第五十七条依据《药品管理法》和本条例的规定核发证书、进行药品注册、药品认证和实施药品审批检验及其强制性检验，可以收取费用。具体收费标准由国务院财政部门、国务院价格主管部门制定。<br/>
+													2.《财政部、国家发展改革委关于重新发布中央管理的食品药品监督管理部门行政事业性收费项目的通知》（财税〔2015〕2号）《财政部、国家发展改革委关于重新发布中央管理的食品药品监督管理部门行政事业性收费项目的通知》（财税〔2015〕2号）一、药品注册费<br/>
+													3.《国家药监局关于重新发布药品注册收费标准的公告》（2020年第75号）附件1：药品注册收费标准；
+附件2：药品注册收费实施细则。<br/>
+										</p>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="cell-title">
+									服务对象类型
+							</td>
+							<td class="cell-content">企业法人;事业单位法人;非法人企业</td>
+							<td class="cell-title">办件类型</td>
+							<td class="cell-content">承诺件</td>
+						</tr>
+						<tr>
+							<td class="cell-title">办理形式</td>
+							<td class="cell-content">窗口办理;网上办理;快递申请</td>
+							<td class="cell-title">到办事现场次数</td>
+							<td class="cell-content">0次</td>
+						</tr>
+						<tr>
+							<td class="cell-title">办理地点</td>
+							<td class="cell-content" colspan="3">
+								<p>
+									1.北京市经济技术开发区广德大街22号院二区
+2.北京经济技术开发区广德大街22号院一区2号楼一层
+								</p>
+								<img src="/website/img/map.png" class="to-map" onclick="openMap('1.北京市经济技术开发区广德大街22号院二区2.北京经济技术开发区广德大街22号院一区2号楼一层')" />
+							</td>
+						</tr>
+						<tr>
+							<td class="cell-title">办理时间</td>
+							<td class="cell-content" colspan="3">
+								<p>工作日：上午：9:00—11:30
+下午：13:00—16:30（周三、周五下午不对外受理）</p>
+							</td>
+						</tr>
+						<tr>
+							<td class="cell-title">咨询方式</td>
+							<td class="cell-content" colspan="3">
+								<p>
+									（1）窗口咨询； 
+（2）电话咨询：
+注册受理咨询：010-80995521（周二、周四）或010-88331793（周一、周二全天）
+审评业务咨询：010-80995522（周一、周三、周五）
+工作时段：9:00-11:30，13:30-16:30
+（3）网上咨询：国家药品监督管理局药品审评中心网站http://www.cde.org.cn/ ，申请人之窗一般性技术问题咨询；
+（4）信函咨询  部门名称：国家药品监督管理局药品审评中心  通讯地址：北京市经济技术开发区广德大街22号院二区  邮政编码：100076  联系电话：010-68585566
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td class="cell-title">监督投诉方式</td>
+							<td class="cell-content" colspan="3">
+								<p>
+									1.监督投诉电话：010-88331866。
+2.网上监督投诉地址：https://zwfw.nmpa.gov.cn/web/index?sourceType=nmpa，投诉举报栏目
+								</p>
+							</td>
+						</tr>
+<!-- 						<tr> -->
+<!-- 							<td class="cell-title">计划生效日期</td> -->
+<!-- 							<td class="cell-content">无</td> -->
+<!-- 							<td class="cell-title">计划取消日期</td> -->
+<!-- 							<td class="cell-content">无</td> -->
+<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td class="cell-title">是否进驻政务大厅</td> -->
+						<!-- 							<td class="cell-content"></td> -->
+						<!-- 							<td class="cell-title">通办范围</td> -->
+						<!-- 							<td class="cell-content"></td> -->
+						<!-- 						</tr> -->
+						<tr>
+							<td class="cell-title">联办机构</td>
+							<td colspan="3" class="cell-content">无</td>
+						</tr>
+						<tr>
+							<td class="cell-title">
+									有无中介服务事项
+							</td>
+							<td colspan="3" class="cell-content">
+								<p>药物临床试验机构</p>
+							</td>
+						</tr>
+<!-- 						<tr> -->
+<!-- 							<td class="cell-title">数量限制</td> -->
+<!-- 							<td colspan="3" class="cell-content"> -->
+<!-- 								<p>无</p> -->
+<!-- 							</td> -->
+<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td class="cell-title">是否支持预约办理</td> -->
+						<!-- 							<td class="cell-content">是</td> -->
+						<!-- 							<td class="cell-title">预约渠道</td> -->
+						<!-- 							<td class="cell-content"></td> -->
+						<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td class="cell-title">受理大厅预约申请地址</td> -->
+						<!-- 							<td colspan="3" class="cell-content"></td> -->
+						<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td class="cell-title">其他预约渠道预约地址</td> -->
+						<!-- 							<td colspan="3" class="cell-content"></td> -->
+						<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td class="cell-title">是否支持网上支付</td> -->
+						<!-- 							<td class="cell-content">是</td> -->
+						<!-- 							<td class="cell-title">是否支持物流快递</td> -->
+						<!-- 							<td class="cell-content">是</td> -->
+						<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td class="cell-title">是否支持自助终端办理</td> -->
+						<!-- 							<td colspan="3" class="cell-content">否</td> -->
+						<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td class="cell-title">面向自然人事项主题分类</td> -->
+						<!-- 							<td class="cell-content"  > -->
+						<!-- 								<p></p> -->
+						<!-- 							</td> -->
+						<!-- 							<td class="cell-title">面向自然人地方特色主题分类</td> -->
+						<!-- 							<td class="cell-content" > -->
+						<!-- 								<p></p> -->
+						<!-- 							</td> -->
+						<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td class="cell-title">面向法人事项主题分类</td> -->
+						<!-- 							<td class="cell-content"  > -->
+						<!-- 								<p>医疗卫生</p> -->
+						<!-- 							</td> -->
+						<!-- 							<td class="cell-title">面向法人地方特色主题分类</td> -->
+						<!-- 							<td class="cell-content"  > -->
+						<!-- 								<p>110</p> -->
+						<!-- 							</td> -->
+						<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td class="cell-title">是否网办</td> -->
+						<!-- 							<td class="cell-content"> -->
+						<!-- 								<p>是</p> -->
+						<!-- 							</td> -->
+						<!-- 							<td class="cell-title">网上办理深度</td> -->
+						<!-- 							<td class="cell-content" > -->
+						<!-- 								<p></p> -->
+						<!-- 							</td> -->
+						<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td class="cell-title">网办地址</td> -->
+						<!-- 							<td class="cell-content" colspan="3"> -->
+						<!-- 								<p>https://zwfw.nmpa.gov.cn</p> -->
+						<!-- 							</td> -->
+						<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td class="cell-title">必须现场办理原因说明</td> -->
+						<!-- 							<td class="cell-content" colspan="3"> -->
+						<!-- 								<p>无</p> -->
+						<!-- 							</td> -->
+						<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td class="cell-title">乡镇街道名称</td> -->
+						<!-- 							<td class="cell-content" > -->
+						<!-- 								<p></p> -->
+						<!-- 							</td> -->
+						<!-- 							<td class="cell-title">乡镇街道代码</td> -->
+						<!-- 							<td class="cell-content" > -->
+						<!-- 								<p></p> -->
+						<!-- 							</td> -->
+						<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td class="cell-title">村居社区名称</td> -->
+						<!-- 							<td class="cell-content" > -->
+						<!-- 								<p></p> -->
+						<!-- 							</td> -->
+						<!-- 							<td class="cell-title">村居社区代码</td> -->
+						<!-- 							<td class="cell-content" > -->
+						<!-- 								<p></p> -->
+						<!-- 							</td> -->
+						<!-- 						</tr> -->
+						<!-- 						<tr> -->
+						<!-- 							<td class="cell-title">服务评分</td> -->
+						<!-- 							<td class="cell-content"> -->
+						<!-- 								0分 -->
+						<!-- 								<b class="start"> -->
+						<!-- 									<i class="hxui-icon material-icons">&#xe838;</i> -->
+						<!-- 									<i class="hxui-icon material-icons">&#xe838;</i> -->
+						<!-- 									<i class="hxui-icon material-icons">&#xe838;</i> -->
+						<!-- 									<i class="hxui-icon material-icons">&#xe838;</i> -->
+						<!-- 									<i class="hxui-icon material-icons">&#xe83a;</i> -->
+						<!-- 								</b> -->
+						<!-- 							</td> -->
+						<!-- 							<td class="cell-title">业务主题形式</td> -->
+						<!-- 							<td class="cell-content">药品</td> -->
+						<!-- 							<td class="cell-title">是否需要实名核验</td> -->
+						<!-- 							<td class="cell-content"></td> -->
+						<!-- 						</tr> -->
+					</tbody>
+				</table>
+			</div>
+			<div class="details-item">
+				<div class="img-wrap">
+					<h3>流程图</h3>
+								<img src="data:image/png;base64,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" alt="流程图" style="max-width: 80%;">
+					<br/>
+					<table class="table table-bordered" style="margin-top: 30px;">
+						<tbody>
+							<tr>
+								<td class="cell-title handleflow-title">规定行政许可程序的依据</td>
+								<td colspan="3" class="cell-content">
+										1.《药品注册管理办法》（国家市场监督管理总局令第27号）第三十八条药品审评中心应当组织药学、医学和其他技术人员，按要求对已受理的药品上市许可申请进行审评。审评过程中基于风险启动药品注册核查、检验，相关技术机构应当在规定时限内完成核查、检验工作。药品审评中心根据药品注册申报资料、核查结果、检验结果等，对药品的安全性、有效性和质量可控性等进行综合审评，非处方药还应当转药品评价中心进行非处方药适宜性审查。<br/>
+										2.《药品注册管理办法》（国家市场监督管理总局令第27号）第三十九条综合审评结论通过的，批准药品上市，发给药品注册证书。综合审评结论不通过的，作出不予批准决定。药品注册证书载明药品批准文号、持有人、生产企业等信息。非处方药的药品注册证书还应当注明非处方药类别。<br/>
+										3.《药品注册管理办法》（国家市场监督管理总局令第27号）第三十四条申请人在完成支持药品上市注册的药学、药理毒理学和药物临床试验等研究，确定质量标准，完成商业规模生产工艺验证，并做好接受药品注册核查检验的准备后，提出药品上市许可申请，按照申报资料要求提交相关研究资料。经对申报资料进行形式审查，符合要求的，予以受理。<br/>
+								</td>
+							</tr>
+							<tr>
+								<td class="cell-title handleflow-title">是否需要现场勘验</td>
+								<td class="cell-content handleflow-content">部分情况下开展</td>
+								<td class="cell-title handleflow-title">是否需要组织听证</td>
+								<td class="cell-content handleflow-content">部分情况下开展</td>
+							</tr>
+							<tr>
+								<td class="cell-title handleflow-title">是否需要招标、拍卖、挂牌交易</td>
+								<td class="cell-content handleflow-content">否</td>
+								<td class="cell-title handleflow-title">是否需要检验、检测、检疫</td>
+								<td class="cell-content handleflow-content">部分情况下开展</td>
+							</tr>
+							<tr>
+								<td class="cell-title handleflow-title">是否需要鉴定</td>
+								<td class="cell-content handleflow-content">否</td>
+								<td class="cell-title handleflow-title">是否需要专家评审</td>
+								<td class="cell-content handleflow-content">部分情况下开展</td>
+							</tr>
+							<tr>
+								<td class="cell-title handleflow-title">是否需要向社会公示</td>
+								<td class="cell-content handleflow-content">否</td>
+								<td class="cell-title handleflow-title">是否实行告知承诺办理</td>
+								<td class="cell-content handleflow-content">否</td>
+							</tr>
+							<tr>
+								<td class="cell-title handleflow-title">审批机关是否委托服务机构开展技术性服务</td>
+								<td colspan="3" class="cell-content handleflow-content">是</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="details-item">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>材料名称</th>
+							<th>材料类型/来源渠道</th>
+							<th>材料形式</th>
+							<th>规范</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th class="cell-content" style="word-wrap: break-word; width: 35%;">1.中药：上市许可申请表</th>
+							<td class="cell-content" style="white-space: nowrap;">原件和复印件 /
+								申请人自备</td>
+							<td class="cell-content" style="word-break:break-all;"> 无  </td>
+							<td class="cell-content" style="white-space: nowrap;">
+								<a style="text-decoration: underline; color: #0000EE;" href="javascript:;" class="file-notice" onclick="openDiv('3a74ea8d-6ec6-4756-a390-5af5e85be585')">详情</a>
+								<!-- 								<a href="javascript:;" class="file-notice" onclick="layer.alert('无')">填报须知</a> -->
+								<!-- 								<a href="javascript:;" class="file-standard" onclick="layer.alert('《国家药监局药审中心关于发布<中药注册受理审查指南（试行）>的通告》（2020年第34号）')">受理标准</a> -->
+											<a href='javascript:void(0);'  class="file-download download-file" onclick="downloadByBase64Material('kbbg','3a74ea8d-6ec6-4756-a390-5af5e85be585')">空白表格下载</a>
+
+											<a href='javascript:void(0);'  class="file-download download-file" onclick="downloadByBase64Material('slyb','3a74ea8d-6ec6-4756-a390-5af5e85be585')">示例样表下载</a>
+							</td>
+						</tr>
+						<tr>
+							<th class="cell-content" style="word-wrap: break-word; width: 35%;">1.中药：行政文件和药品信息</th>
+							<td class="cell-content" style="white-space: nowrap;">原件和复印件 /
+								申请人自备</td>
+							<td class="cell-content" style="word-break:break-all;"> 无  </td>
+							<td class="cell-content" style="white-space: nowrap;">
+								<a style="text-decoration: underline; color: #0000EE;" href="javascript:;" class="file-notice" onclick="openDiv('7fe52fbd-0520-46fa-934a-f442f5a2e9a9')">详情</a>
+								<!-- 								<a href="javascript:;" class="file-notice" onclick="layer.alert('无')">填报须知</a> -->
+								<!-- 								<a href="javascript:;" class="file-standard" onclick="layer.alert('《国家药监局药审中心关于发布<中药注册受理审查指南（试行）>的通告》（2020年第34号）')">受理标准</a> -->
+
+							</td>
+						</tr>
+						<tr>
+							<th class="cell-content" style="word-wrap: break-word; width: 35%;">1.中药：概要</th>
+							<td class="cell-content" style="white-space: nowrap;">原件和复印件 /
+								申请人自备</td>
+							<td class="cell-content" style="word-break:break-all;"> 无  </td>
+							<td class="cell-content" style="white-space: nowrap;">
+								<a style="text-decoration: underline; color: #0000EE;" href="javascript:;" class="file-notice" onclick="openDiv('2fc51284-9e76-4893-83ce-3b37289cfd5b')">详情</a>
+								<!-- 								<a href="javascript:;" class="file-notice" onclick="layer.alert('无')">填报须知</a> -->
+								<!-- 								<a href="javascript:;" class="file-standard" onclick="layer.alert('《国家药监局药审中心关于发布<中药注册受理审查指南（试行）>的通告》（2020年第34号）')">受理标准</a> -->
+
+							</td>
+						</tr>
+						<tr>
+							<th class="cell-content" style="word-wrap: break-word; width: 35%;">1.中药：药学研究资料</th>
+							<td class="cell-content" style="white-space: nowrap;">原件和复印件 /
+								申请人自备</td>
+							<td class="cell-content" style="word-break:break-all;"> 无  </td>
+							<td class="cell-content" style="white-space: nowrap;">
+								<a style="text-decoration: underline; color: #0000EE;" href="javascript:;" class="file-notice" onclick="openDiv('2c0afc98-ec4f-4ddd-a453-0840dd164195')">详情</a>
+								<!-- 								<a href="javascript:;" class="file-notice" onclick="layer.alert('无')">填报须知</a> -->
+								<!-- 								<a href="javascript:;" class="file-standard" onclick="layer.alert('《国家药监局药审中心关于发布<中药注册受理审查指南（试行）>的通告》（2020年第34号）')">受理标准</a> -->
+
+							</td>
+						</tr>
+						<tr>
+							<th class="cell-content" style="word-wrap: break-word; width: 35%;">1.中药：药理毒理研究资料</th>
+							<td class="cell-content" style="white-space: nowrap;">原件和复印件 /
+								申请人自备</td>
+							<td class="cell-content" style="word-break:break-all;"> 无  </td>
+							<td class="cell-content" style="white-space: nowrap;">
+								<a style="text-decoration: underline; color: #0000EE;" href="javascript:;" class="file-notice" onclick="openDiv('37c57b38-1b36-41ae-8353-4ffeae5b3b78')">详情</a>
+								<!-- 								<a href="javascript:;" class="file-notice" onclick="layer.alert('无')">填报须知</a> -->
+								<!-- 								<a href="javascript:;" class="file-standard" onclick="layer.alert('《国家药监局药审中心关于发布<中药注册受理审查指南（试行）>的通告》（2020年第34号）')">受理标准</a> -->
+
+							</td>
+						</tr>
+						<tr>
+							<th class="cell-content" style="word-wrap: break-word; width: 35%;">1.中药：临床研究资料</th>
+							<td class="cell-content" style="white-space: nowrap;">原件和复印件 /
+								申请人自备</td>
+							<td class="cell-content" style="word-break:break-all;"> 无  </td>
+							<td class="cell-content" style="white-space: nowrap;">
+								<a style="text-decoration: underline; color: #0000EE;" href="javascript:;" class="file-notice" onclick="openDiv('1df9a115-15ad-4bec-8e4c-49238878fd3e')">详情</a>
+								<!-- 								<a href="javascript:;" class="file-notice" onclick="layer.alert('无')">填报须知</a> -->
+								<!-- 								<a href="javascript:;" class="file-standard" onclick="layer.alert('《国家药监局药审中心关于发布<中药注册受理审查指南（试行）>的通告》（2020年第34号）')">受理标准</a> -->
+
+							</td>
+						</tr>
+						<tr>
+							<th class="cell-content" style="word-wrap: break-word; width: 35%;">2.化药和生物制品：上市许可申请表</th>
+							<td class="cell-content" style="white-space: nowrap;">原件和复印件 /
+								申请人自备</td>
+							<td class="cell-content" style="word-break:break-all;"> 无  </td>
+							<td class="cell-content" style="white-space: nowrap;">
+								<a style="text-decoration: underline; color: #0000EE;" href="javascript:;" class="file-notice" onclick="openDiv('7c80a5c8-60cd-4047-b5e3-71980ad26424')">详情</a>
+								<!-- 								<a href="javascript:;" class="file-notice" onclick="layer.alert('无')">填报须知</a> -->
+								<!-- 								<a href="javascript:;" class="file-standard" onclick="layer.alert('《国家药监局药审中心关于发布<化学药品注册受理审查指南（试行）>的通告》（2020年第10号）、《国家药品监督管理局关于发布<生物制品注册受理审查指南（试行）>的通告》（2020年第11号）')">受理标准</a> -->
+											<a href='javascript:void(0);'  class="file-download download-file" onclick="downloadByBase64Material('kbbg','7c80a5c8-60cd-4047-b5e3-71980ad26424')">空白表格下载</a>
+
+											<a href='javascript:void(0);'  class="file-download download-file" onclick="downloadByBase64Material('slyb','7c80a5c8-60cd-4047-b5e3-71980ad26424')">示例样表下载</a>
+							</td>
+						</tr>
+						<tr>
+							<th class="cell-content" style="word-wrap: break-word; width: 35%;">2.化药和生物制品：《M4：人用药物注册申请通用技术文档（CTD）》</th>
+							<td class="cell-content" style="white-space: nowrap;">原件和复印件 /
+								申请人自备</td>
+							<td class="cell-content" style="word-break:break-all;"> 无  </td>
+							<td class="cell-content" style="white-space: nowrap;">
+								<a style="text-decoration: underline; color: #0000EE;" href="javascript:;" class="file-notice" onclick="openDiv('5c03324a-28c6-49df-b96f-4ab511635aaa')">详情</a>
+								<!-- 								<a href="javascript:;" class="file-notice" onclick="layer.alert('无')">填报须知</a> -->
+								<!-- 								<a href="javascript:;" class="file-standard" onclick="layer.alert('《国家药监局药审中心关于发布<化学药品注册受理审查指南（试行）>的通告》（2020年第10号）、《国家药品监督管理局关于发布<生物制品注册受理审查指南（试行）>的通告》（2020年第11号）')">受理标准</a> -->
+
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="details-item">
+				<div class="img-wrap">
+					<h3>收费标准</h3>
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>收费项目名称</th>
+								<th>
+										收费项目标准
+								</th>
+								<th>收费依据</th>
+								<!-- <th>收费类型</th> -->
+								<th>是否允许减免</th>
+								<th>允许减免依据</th>
+								<th>备注</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th class="cell-content" width="50">（1）新药注册费（上市许可）（2）仿制药注册费：</th>
+								<td class="cell-content" width="150">（1）新药注册费（上市许可）：43.20万元
+（2）仿制药注册费：无需临床试验的上市许可：18.36万元；需临床试验的上市许可：31.80万元（3）药品注册收费按一个制剂为一个品种计收，如再增加一种规格，则按相应类别增收20%注册费。</td>
+								<td class="cell-content" width="250">
+										1.《中华人民共和国药品管理法实施条例》第五十七条依据《药品管理法》和本条例的规定核发证书、进行药品注册、药品认证和实施药品审批检验及其强制性检验，可以收取费用。具体收费标准由国务院财政部门、国务院价格主管部门制定。<br/>
+										2.《财政部、国家发展改革委关于重新发布中央管理的食品药品监督管理部门行政事业性收费项目的通知》（财税〔2015〕2号）《财政部、国家发展改革委关于重新发布中央管理的食品药品监督管理部门行政事业性收费项目的通知》（财税〔2015〕2号）一、药品注册费<br/>
+										3.《国家药监局关于重新发布药品注册收费标准的公告》（2020年第75号）附件1：药品注册收费标准；
+附件2：药品注册收费实施细则。<br/>
+								</td>
+								<!-- <td class="cell-content" width="50">办理行政许可收费</td> -->
+								<td class="cell-content" width="50">是</td>
+								<td class="cell-content" width="180"></td>
+								<td class="cell-content" width="120"></td>
+							</tr>
+						</tbody>
+					</table>
+					<!-- 					 -->					<!-- 					<h3>收费依据</h3> -->
+					<!-- 					<p></p> -->
+					<!-- 					 -->				</div>
+			</div>
+			<div class="details-item">
+				<div class="img-wrap">
+					<h3>样本图</h3>
+					<hr>
+					<br/>
+
+								<a href='javascript:void(0);'  class="file-download download-file" onclick="downloadByBase64('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','af9da3ed-82fe-48ff-b6dd-3b37ee47831b-ResultGuid.docx')">样本文件下载</a>
+				</div>
+			</div>
+			<div class="details-item">
+				<div class="ask-wrap">
+					<dl>
+						<dt class="ask-title">国内上市的原研药或原研地产化品种已纳入《化学仿制药参比制剂目录》，但因为可及性等问题，制剂申请人选择参比制剂目录中公示的未进口原研药品进行仿制，可否按照化学药品4类进行申报？</dt>
+						<dd class="ask-con">
+							<p>
+								<b>答：</b>
+								所申报适应症与境内已批准适应症一致的前提下，认可其按照化学药品4类进行申报和受理。
+							</p>
+						</dd>
+						<dt class="ask-title">药品申报资料中临床试验报告的封面有哪些要求？</dt>
+						<dd class="ask-con">
+							<p>
+								<b>答：</b>
+								应符合《国家药品监督管理局关于发布化学药品注册受理审查指南（试行）的通告》（（2020年第10号）的要求，临床试验报告应符合相关指导原则要求。临床四眼报告标题页应提供药品注册社请人（签字及盖章），主要或协调研究正（签字）、复核或协调研究单位名称、统计学负责人（签字）和统计单位名称及ICHE3要求的其他信息；临床研究报告附录II中应提供申办方负责医学专员签名。
+							</p>
+						</dd>
+						<dt class="ask-title">对于拟申请豁免生物等效性试验的品种，注册申报时应提交哪些研究资料？</dt>
+						<dd class="ask-con">
+							<p>
+								<b>答：</b>
+								应根据《人体生物等效性试验豁免指导原则》，证明这些品种的BCS分类。对于BCS1类的品种，应进行溶解度、溶出度和渗透性研究；对于BCS3类药物，除需进行溶解度、溶出度研究外，还应处方种类一致，各组成用量相似。申请人应根据品种特点和自身资料按要求申报。
+							</p>
+						</dd>
+						<dt class="ask-title">生物制品申报生产时，如药学研究资料、药理毒理研究资料与临床试验申报资料无变化，是否可免报？</dt>
+						<dd class="ask-con">
+							<p>
+								<b>答：</b>
+								对于非生物制品1类注册申请，应按照《药品注册管理办法》（局令第28号）附件3要求，治疗用生物制品完成临床试验后报送资料项目1-6、15和29-38，预防用生物制品完成临床试验后报送资料项目1、2和12-18。对于生物制品1类注册申请，应按照《关于适用国际人用药品注册技术协调会二级指导原则的公告》（2018年第10号）相关要求进行提交。
+							</p>
+						</dd>
+						<dt class="ask-title">关于按照生物制品管理的体外诊断试剂是否需申报临床试验申请？</dt>
+						<dd class="ask-con">
+							<p>
+								<b>答：</b>
+								按照生物制品管理的体外诊断试剂，申请人在境内完成临床试验后可以直接提出药品上市许可申请。
+							</p>
+						</dd>
+						<dt class="ask-title">按照生物制品管理的体外诊断试剂申报资料是否按照M4：人用药物注册申请通用技术文档（CTD）整理?</dt>
+						<dd class="ask-con">
+							<p>
+								<b>答：</b>
+								应按照《国家药监局关于发布生物制品注册分类及申报资料要求（试行）的通告》（2020年 第43号）第三部分 按生物制品管理的体外诊断试剂申报资料要求整理。
+							</p>
+						</dd>
+						<dt class="ask-title">申报资料中的外文资料是否全部翻译为中文？</dt>
+						<dd class="ask-con">
+							<p>
+								<b>答：</b>
+								根据《药品注册管理办法》，全部申报资料应当使用中文并附原文，其他文种的资料可附后作为参考。中文译文应当与原文一致。
+							</p>
+						</dd>
+					</dl>
+
+				</div>
+			</div>
+		</div>
+		<!--操作-->
+		<div class="right-option">
+			<div class="right-option-tofixed">
+				<!-- 				<button class="hxui-btn guidance"> -->
+				<!-- 					<i class="hxui-icon material-icons">&#xe149;</i> -->
+				<!-- 					下载办事指南 -->
+				<!-- 				</button> -->
+				<a class="hxui-btn to-manage " target="_blank" href="https://zwfw.nmpa.gov.cn/web/user/login?backUrl=/web/ssologin/YPYWYYXT?returnUrl=/index!welcome.do?sqfl=jnscypzc">
+					<i class="hxui-icon material-icons">&#xe30c;</i>
+					在线办理
+				</a>
+<!-- 				<button class="hxui-btn advisory disabled"> -->
+<!-- 					<i class="hxui-icon material-icons">&#xe87f;</i> -->
+<!-- 					在线咨询 -->
+<!-- 				</button> -->
+				<button class="hxui-btn subscribe ">
+					<i class="hxui-icon material-icons">&#xe85e;</i>
+					在线预约
+				</button>
+				<button type="button" class="hxui-btn favorite  " onclick="hxzk_auth.favorite(this,'af9da3ed-82fe-48ff-b6dd-3b37ee47831b')">
+					<i class="hxui-icon material-icons">&#xe87e;</i>
+					收藏
+				</button>
+				<button type="button" class="hxui-btn favorite" onclick="hxzk_auth.appraiseView('11100000MB0341032Y100017210300101')">
+					<i class="hxui-icon material-icons">&#xe3e3;</i>
+					评价信息
+				</button>
+				<!-- 20240409 由于引用的js文件访问不到，进行隐藏 -->
+<!-- 				<div class="share-platform"> -->
+<!-- 					分享到： -->
+<!-- 					<div class="bshare-custom icon-medium-plus"> -->
+<!-- 						<div class="bsPromo bsPromo2"></div> -->
+<!-- 												<a title="分享到" href="http://www.bShare.cn/" id="bshare-shareto" class="bshare-more">分享到</a> -->
+<!-- 						<a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a> -->
+<!-- 						<a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a> -->
+<!-- 						<a title="分享到QQ空间" class="bshare-qzone"></a> -->
+<!-- 						<a title="分享到新浪微博" class="bshare-sinaminiblog"></a> -->
+<!-- 						<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a> -->
+<!-- 					</div> -->
+<!-- 					<script type="text/javascript" charset="utf-8" src="/website/js/buttonLite.js"></script> -->
+<!-- 					<script type="text/javascript" charset="utf-8" src="https://static.bshare.cn/b/bshareC0.js"></script> -->
+<!-- 					<script type="text/javascript" src="https://static.bshare.cn/b/components/bsStatic.js?v=20150603"></script> -->
+<!-- 					<script type="text/javascript" src="https://static.bshare.cn/b/engines/bs-engine.js?v=20150603"></script> -->
+<!-- 				</div> -->
+			</div>
+		</div>
+		<!--回顶部-->
+		<a href="javascript:;" class="to-top top-arrived" id="toTop" title="返回顶部">
+			<i class="hxui-icon material-icons">&#xe25a;</i>
+		</a>
+	</div>
+</div>
+
+<div class="details-item" id="material_detail">
+	<br />
+	<table class="table table-bordered" style="margin-left: 2px;">
+		<tbody>
+			<tr>
+				<td class="cell-title">材料名称</td>
+				<td class="cell-content" colspan="3" id="materialName"></td>
+			</tr>
+			<tr>
+				<td class="cell-title">材料类型</td>
+				<td class="cell-content" id="materialType"></td>
+				<td class="cell-title">材料必要性</td>
+				<td class="cell-content" id="isNeed"></td>
+			</tr>
+			<tr>
+				<td class="cell-title">材料形式</td>
+				<td class="cell-content" id="materialFormat"></td>
+				<td class="cell-title">来源渠道</td>
+				<td class="cell-content" id="sourceType"></td>
+			</tr>
+			<tr>
+				<td class="cell-title">来源渠道说明</td>
+				<td class="cell-content" colspan="3" id="sourceExplain"></td>
+			</tr>
+			<tr>
+				<td class="cell-title">填报须知</td>
+				<td class="cell-content" colspan="3" id="fillExplain"></td>
+			</tr>
+			<tr>
+				<td class="cell-title">受理标准</td>
+				<td class="cell-content" colspan="3" id="accept_stand"></td>
+			</tr>
+			<tr>
+				<td class="cell-title">
+						规定申请材料的依据
+				</td>
+				<td class="cell-content" colspan="3" id="by_law"></td>
+			</tr>
+				<tr style="display:none;">
+					<td class="cell-title">备注</td>
+					<td class="cell-content" colspan="3" id="remark"></td>
+				</tr>
+		</tbody>
+	</table>
+	<br />
+</div>
+
+
+
+	<!-- 右侧悬浮 -->
+<!--右侧-->
+<div id="right-wrap" class="right-wrap" style="top: calc(50% - 186px + 100px); display: none;font-size:12px;">
+	<a href="/web/index/help" class="a-wrap"  target="_blank">
+		<img src="/website/img/right_help2.png" alt="" style="height:28px;width:28px;">
+		<b>帮助</b>
+	</a>
+	<a href="/web/problem?ssywxt=ZWFW" target="_blank" class="a-wrap">
+		<img src="/website/img/right_zixun.png" alt="" style="height:28px;width:28px;">
+		<b>咨询</b>
+	</a>
+	<a href="https://www.nmpa.gov.cn/hd/nmpa_robot.html" class="a-wrap" target="_blank">
+		<img src="/website/img/right_znwd.png" alt="" style="height:28px;width:28px;">
+		<b>智能<br/>问答</b>
+	</a>
+	<a href="javascript:;" class="a-wrap ssologin" data-systemid="WSYYXT">
+		<img src="/website/img/right_yuyue.png" alt="" style="height:28px;width:28px;">
+		<b>网上<br/>预约</b>
+	</a>
+	<a href="/web/index/dzzzSign" target="_blank" class="a-wrap systemauth" >
+		<img src="/website/img/right_yanzheng4.png" alt="" style="height:28px;width:28px;">
+		<b>在线<br/>验证</b>
+	</a>
+	<a href="https://www.12315.cn/" target="_blank" class="defaulthide a-wrap">
+		<img src="/website/img/right_tousu.png" alt="" style="height:28px;width:28px;">
+		<b>投诉<br/>举报</b>
+	</a>
+	<a href="javascript:;" class="defaulthide a-wrap ssologin" data-systemid="YGKSQ">
+		<img src="/website/img/right_gongkai.png" alt="" style="height:28px;width:28px;">
+		<b>申请<br/>公开</b>
+	</a>
+	<a href="javascript:;" class="defaulthide a-wrap ssologin" data-systemid="ZXXF">
+		<img src="/website/img/right_xinfang.png" alt="" style="height:28px;width:28px;">
+		<b>在线<br/>信访</b>
+	</a>
+	<a href="javascript:;" class="defaulthide a-wrap systemauth" data-systemid="TSYJY">
+		<img src="/website/img/right_jianyi.png" alt="" style="height:28px;width:28px;">
+		<b>建议</b>
+	</a>
+	<a href="javascript:;" id="wrapBtn" style="border-bottom-width: 0">
+		<img src="/website/img/unfold.png" alt="">
+		<b>收缩</b>
+	</a>
+</div>
+	<!--底部-->
+<footer class="clearfix">
+  <div class="ge"></div>
+  <div class="leg">
+      <ul class="footnav">
+          <li class="foot-nav-li" ><a href="http://gjzwfw.www.gov.cn" target="_blank" class="link-to">国家政务服务平台</a></li>
+          <li class="foot-nav-li link-open-list">
+				<span class="">国务院部门政务服务平台</span>
+				<ul class="link-list-new">
+					<li><a href="https://www.mfa.gov.cn/wjbzwfwpt/" target="_blank">外交部</a></li>
+                    <li><a href="https://www.ndrc.gov.cn/?code=&amp;state=123" target="_blank">国家发展和改革委员会</a></li>
+                    <li><a href="https://zwfw.moe.gov.cn/?isUnifiedLogin=1" target="_blank">教育部</a></li>
+                    <li><a href="https://fuwu.most.gov.cn/html/" target="_blank">科学技术部</a></li>
+                    <li><a href="https://ythzxfw.miit.gov.cn/index" target="_blank">工业和信息化部</a></li>
+                    <li><a href="http://ywtb.mps.gov.cn/" target="_blank">公安部</a></li>
+                    <li><a href="https://zwfw.mca.gov.cn/" target="_blank">民政部</a></li>
+                    <li><a href="http://zwfw.12348.gov.cn/" target="_blank">司法部</a></li>
+                    <li><a href="http://zwfw.mof.gov.cn/" target="_blank">财政部</a></li>
+                    <li><a href="https://www.12333.gov.cn/" target="_blank">人力资源和社会保障部</a></li>
+                    <li><a href="https://www.mnr.gov.cn/fw/" target="_blank">自然资源部</a></li>
+                    <li><a href="http://zwfw.mee.gov.cn" target="_blank">生态环境部</a></li>
+                    <li><a href="http://www.mohurd.gov.cn/" target="_blank">住房和城乡建设部</a></li>
+                    <li><a href="https://zwfwx.mot.gov.cn:6002/" target="_blank">交通运输部</a></li>
+                    <li><a href="http://www.mwr.gov.cn" target="_blank">水利部</a></li>
+                    <li><a href="http://www.moa.gov.cn/" target="_blank">农业农村部</a></li>
+                    <li><a href="http://egov.mofcom.gov.cn" target="_blank">商务部</a></li>
+                    <li><a href="https://zwfw.mct.gov.cn/" target="_blank">文化和旅游部</a></li>
+                    <li><a href="https://zwfw.nhc.gov.cn/" target="_blank">国家卫生健康委员会</a></li>
+                    <li><a href="https://wsfw.mva.gov.cn/" target="_blank">退役军人事务部</a></li>
+                    <li><a href="https://zwfw.mem.gov.cn" target="_blank">应急管理部</a></li>
+                    <li><a href="https://xzxk.pbc.gov.cn/opal/pages/systemmanage/weblogin.jsf" target="_blank">中国人民银行</a></li>
+                    <li><a href="http://online.customs.gov.cn/" target="_blank">海关总署</a></li>
+                    <li><a href="http://www.chinatax.gov.cn/n810346/index.html" target="_blank">国家税务总局</a></li>
+                    <li><a href="https://zwfw.samr.gov.cn/server" target="_blank">国家市场监督管理总局</a></li>
+                    <li><a href="https://zwfw.nfra.gov.cn/#/home" target="_blank">国家金融监督管理总局</a></li>
+                    <li><a href="http://neris.csrc.gov.cn/portal" target="_blank">中国证券监督管理委员会</a></li>
+                    <li><a href="https://www.nrta.gov.cn/col/col6/index.html" target="_blank">国家广播电视总局</a></li>
+                    <li><a href="https://zwfw.sport.gov.cn/" target="_blank">国家体育总局</a></li>
+                    <li><a href="http://www.stats.gov.cn/fw/" target="_blank">国家统计局</a></li>
+                    <li><a href="https://www.cnipa.gov.cn/col/col59/index.html" target="_blank">国家知识产权局</a></li>
+                    <li><a href="https://fuwu.nhsa.gov.cn/nationalHallSt/#/home" target="_blank">国家医疗保障局</a></li>
+                    <li><a href="http://www.ggj.gov.cn/zwfwdto/" target="_blank">国家机关事务管理局</a></li>
+                    <li><a href="https://zwfw.cma.gov.cn/" target="_blank">中国气象局</a></li>
+                    <li><a href="https://zwfw.lswz.gov.cn:49879/vuezw/#/" target="_blank">国家粮食和物资储备局</a></li>
+                    <li><a href="http://www.nea.gov.cn/" target="_blank">国家能源局</a></li>
+                    <li><a href="https://www.sastind.gov.cn/history/n6195634/n6195706/n6195716/index.html" target="_blank">国家国防科技工业局</a></li>
+                    <li><a href="https://zwfwdt.tobacco.gov.cn/cooperativeWeb/event/tab" target="_blank">国家烟草专卖局</a></li>
+                    <li><a href="https://s.nia.gov.cn/" target="_blank">国家移民管理局</a></li>
+                    <li><a href="http://www.forestry.gov.cn/" target="_blank">国家林业和草原局</a></li>
+                    <li><a href="https://zwfw.nra.gov.cn/" target="_blank">国家铁路局</a></li>
+                    <li><a href="https://zwfw.caac.gov.cn/ticket" target="_blank">中国民用航空局</a></li>
+                    <li><a href="https://zwfw.spb.gov.cn" target="_blank">国家邮政局</a></li>
+                    <li><a href="http://gl.ncha.gov.cn" target="_blank">国家文物局</a></li>
+                    <li><a href="https://www.chinamine-safety.gov.cn/">国家矿山安全监察局</a></li>
+                    <li><a href="https://zwfw.nmpa.gov.cn/web/index?loginTrust=index" target="_blank">国家药品监督管理局</a></li>
+                    <li><a href="http://www.oscca.gov.cn/sca/zxfw/index.shtml" target="_blank">国家密码管理局</a></li>
+				</ul>
+		  </li>
+          <li class="foot-nav-li"><a href="http://www.nmpa.gov.cn/" target="_blank" class="link-to">国家药品监督管理局</a></li>
+          <li class="foot-nav-li"><a href="http://www.samr.gov.cn/" target="_blank" class="link-to">国家市场监督管理总局</a></li>
+      </ul>
+  </div>
+  
+  <div class="footer grayscale mt26" >
+	<div class="w1200-auto clearfix">
+		<div class="footer-menu fl-l">
+			<a href="http://www.gov.cn/" target="_blank" tabindex="0" role="imagebutton" aria-label="中国政府网" class="ariaskiptheme"><img src="/websiteTwo/images/wbppimages/20186_zhgzhfw.png" alt=""></a>
+			<a href="http://app.www.gov.cn/download/Chinese.html" target="_blank" tabindex="0" role="imagelink" aria-label="国务院客户端" class="ariaskiptheme"><img src="/websiteTwo/images/wbppimages/20186_gwykhd.png" alt=""></a>
+			<a href="http://www.samr.gov.cn/" target="_blank" tabindex="0" aria-label="国家市场管理监督总局" class="ariaskiptheme"><img src="/websiteTwo/images/wbppimages/20186_shchjgzj.png" alt=""></a>
+		</div>		
+		
+		<a href="https://www.nmpa.gov.cn/hudong/wzhshm/index.html" target="_blank" class="statement fl-r">网站声明</a>
+		<span class="fenge fl-r">丨</span>
+		<a href="https://www.nmpa.gov.cn/hudong/wzhshyzhn/index.html" target="_blank" class="zhinan fl-r">网站使用指南</a>
+		<span class="fenge fl-r">丨</span>
+		<a href="https://www.nmpa.gov.cn/hudong/wzgl/index.html" target="_blank" class="manager fl-r">网站管理</a>
+
+		<dl class="footer-link fl-r">
+			<dt class="">-----地方药监局-----</dt>
+			<dd class="difang" style="display: none;">
+				<a target="_blank" href="http://yjj.beijing.gov.cn" title="北京市药品监督管理局">北京市药品监督管理局</a>
+				<a target="_blank" href="https://scjg.tj.gov.cn/tjsscjdglwyh_52651/tjyj/" title="天津市药品监督管理局">天津市药品监督管理局</a>
+				<a target="_blank" href="http://yjj.hebei.gov.cn" title="河北省药品监督管理局">河北省药品监督管理局</a>
+				<a target="_blank" href="http://yjj.shanxi.gov.cn/" title="山西省药品监督管理局">山西省药品监督管理局</a>
+		
+				<a target="_blank" href="http://mpa.nmg.gov.cn/" title="内蒙古自治区药品监督管理局">内蒙古自治区药品监督管理局</a>
+				<a target="_blank" href="http://ypjg.ln.gov.cn/" title="辽宁省药品监督管理局">辽宁省药品监督管理局</a>
+				<a target="_blank" href="http://mpa.jl.gov.cn/" title="吉林省药品监督管理局">吉林省药品监督管理局</a>
+				<a target="_blank" href="http://mpa.hlj.gov.cn/" title="黑龙江省药品监督管理局">黑龙江省药品监督管理局</a>
+		
+				<a target="_blank" href="http://yjj.sh.gov.cn/" title="上海市药品监督管理局">上海市药品监督管理局</a>
+				<a target="_blank" href="http://da.jiangsu.gov.cn/" title="江苏省药品监督管理局">江苏省药品监督管理局</a>
+				<a target="_blank" href="http://mpa.zj.gov.cn/" title="浙江省药品监督管理局">浙江省药品监督管理局</a>
+				<a target="_blank" href="http://mpa.ah.gov.cn/" title="安徽省药品监督管理局">安徽省药品监督管理局</a>
+		
+				<a target="_blank" href="https://yjj.scjgj.fujian.gov.cn/" title="福建省药品监督管理局">福建省药品监督管理局</a>
+				<a target="_blank" href="http://mpa.jiangxi.gov.cn/" title="江西省药品监督管理局">江西省药品监督管理局</a>
+				<a target="_blank" href="http://mpa.shandong.gov.cn/" title="山东省药品监督管理局">山东省药品监督管理局</a>
+				<a target="_blank" href="http://yjj.henan.gov.cn" title="河南省药品监督管理局">河南省药品监督管理局</a>
+		
+				<a target="_blank" href="https://mpa.hubei.gov.cn/" title="湖北省药品监督管理局">湖北省药品监督管理局</a>
+				<a target="_blank" href="http://mpa.hunan.gov.cn" title="湖南省药品监督管理局">湖南省药品监督管理局</a>
+				<a target="_blank" href="http://mpa.gd.gov.cn/" title="广东省药品监督管理局">广东省药品监督管理局</a>
+				<a target="_blank" href="http://yjj.gxzf.gov.cn/" title="广西壮族自治区药品监督管理局">广西壮族自治区药品监督管理局</a>
+		
+				<a target="_blank" href="http://amr.hainan.gov.cn/himpa/" title="海南省药品监督管理局">海南省药品监督管理局</a>
+				<a target="_blank" href="http://yaojianju.cq.gov.cn" title="重庆市药品监督管理局">重庆市药品监督管理局</a>
+				<a target="_blank" href="http://yjj.sc.gov.cn/" title="四川省药品监督管理局">四川省药品监督管理局</a>
+				<a target="_blank" href="http://yjj.guizhou.gov.cn/" title="贵州省药品监督管理局">贵州省药品监督管理局</a>
+		
+				<a target="_blank" href="http://mpa.yn.gov.cn" title="云南省药品监督管理局">云南省药品监督管理局</a>
+				<a target="_blank" href="http://mpa.xizang.gov.cn/" title="西藏自治区药品监督管理局">西藏自治区药品监督管理局</a>
+				<a target="_blank" href="http://mpa.shaanxi.gov.cn/" title="陕西省药品监督管理局">陕西省药品监督管理局</a>
+				<a target="_blank" href="http://yjj.gansu.gov.cn/" title="甘肃省药品监督管理局">甘肃省药品监督管理局</a>
+		
+				<a target="_blank" href="http://ypjgj.qinghai.gov.cn/" title="青海省药品监督管理局">青海省药品监督管理局</a>
+				<a target="_blank" href="http://nxyjj.nx.gov.cn/" title="宁夏回族自治区药品监督管理局">宁夏回族自治区药品监督管理局</a>
+				<a target="_blank" href="http://mpa.xinjiang.gov.cn/" title="新疆维吾尔自治区药品监督管理局">新疆维吾尔自治区药品监督管理局</a>		
+				
+				<div class="footer-layer"></div>
+			</dd>
+		</dl>
+
+		<dl class="footer-link fl-r">
+			<dt class="">-----直属单位-----</dt>
+			<dd style="display: none;">
+				<a target="_blank" href="https://www.nifdc.org.cn/" title="中国食品药品检定研究院（国家药品监督管理局医疗器械标准管理中心，中国药品检验总所）">中国食品药品检定研究院（国家药品监督管理局医疗器械标准管理中心，中国药品检验总所）</a>
+				<a target="_blank" href="https://www.chp.org.cn/" title="国家药典委员会">国家药典委员会</a>
+				<a target="_blank" href="https://www.cde.org.cn" title="国家药品监督管理局药品审评中心">国家药品监督管理局药品审评中心</a>
+				<a target="_blank" href="https://www.cfdi.org.cn/" title="国家药品监督管理局食品药品审核查验中心">国家药品监督管理局食品药品审核查验中心</a>
+				<a target="_blank" href="https://www.cdr-adr.org.cn/" title="国家药品监督管理局药品评价中心（国家药品不良反应监测中心）">国家药品监督管理局药品评价中心（国家药品不良反应监测中心）</a>
+				<a target="_blank" href="https://www.cmde.org.cn/" title="国家药品监督管理局医疗器械技术审评中心">国家药品监督管理局医疗器械技术审评中心</a>
+				<a target="_blank" href="http://www.cascr.org.cn/index.html" title="国家药品监督管理局行政事项受理服务和投诉举报中心">国家药品监督管理局行政事项受理服务和投诉举报中心</a>
+				<a target="_blank" href="https://www.nmpa.gov.cn/jggk/jgzhn/zhshdw/jgfuwu/index.html" title="国家药品监督管理局机关服务中心（国家药品监督管理局机关服务局）">国家药品监督管理局机关服务中心（国家药品监督管理局机关服务局）</a>
+				<a target="_blank" href="https://www.nmpaic.org.cn/" title="国家药品监督管理局信息中心（中国食品药品监管数据中心）">国家药品监督管理局信息中心（中国食品药品监管数据中心）</a>
+				<a target="_blank" href="http://nmpaied.org.cn/" title="国家药品监督管理局高级研修学院（国家药品监督管理局安全应急演练中心）">国家药品监督管理局高级研修学院（国家药品监督管理局安全应急演练中心）</a>
+				<a target="_blank" href="http://www.cqlp.org/" title="国家药品监督管理局执业药师资格认证中心">国家药品监督管理局执业药师资格认证中心</a>
+				<a target="_blank" href="https://www.nmpa.gov.cn/jggk/jgzhn/zhshdw/xwzhx/index.html" title="国家药品监督管理局新闻宣传中心">国家药品监督管理局新闻宣传中心</a>
+				<a target="_blank" href="http://www.health-china.com/" title="中国健康传媒集团">中国健康传媒集团</a>
+				<a target="_blank" href="https://www.ccfdie.org/" title="中国食品药品国际交流中心">中国食品药品国际交流中心</a>
+				<a target="_blank" href="http://www.smei.net.cn/" title="国家药品监督管理局南方医药经济研究所">国家药品监督管理局南方医药经济研究所</a>
+				<a target="_blank" href="https://www.nmpa.gov.cn/jggk/jgzhn/zhshdw/yslck/index.html" title="国家药品监督管理局一四六仓库">国家药品监督管理局一四六仓库</a>
+				<a target="_blank" href="https://www.cpa.org.cn" title="中国药学会">中国药学会</a>
+				<a target="_blank" href="https://www.ydcdei.org.cn/" title="国家药品监督管理局药品审评检查长三角分中心">国家药品监督管理局药品审评检查长三角分中心</a>
+				<a target="_blank" href="https://www.ydcmdei.org.cn/" title="国家药品监督管理局医疗器械技术审评检查长三角分中心">国家药品监督管理局医疗器械技术审评检查长三角分中心</a>
+				<a target="_blank" href="https://www.gbacdei.org.cn/" title="国家药品监督管理局药品审评检查大湾区分中心">国家药品监督管理局药品审评检查大湾区分中心</a>
+				<a target="_blank" href="http://www.mdei.org.cn/" title="国家药品监督管理局医疗器械技术审评检查大湾区分中心">国家药品监督管理局医疗器械技术审评检查大湾区分中心</a>
+				<div class="footer-layer"></div>
+			</dd>
+		</dl>
+	</div>
+	
+	<div class="w1200-auto clearfix">
+		<div class="about fl-l">
+			<div>本站由国家药品监督管理局主办  版权所有：国家药品监督管理局</div>
+			<div>Copyright © NMPA All Rights Reserved</div>
+			<div>
+				<span class="p8">网站标识码bm35000001</span>
+				<a href="https://beian.miit.gov.cn/" target="_blank" class="p8">备案序号:京ICP备13027807号</a>   
+				<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010202008311" target="_blank" class="beian">京公网安备11010202008311号</a>
+			</div>
+			<div>
+				地址：北京市西城区展览路北露园1号 | 邮编：100037 | &nbsp;&nbsp;<a href="/web/index/contactWay" target="_blank" style="color:#2b5aaa">联系我们</a>
+			</div>
+		</div>
+		<a href="http://bszs.conac.cn/sitename?method=show&amp;id=7A8439F78D616CC8E05310291AACA486" target="_blank" class="red-bg fl-r ariaskiptheme"><img src="/websiteTwo/images/wbppimages/red.png" alt=""></a>
+
+		<div class="footer_jiucuo fl-r">
+			<span id="_span_jiucuo"><img onclick="window.open('https://zfwzgl.www.gov.cn/exposure/jiucuo.html?site_code=bm35000001&url=https%3A%2F%2Fzwfw.nmpa.gov.cn%2Fweb%2Findex');" style="margin:0;border:0;cursor: pointer;" src="/website/img/jiucuo.png?v=bm35000001"></span>
+		</div>
+		
+        <div class="footer_wuzhangai fl-r">
+			<!-- <img src="/websiteTwo/images/wbppimages/wuzhangailogo.png">  -->
+			<a href="http://www.gov.cn/hudong/index.htm" target="_blank"><img src="/websiteTwo/images/wbppimages/gwywls.png"></a>
+		</div>
+	</div>
+   </div>
+</footer>
+
+</div>
+
+	<!-- 智能咨询悬浮 -->
+<!-- 智能问答悬浮通知对话框start -->
+	<style type="text/css">
+		.questionSubmit{
+			position: fixed;
+			top: calc(50% - 186px + 100px - 86px - 10px);
+			right: 72px;
+			/*left:8px;*/
+			width: 100px;
+			padding: 8px;
+			border-radius: 8px;
+			/*background: #f18f1c;*/
+			z-index: 999999;
+		}
+		.questionSubmit .questionSubmit_close{
+			display: block;
+			position: absolute;
+			top: 6px;
+			right: 6px;
+			width: 20px;
+			height: 20px;
+			background: url('/website/img/icon_question_close.png') no-repeat center;
+			cursor: pointer;
+		}
+		.questionSubmit p{
+			font-size: 14px;
+			line-height: 14px;
+			color: #0c52c1;
+			margin:2px;
+			/*text-indent: 2em;
+			text-align: justify;*/
+		}
+	</style>
+	<script type="text/javascript">
+		var isShow = false;
+		$(function (){
+			/* $('.questionSubmit').animate({bottom:'10px'},1500); */
+		});
+		
+		function showZnzxDialog(){
+			//https://www.ctdgt.cn:32318/askwise-nmpa-frontend/#/home
+			$('.questionSubmit').hide();
+			$('.publicZnzx').show();
+			var znzcUrl = '';
+			if(!isShow){//第一次打开
+				resizeIframe();
+				var iframe = document.getElementById("znzxIframe");
+				if('' == '' || '' == null || '' == undefined){//未登录
+					znzcUrl = "https://zwfw.nmpa.gov.cn/askwise-nmpa-frontend/#/home?channelCode=guojiayaojianju";
+				}else{//已登录
+					znzcUrl = "/web/systemauth/ZNZX?returnUrl=";
+				}
+				console.log("znzcUrl=="+znzcUrl);
+				iframe.src = znzcUrl;
+				
+				/* 根据设备高度动态调整iframe的高度 */
+				window.addEventListener('resize', resizeIframe);
+				
+				initDivDarg();//可拖动DIV层的实现方法
+			}
+			//20250327 记录日志
+			var page_url = window.location.href;
+			// znzxLogSave('open',page_url,znzcUrl);//20251222 修改为不记录日志
+			overFlowStyle();
+		}
+		function overFlowStyle() {
+			if (document.body.style.overflow === 'hidden') {
+				document.body.style.overflow = ''; // 启用滚动
+				//隐藏遮罩层和弹层
+				document.getElementById('overlay').style.display = 'none';
+		    } else {
+		    	// 显示遮罩层和弹层
+				document.getElementById('overlay').style.display = 'block';
+		    	document.body.style.overflow = 'hidden'; // 禁用滚动
+		    }
+		}
+		//20250327 记录日志
+		function znzxLogSave(operate_type,current_page_url,iframe_url) {
+			$.ajax({
+				type : "POST",
+				url : "/web/usercenter/znzxLog/znzxLogSave",
+				data : {
+					operate_type : operate_type,
+					current_page_url : current_page_url,
+					iframe_url : iframe_url,
+					ywlx : 'znzx'
+				},
+				dataType : "json",
+				success : function(data) {
+					if (data.state) {
+						console.log('success');
+					}else{
+						console.log('fail');
+					}
+				}
+			});
+		}
+		function resizeIframe() {
+			//如果是第一次打开，则加载iframe地址，否则只是显示智能咨询对话框
+			var divheight = $('.publicZnzx').height();
+			console.log("publicZnzx==="+divheight);
+			
+			var iframe = document.getElementById("znzxIframe");
+			iframe.height = divheight - 50;//需要减去顶部标题区域的高度
+			console.log("iframe.height==="+iframe.height);
+	    }
+		
+		
+		/* 展示在右侧悬浮栏上方，收缩和展开，控制机器人的位置 */
+		function showZnzxTop(wraptop){
+			console.log('展示到正上方=='+wraptop);
+			var znwdHeight = $('.questionSubmit').height();
+			console.log('znwdHeight=='+znwdHeight);
+			
+			$('.questionSubmit').css('top', (wraptop-znwdHeight-10)+'px');
+			$('.questionSubmit').css('right','72px');
+			
+			console.log('znwdTop=='+$(".questionSubmit").offset().top);
+		}
+		
+		function showZnzxBottom(wraptop){
+			console.log('展示到下方=='+wraptop);
+			
+			var url = window.location.href;
+			if(url.indexOf("/web/user/login") != -1){
+				$('.questionSubmit').css('top', (wraptop-10+15)+'px');//20251225 将(wraptop-10)改为(wraptop-10+15)，使智能问答图标往下移，防止挡住导航栏的登录
+			}else{
+				$('.questionSubmit').css('top', (wraptop-10+125)+'px');//20251225 将(wraptop-10)改为(wraptop-10+125)，使智能问答图标往下移，防止挡住导航栏的登录
+			}
+// 			$('.questionSubmit').css('top', (wraptop-10)+'px');
+			$('.questionSubmit').css('right','133px');
+			
+			
+			console.log('znwdTop=='+$(".questionSubmit").offset().top);
+		}
+	</script>
+	<!-- 智能问答悬浮通知对话框end -->
+	
+	<!-- 智能咨询图标 -->
+	<!-- window.open('/web/systemauth/ZNZX?returnUrl=') -->
+	<div id="questionSubmit" class="questionSubmit">
+		<div id="questionSubmit_Card" style="display: block;text-align:center;" onclick="showZnzxDialog();">
+			<img src="/website/img/icon_znzx_new2.gif" style="width:172px;height:86px;"></img>
+		</div>
+	</div>
+	<!-- 智能问答悬浮通知对话框end -->
+	
+	<!-- 智能咨询对话框界面 -->
+	<!-- 智能问答悬浮通知对话框start -->
+	<script type="text/javascript">
+		$(function (){
+			$('.publicZnzx').animate({bottom:'10px'},1500);
+			//$('.publicZnzx_close').click(function(){$(this).parents('.publicZnzx').hide();});
+		});
+		function closeZnzxDiv(){
+			console.log('{closeZnzxDiv}--postMessage--start--');
+			//实现点击关闭按钮，发消息给iframe
+			var iframe = document.getElementById('znzxIframe');
+			iframe.contentWindow.postMessage('closeDialog', 'https://zwfw.nmpa.gov.cn');
+			console.log('{closeZnzxDiv}--postMessage--end--');
+			$('.publicZnzx_close').parents('.publicZnzx').hide();
+			$('.questionSubmit').show();
+			//20250327 记录日志
+			var page_url = window.location.href;
+			// znzxLogSave('close',page_url,'');//20251222 修改为不记录日志
+			overFlowStyle();
+			
+			isShow = false;//20251226，点击关闭按钮，设置再次打开重新请求url
+			iframe.src = "about:blank";//20251226，点击关闭按钮后，停止加载iframe
+		}
+		
+		
+		function hiddenZnzxDiv(){
+			console.log('{closeZnzxDiv}--postMessage--start--');
+			//实现点击关闭按钮，发消息给iframe
+			var iframe = document.getElementById('znzxIframe');
+			iframe.contentWindow.postMessage('closeDialog', 'https://zwfw.nmpa.gov.cn');
+			console.log('{closeZnzxDiv}--postMessage--end--');
+			$('.publicZnzx_close').parents('.publicZnzx').hide();
+			$('.questionSubmit').show();
+			//20250327 记录日志
+			var page_url = window.location.href;
+			// znzxLogSave('close',page_url,'');//20251222 修改为不记录日志
+			overFlowStyle();
+			
+			isShow = true;//20251226，点击最小化按钮，设置再次打开不请求url
+		}
+		
+		//可拖动DIV层的实现方法https://blog.csdn.net/twoByte/article/details/73269653
+		var isMouseDown;
+		var initX;
+		var initY;
+	    
+	    function initDivDarg(){
+	    	var draggable = document.getElementById('publicZnzx');
+	    	var content = document.getElementById('znzxIframe');
+	    	
+	    	isMouseDown = false;
+	    	
+	    	draggable.addEventListener('mousedown', function(e) {
+	    		console.log('{mousedown}event.target.id=='+event.target.id+';isMouseDown='+isMouseDown);
+	    		if (event.target.id == 'publicZnzx_Bar') { // 确保不是其他元素触发的
+	    			isMouseDown = true;
+		  		  	document.body.classList.add('no-select');
+		  		  	content.classList.add('pointer-events');
+		  		  	
+		  			initX = e.offsetX;
+		  	  		initY = e.offsetY;
+	    	    }
+	  		});
+	    	
+	    	//左键操作时，顺序是mousedown -> mouseup -> click
+	    	//而右键的话不会有click事件。这说明click是左键特有的，而mousedown和mouseup不管左右键都会触发。
+	    	//这样在实现拖拽或者点击时，可能需要处理这些事件的顺序，避免冲突。
+	    	document.addEventListener('mousemove', function(e) {
+	    		console.log('{mousemove}isMouseDown='+isMouseDown);
+	  		  	if (isMouseDown) {
+	  				var cx=e.clientX,cy=e.clientY;
+	  		    	draggable.style.left = e.clientX - initX  + 'px';
+	  		    	draggable.style.top = e.clientY - initY + 'px';
+	  		  	}
+	  		})
+	  		
+	  		draggable.addEventListener('mouseup', function(e) {
+	  			console.log('{mouseup}isMouseDown='+isMouseDown);
+	  			isMouseDown = false;
+  			    document.body.classList.remove('no-select');
+  			  	content.classList.remove('pointer-events');
+	  		})
+	    }
+		
+
+	</script>
+	<!-- 智能问答悬浮通知对话框end -->
+	
+	<!-- 智能问答悬浮通知对话框start -->
+	<style type="text/css">
+		.publicZnzx{
+			position: fixed;
+			bottom: -386px;
+			right: 78px;
+			/*left:8px;*/
+			width: 60%;
+			height:94%;
+			padding: 10px 10px 10px 10px;
+			border-radius: 8px;
+			border:2px solid #e9e9e9;
+			box-shadow: 5px 5px 5px #e9e9e9;
+			background: #ffffff;
+			z-index: 999999;
+			cursor: pointer; /* 鼠标悬停时显示移动指针 move*/
+		}
+		.publicZnzx .publicZnzx_close{
+			display: block;
+			position: absolute;
+			top: 1px;
+			right: 1px;
+			width: 60px;
+			height: 60px;
+			cursor: pointer;
+			text_align:center;
+		}
+		
+		.publicZnzx_close .publicZnzx_close_img{
+			display: block;
+			position: absolute;
+    		top: 50%;
+    		left: 50%;
+    		transform: translate(-50%, -50%); /* 居中图片 */
+			width: 16px;
+			height: 16px;
+			background: url('/website/img/icon_znzx_hide2.png') no-repeat center;
+			cursor: pointer;
+			
+		}
+		
+		.publicZnzx .publicZnzx_hidden{
+			display: block;
+			position: absolute;
+			top: 1px;
+			right: 61px;
+			width: 60px;
+			height: 60px;
+			cursor: pointer;
+			text_align:center;
+		}
+		
+		.publicZnzx_hidden .publicZnzx_hidden_img{
+			display: block;
+			position: absolute;
+    		top: 50%;
+    		left: 50%;
+    		transform: translate(-50%, -50%); /* 居中图片 */
+			width: 16px;
+			height: 16px;
+			background: url('/website/img/icon_znzx_zuixiaohua.png') no-repeat center;
+			cursor: pointer;
+			
+		}
+		
+		.publicZnzx h1{
+			width: 100%;
+			font-size: 18px;
+			font-weight: bold;
+			color: #fff;
+			line-height: 20px;
+			text-align: center;
+			border-bottom: 1px solid #fff;
+			padding: 12px 0px;
+		}
+		.publicZnzx p{
+			font-size: 16px;
+			line-height: 22px;
+			color: #fff;
+			text-indent: 2em;
+			text-align: justify;
+		}
+		.publicZnzx_Cardbo{
+			width: 100%;
+			text-align: center;
+			margin: 8px auto;
+		}
+		.publicZnzx a{
+			display: inline-block;
+			width: 80px;
+			font-size: 14px;
+			line-height: 28px;
+			color: #fff;
+			letter-spacing: 3px;
+			background: #4391e4;
+			/* background: #f7b02b; */
+			border: 1px solid #fff;
+			border-radius: 5px;
+		}
+		
+		/* 可拖动DIV层的实现方法 */
+		.no-select {
+		  user-select: none;
+		}
+		
+		/* .publicZnzx_Bar{
+			align-items: center;
+		    display: flex;
+		    justify-content: space-between;
+		    background: #ccc;
+		    width: 100%;
+		    height: 60px;
+		    cursor: move;
+		    user-select: none;
+		} */
+		
+		
+		/* 顶替智能问答标题区域 */
+		.publicZnzx_main-title{
+			width: 100%;
+		    display: flex;
+		    /* padding-top: 10px; */
+		    align-items: center;
+		    flex-direction: column;
+		    justify-content: center;
+		    font-family: Alibaba PuHuiTi,Alibaba PuHuiTi;
+		    font-weight: 500;
+		    font-size: 28px;
+		    color: #333;
+		    line-height: 42px;
+		    letter-spacing: 1px;
+		    text-align: center;
+		    font-style: normal;
+		    text-transform: none;
+		    cursor: move; /* 鼠标悬停时显示移动指针 move*/
+		}
+		
+		.publicZnzx_main-title .publicZnzx_sub-title {
+		    display: contents;
+		    font-weight: 400;
+		    font-size: 20px;
+		    color: #666;
+		}
+		
+		.publicZnzx_main-title .publicZnzx_title-underline {
+		    width: 290px;
+		    height: 4px;
+		    background: #2588FD;
+		    border-radius: 0;
+		}
+	</style>
+	<!-- 智能问答悬浮通知对话框end -->
+	
+	<!-- 智能问答悬浮通知对话框start  onmousedown="moveBind(this, event)" -->
+	<div id="publicZnzx" class="publicZnzx" style="bottom: 10px;display:none;" class="no-select">
+		<div id="publicZnzx_Bar" class="publicZnzx_main-title no-select">
+			智能业务咨询<span class="publicZnzx_sub-title">（试运行）</span>
+			<div class="publicZnzx_title-underline"></div>
+		</div>
+		<div id="publicZnzx_hidden" class="publicZnzx_hidden" onclick="hiddenZnzxDiv();">
+			<i class="publicZnzx_hidden_img" title="最小化"></i>
+		</div>
+		<div id="publicZnzx_close" class="publicZnzx_close" onclick="closeZnzxDiv();">
+			<i class="publicZnzx_close_img" title="关闭"></i>
+		</div>
+		<div id="publicZnzx_Card" class="publicZnzx_Card" style="display: block;">
+			<iframe id="znzxIframe" width="100%" scrolling='no' frameborder='0'></iframe>
+		</div>
+	</div>
+	<!-- 智能问答悬浮通知对话框end -->
+	
+
+	<!-- 调查问卷悬浮 -->
+
+<!-- 调查问卷悬浮通知对话框start -->
+	<style type="text/css">
+		.dcwjSubmit{
+			position: fixed;
+			bottom: -386px;
+			/* left: 78px; */
+			left:0px;
+			width: 100px;
+			/* padding: 5px; */
+			border-radius: 8px;
+			/*background: #f18f1c;*/
+			z-index: 999999;
+		}
+		.dcwjSubmit .dcwjSubmit_close{
+			display: block;
+			position: absolute;
+			top: 45%;
+			width: 20px;
+			height: 40px;
+			background: url('/website/img/icon_dcwj_shousuo.png') no-repeat center;
+			cursor: pointer;
+		}
+		.dcwjSubmit p{
+			font-size: 14px;
+			line-height: 14px;
+			color: #0c52c1;
+			margin:2px;
+			/*text-indent: 2em;
+			text-align: justify;*/
+		}
+		
+		.dcwjSubmitShow{
+			position: fixed;
+			bottom: -386px;
+			/* left: 78px; 
+			width: 100px;
+			padding: 5px;
+			border-radius: 8px;*/
+			left:0px;
+			/*background: #f18f1c;*/
+			z-index: 999999;
+		}
+		.dcwjSubmitShow .dcwjSubmitShow_close{
+			display: block;
+			position: absolute;
+			top: 5px;
+			right: 5px;
+			width: 12px;
+			height: 12px;
+			background: url('/website/img/icon_dcwj_hide.png') no-repeat center;
+			cursor: pointer;
+		}
+		.dcwjSubmitShow p{
+			font-size: 14px;
+			line-height: 14px;
+			color: #0c52c1;
+			margin:2px;
+			/*text-indent: 2em;
+			text-align: justify;*/
+		}
+		
+		.dcwjSubmitHidden{
+			position: fixed;
+			bottom: -386px;
+			/* left: 78px; 
+			width: 100px;
+			padding: 5px;
+			border-radius: 8px;*/
+			left:0px;
+			/*background: #f18f1c;*/
+			z-index: 999999;
+		}
+		.dcwjSubmitHidden .dcwjSubmitHidden_close{
+			display: block;
+			position: absolute;
+			top: 45%;
+			width: 20px;
+			height: 40px;
+			background: url('/website/img/icon_dcwj_shousuo.png') no-repeat center;
+			cursor: pointer;
+		}
+		.dcwjSubmitHidden p{
+			font-size: 14px;
+			line-height: 14px;
+			color: #0c52c1;
+			margin:2px;
+			/*text-indent: 2em;
+			text-align: justify;*/
+		}
+		
+		.pointer-cursor {
+		    cursor: pointer;
+		}
+		
+	</style>
+	<script type="text/javascript">
+		var isShow = false;
+		var showOrHiddenState = 1;
+		
+		/* 调查问卷打开问卷对话框 */
+		function showDcwjDialog(){
+			//https://www.ctdgt.cn:32318/askwise-nmpa-frontend/#/home
+			$('.dcwjSubmit').hide();
+			$('.publicDcwj').show();
+			if(!isShow){
+				isShow = true;
+				//如果是第一次打开，则加载iframe地址，否则只是显示智能咨询对话框
+				var divheight = $('.publicDcwj').height();
+				console.log("publicDcwj==="+divheight);
+				
+				var iframe = document.getElementById("dcwjIframe");
+				iframe.height = divheight;
+				var dcwjUrl = "https://www.nmpaic.org.cn/dcwj/index.html";
+				console.log("dcwjUrl=="+dcwjUrl);
+				iframe.src = dcwjUrl;
+			}
+		}
+		
+		/* 调查问卷默认状态1到展开状态2 */
+		function autoShow(){
+			showDcwjShow();
+		}
+		/* 调查问卷默认状态1到展开状态2 */
+		function showDcwjShow(){
+			$('.dcwjSubmit').hide();
+			$('.dcwjSubmitShow').show();
+			showOrHiddenState = 2;
+		}
+		
+		/* 调查问卷展开状态2到到默认状态1 */
+		function autoToDefault(){
+			showDcwjDefault();
+		}
+		/* 调查问卷展开状态2到到默认状态1 */
+		function showDcwjDefault(){
+			$('.dcwjSubmitShow').hide();
+			if(showOrHiddenState == 3){
+				$('.dcwjSubmit').hide();
+			}else{
+				$('.dcwjSubmit').show();
+			}
+			showOrHiddenState = 1;
+		}
+		/* 调查问卷展开状态2到到隐藏状态3 */
+		function closeDivDcwjShow(){
+			$('.dcwjSubmitShow').hide();
+			$('.dcwjSubmitHidden').show();
+			showOrHiddenState = 3;
+		}
+		
+		/* 调查问卷从隐藏状态3到展开状态2 */
+		function autoToShow2(){
+			showDcwjSubmit();
+		}
+		/* 调查问卷从隐藏状态3到展开状态2 */
+		function showDcwjSubmit(){
+			$('.dcwjSubmitHidden').hide();
+			$('.dcwjSubmitShow').show();
+			showOrHiddenState = 2;
+		}
+		
+		
+	</script>
+	<!-- 调查问卷悬浮通知对话框end -->
+
+	<!-- 调查问卷悬浮通知对话框start2 2025/3/31下架display:none;-->
+ 	<div id="dcwjSubmit" class="dcwjSubmit" style="bottom: 30%;display:none;" onmouseover="autoShow();">
+		<div id="dcwjSubmit_Card" style="display: block;text-align:center;" onclick="showDcwjShow();">
+			<img src="/website/img/icon_dcwj_default.png" width="158px" class="pointer-cursor"></img>
+		</div>
+	</div>
+	
+	<div id="dcwjSubmitShow" class="dcwjSubmitShow" style="bottom: 20%;display:none;" onmouseleave="autoToDefault();">
+		<i id="dcwjSubmitShow_close" class="dcwjSubmitShow_close" onclick="closeDivDcwjShow();"></i>
+		<div id="dcwjSubmitShow_Card" style="display: block;text-align:center;" onclick="showDcwjDialog();">
+			<img src="/website/img/icon_dcwj_show.png" width="158px" class="pointer-cursor"></img>
+		</div>
+	</div>
+	
+	<div id="dcwjSubmitHidden" class="dcwjSubmitHidden" style="bottom: 30%;display:none;" onmouseover="autoToShow2();">
+		<!-- <i id="dcwjSubmitHidden_close" class="dcwjSubmitHidden_close" onclick="closeDivDcwjHidden();"></i> -->
+		<div id="dcwjSubmitHidden_Card" style="display: block;text-align:center;" onclick="showDcwjSubmit();">
+			<img src="/website/img/icon_dcwj_hidden.png" style="width:38px;" class="pointer-cursor"></img><br/>
+		</div>
+	</div>
+	
+	<!-- 调查问卷悬浮通知对话框end2 -->
+	
+	<!-- 调查问卷对话框界面 -->
+	<!-- 调查问卷悬浮通知对话框start -->
+	<script type="text/javascript">
+		function closeDivPublicDcwj(){
+			$('.publicDcwj_close').parents('.publicDcwj').hide();
+			$('.dcwjSubmitShow').show();
+		}
+	</script>
+	<!-- 调查问卷悬浮通知对话框end -->
+	
+	<!-- 调查问卷悬浮通知对话框start -->
+	<style type="text/css">
+		.publicDcwj{
+			position: fixed;
+			bottom: -386px;
+			/* right: 78px; */
+			left:0px;
+			width: 87%;
+			height:94%;
+			padding: 10px 15px 20px;
+			border-radius: 8px;
+			border:1px solid #e9e9e9;
+			box-shadow: 5px 5px 5px #e9e9e9;
+			background: #ffffff;
+			z-index: 999999;
+		}
+		.publicDcwj .publicDcwj_close{
+			display: block;
+			position: absolute;
+			top: 15px;
+			right: 40px;
+			width: 20px;
+			height: 20px;
+			background: url('/website/img/icon_dcwj_close.png') no-repeat center;
+			cursor: pointer;
+		}
+		.publicDcwj h1{
+			width: 100%;
+			font-size: 18px;
+			font-weight: bold;
+			color: #fff;
+			line-height: 20px;
+			text-align: center;
+			border-bottom: 1px solid #fff;
+			padding: 12px 0px;
+		}
+		.publicDcwj p{
+			font-size: 16px;
+			line-height: 22px;
+			color: #fff;
+			text-indent: 2em;
+			text-align: justify;
+		}
+		.publicDcwj_Cardbo{
+			width: 100%;
+			text-align: center;
+			margin: 8px auto;
+		}
+		.publicDcwj a{
+			display: inline-block;
+			width: 80px;
+			font-size: 14px;
+			line-height: 28px;
+			color: #fff;
+			letter-spacing: 3px;
+			background: #4391e4;
+			/* background: #f7b02b; */
+			border: 1px solid #fff;
+			border-radius: 5px;
+		}
+		
+	</style>
+	<!-- 调查问卷悬浮通知对话框end -->
+	
+	<!-- 调查问卷悬浮通知对话框start -->
+	 <div id="publicDcwj" class="publicDcwj" style="bottom: 10px;cursor:pointer;display:none;">
+		<i id="publicDcwj_close" class="publicDcwj_close" onclick="closeDivPublicDcwj();"></i>
+		<div id="publicDcwj_Card" class="publicDcwj_Card" style="display: block;">
+			<iframe id="dcwjIframe" width="100%" scrolling='yes' frameborder='0'></iframe>
+		</div>
+	</div>
+	<!-- 调查问卷悬浮通知对话框end -->
+	
+	<script src="/website/script/common/mobileappwhy.js?20260716"></script>
+	
+	<script>
+		//2025-04-17，适配移动端
+		$(window).on("resize load", function() {
+			//2025-04-17，适配移动端
+			handleResize();
+		 });
+		
+		//动态调整布局示例【暂不使用】
+		//window.addEventListener('resize', handleResize);
+		
+		function handleResize() {
+		    var deviceType = detectDevice();
+			console.log("deviceType=="+deviceType);
+			if (deviceType === 'app') {
+				// 针对移动端的处理
+				console.log("=app=");
+				//隐藏右侧悬浮栏
+				$(".right-wrap").hide();
+				$(".questionSubmit").hide();//隐藏智能咨询的入口
+				loadCSS('/websiteTwo/css/mobileappwhy.css?20250417');
+			 } else if(deviceType === 'mobile'){
+			    // 针对WAP端的处理
+			    console.log("=mobile=");
+				$(".right-wrap").show();
+				$(".questionSubmit").show();//保留智能咨询的入口
+				loadCSS('/websiteTwo/css/mobilewhy.css?20250417');
+			 } else {
+			    // 针对PC端的处理
+			    console.log("=pc=");
+			 }
+		}
+	</script>
+	
+	<script type="text/javascript">
+		Vue.prototype.ajax = function(url, data, success) {
+			$.ajax({
+				type : "POST",
+				cache : false,
+				url : url,
+				data : data,
+				success : function(res) {
+					if (success) {
+						success(res);
+					}
+				}
+			});
+		}
+	</script>
+
+	<script>
+	$(document).ready(function() {
+		if(getQueryVariable("index") == 1){
+			openBllc();
+		}
+	});
+	function getQueryVariable(variable)
+	{
+	       var query = window.location.search.substring(1);
+	       var vars = query.split("&");
+	       for (var i=0;i<vars.length;i++) {
+	               var pair = vars[i].split("=");
+	               if(pair[0] == variable){return pair[1];}
+	       }
+	       return false;
+	}
+	// 滚动固定、回到顶部
+	var win = $(window), tofixed = $(".left-tab-tofixed,.right-option-tofixed"), main = $(".center-details"), toTop = $("#toTop");
+	win.on("scroll", function() {
+		var t = win.scrollTop();
+		tofixed.css(t > main.offset().top ? {
+			position : "fixed",
+			top : "0"
+		} : {
+			position : "relative"
+		});
+		toTop.css("margin-left", main.width() * 0.5);
+		t > 200 ? toTop.removeClass("top-arrived") : toTop.addClass("top-arrived")
+	});
+	toTop.click(function() {
+		$('html , body').animate({
+			scrollTop : 0
+		}, 'slow');
+	});
+	// 打开地图
+	function openMap(addr) {
+		window.open("https://api.map.baidu.com/geocoder?address=" + addr + "&output=html", "map")
+	}
+	//打开材料详情
+	function openDiv(material_id) {
+		$.ajax({
+			type : "POST",
+			url : "/web/taskview/findMaterial",
+			data : {
+				material_id : $.trim(material_id)
+			},
+			dataType : "json",
+			success : function(data) {
+				if (data.state) {
+			 		document.getElementById('materialName').innerHTML=data.data.material_name.replace(new RegExp('/^', 'gi'),'<br/>');
+			 		var material_type = "无";
+			 		if('1' == data.data.material_type){
+			 			material_type = "原件";
+			 		}else if('2' == data.data.material_type){
+			 			material_type = "复印件";
+			 		}else if('3' == data.data.material_type){
+			 			material_type = "原件和复印件";
+			 		}
+			 		document.getElementById('materialType').innerHTML=material_type;
+			 		var is_need = "无";
+			 		if('1' == data.data.is_need){
+			 			is_need = "必要";
+			 		}else if('2' == data.data.is_need){
+			 			is_need = "非必要";
+			 		}else if('3' == data.data.is_need){
+			 			is_need = "容缺后补";
+			 		}
+			 		document.getElementById('isNeed').innerHTML=is_need;
+			 		var material_format = "无";
+			 		if('1' == data.data.material_format){
+			 			material_format = "纸质";
+			 		}else if('2' == data.data.material_format){
+			 			material_format = "电子";
+			 		}else if('3' == data.data.material_format){
+			 			material_format = "纸质、电子";
+			 		}
+			 		document.getElementById('materialFormat').innerHTML=material_format;
+			 		var source_type = "无";
+			 		if(10 == data.data.source_type){
+			 			source_type = "申请人自备";
+			 		}else if(20 == data.data.source_type){
+			 			source_type = "政府部门核发";
+			 		}else if(99 == data.data.source_type){
+			 			source_type = "其他";
+			 		}
+			 		var by_law= '';
+			 		for(var i=0; i<data.data.materiallaws.length;i++){
+			 			by_law += (i + 1) +'.' + data.data.materiallaws[i].fl_name + (data.data.materiallaws[i].num==null?'' : data.data.materiallaws[i].num)
+			 				+ (data.data.materiallaws[i].clause==null ? '':data.data.materiallaws[i].clause) + data.data.materiallaws[i].content + '<br/>';
+			 		}
+			 		document.getElementById('sourceType').innerHTML=source_type;
+			 		document.getElementById('sourceExplain').innerHTML=data.data.source_explain==null ? '无':data.data.source_explain;
+			 		document.getElementById('fillExplain').innerHTML=data.data.fill_explain==null ? '无':data.data.fill_explain;
+			 		document.getElementById('accept_stand').innerHTML=data.data.accept_stand==null ? '无':data.data.accept_stand;
+			 		document.getElementById('by_law').innerHTML=by_law;
+			 		document.getElementById('remark').innerHTML=data.data.remark==null ? '无':data.data.remark;
+				} else {
+					layer.msg(data.msg);
+				}
+			}
+		});
+
+		layer.open({
+		  type: 1,
+// 		  skin: 'layui-layer-rim', //加上边框
+		  area: ['60%', '60%'], //宽高
+		  content: $('#material_detail'),
+		  title:'材料详情',
+		  success:function(){
+			  $('#material_detail').css('display','block');
+		  },
+		  cancel : function(){
+			  $('#material_detail').css('display','none');
+		  }
+		});
+	}
+
+	//国家药监局规定的特殊制剂调剂使用以及制剂跨省级行政区域调剂使用审批11100000MB0341032Y100017211400101
+	//企业从事麻醉药品、第一类精神药品全国性批发首次审批11100000MB0341032Y100017212100101【20241220切换到东软的政务服务事项系统】
+	function toviewtask(task_handle_item){
+		var msg = "请按照<a href='javascript:void(0)' onclick='openBllc()' style='color: #0b51c1;text-decoration: underline;'>办事流程</a>前往企业所属省份的政务服务平台办理";
+		if(task_handle_item=='11100000MB0341032Y100017211400101'){
+			msg = "请按照<a href='javascript:void(0)' onclick='openBllc()' style='color: #0b51c1;text-decoration: underline;'>办事流程</a>前往机构所属省份的政务服务平台办理";
+		}
+		layer.alert(msg, {icon: 7});
+
+	}
+	//医疗机构配制的制剂调剂（跨省）审批：在线办理
+	function toviewtask2(task_handle_itemStr){
+		//20221014，HaiyuKing，暂时隐藏，测试环境中放开
+		hxzk_auth.openzwfwglxt(this,task_handle_itemStr,'ZWFWGLXT');
+	}
+	//企业从事麻醉药品、第一类精神药品全国性批发首次审批,11100000MB0341032Y100017212100101,在线办理
+	function toviewtask3(task_handle_itemStr){
+		//20241030，HaiyuKing
+		var msg = msg = "申请成为麻醉药品和第一类精神药品全国性批发企业应符合<a href='https://zwfw.nmpa.gov.cn/web/index/notice?id=8ac789d0928f9cd801929e8960d6251a' target='_blank' style='color: #0b51c1;text-decoration: underline;'>《国家药监局麻醉药品和第一类精神药品定点批发企业布局和数量要求》</a>（国食药监安〔2007〕6号） ";
+		layer.alert(msg, 
+				{
+					btn: ['继续办理','我已知晓'],
+					icon: 7,
+					yes:function(){
+						hxzk_auth.openzwfwglxt(this,task_handle_itemStr,'ZWFWGLXT'); 
+						//关闭对话框
+						layer.closeAll();
+					},
+					btn2:function(){
+				    }
+				});
+		
+	}
+	//跳转到办理流程
+	function openBllc(){
+		layer.closeAll();
+		$('.left-tab-tofixed ul li').removeClass('active');
+		$('#bllc').addClass('active');
+		$(".center-details > .details-item").eq(1).show().siblings().hide();
+	}
+
+	$(function(){
+		$("#aDiv a").each(function(i){
+			$(this).click(function(){
+				if(i==0){
+					$("ul.has-progress li").show();
+				}else{
+					var obj = $(".progress-list-"+(i-1));
+					obj.siblings().hide();
+					obj.show();
+				}
+			})
+		});
+	})
+
+	//下载base64文件
+	function downloadByBase64(base64Str, fileName) {
+		if (window.navigator && window.navigator.msSaveBlob) {
+			//兼容IE浏览器
+		   base64Str = window.atob(base64Str);//解码使用 base-64 编码的字符串。
+		   var n = base64Str.length;
+		   // 创建一个Uint8Array类型的数组以存放二进制数据
+		   var u8arr = new Uint8Array(n);
+		   // 将二进制数据存入Uint8Array类型的数组中
+// 		   for (var i = 0; i < n; i++) {
+// 			   u8arr[i] = base64Str.charCodeAt(i);
+// 		   }
+		   while (n--) {
+			   u8arr[n] = base64Str.charCodeAt(n);
+		   }
+		   // 创建blob对象
+		   var blob = new Blob([u8arr]);
+		   // 调用浏览器的方法，调起IE的下载流程
+		   window.navigator.msSaveOrOpenBlob(blob, fileName);//打开或保存
+
+// 		   window.navigator.msSaveBlob(blob, fileName);//保存
+		} else {
+			  var downloadElement = document.createElement("a");
+			  var href = base64Str;
+			  if (typeof base64Str == "string") {
+			    downloadElement.target = "_blank";
+			  } else {
+			    href = window.URL.createObjectURL(base64Str); //创建下载的链接
+			  }
+			  downloadElement.href = href;
+			  if(fileName.indexOf('pdf')>=0){
+				  downloadElement.setAttribute('href', 'data:application/pdf;base64,' + base64Str);
+			  }else if(fileName.indexOf('doc')>=0){
+				  downloadElement.setAttribute('href', 'data:application/docx;base64,' + base64Str);
+			  }
+
+			  downloadElement.download = fileName; //下载后文件名
+			  document.body.appendChild(downloadElement);
+			  downloadElement.click(); //触发点击下载
+			  document.body.removeChild(downloadElement); //下载完成移除元素
+			  if (typeof base64Str != "string") {
+			    window.URL.revokeObjectURL(href); //释放掉blob对象
+			  }
+		}
+	}
+
+	//收费材料下载
+	function downloadByBase64Material(file_type, id) {
+		//20250326 修改为从数据库中查询下载
+		$.ajax({
+			type: "POST",
+			url: "/web/taskview/findMaterial",
+			data: {
+				material_id: $.trim(id)
+			},
+			dataType: "json",
+			success: function (data) {
+				if (data.state) {
+					var base64Str = '';
+					var fileName = '';
+					if(file_type=='kbbg'){//空白表格下载
+						var base64Str = data.data.form_content;
+						var fileName = data.data.form_guid;
+					}else{//示例样表下载
+						base64Str = data.data.example_content;
+						fileName = data.data.example_guid;
+					}
+					downloadByBase64(base64Str, fileName);
+				}else{
+					layer.alert('未获取到附件！');
+				}
+			}
+		});
+	}
+</script>
+
+<div id="overlay" class="overlay"></div>
+</body>
+</html>

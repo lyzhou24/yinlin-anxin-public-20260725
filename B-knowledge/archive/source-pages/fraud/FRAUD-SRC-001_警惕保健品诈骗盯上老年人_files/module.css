@@ -1,0 +1,617 @@
+@charset "utf-8";
+/*
+    Css for PEL,    ver 1.0
+    CopyRight By Dongyi Network Technology CO.,Ltd Design Center
+
+    所有网站通用模块，可根据自身网站修改
+*/
+/* 通用信息列表 */
+.infoList {
+    text-align: left;
+}
+.infoList li {
+    padding:0 5px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+}
+.infoList li a {
+    padding-left: 12px;
+    font-size: 16px;
+    background: url(/global/icons.png) -2px -386px no-repeat;
+}
+.infoList li .date {
+    font-size: 14px;
+    margin-left: 15px;
+    float: right;
+    color: #999;
+}
+.infoList li span {
+    font-size: 14px;
+    margin-left: 15px;
+    float: right;
+    color: #999;
+}
+.infoList li .node {
+    color: #f00;
+    margin-right: 5px;
+}
+.infoList .newSing{
+    display:inline-block;
+    *display:inline;
+    zoom:1;
+    vertical-align:top;
+    height: 100%;
+    width: 40px;
+    background:url(../../Base/img/new.gif) center center no-repeat;
+}
+/* 通用带图片的信息列表_普通式 */
+.picList li {
+    text-align: center;
+}
+.picList li .pic img {
+    width: 95px;
+    height: 125px;
+    padding: 4px;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+.picList li .pic a:hover img {
+    border-color: #aaa;
+}
+.picList li .title {
+    padding-top: 5px;
+}
+/* 通用带图片的信息列表_普通式 - 横排浮动 */
+.picListFl {
+    margin-right: -2%;
+    overflow: hidden;
+    zoom: 1;
+}
+.picListFl li {
+    width: 23%;
+    margin-right: 2%;
+    text-align: center;
+    float: left;
+    _display: inline;
+    overflow: hidden;
+}
+.picListFl li .pic {
+    overflow: hidden
+}
+.picListFl li .pic img {
+    width: 100%;
+    height:auto;
+    transition: 200ms;
+    -webkit-transition: 200ms;
+    -o-transition: 200ms;
+    -moz-transition: 200ms;
+}
+.picListFl li .title {
+    font-size: 14px;
+    padding-top: 8px;
+    line-height:24px;
+    height: 48px;
+}
+.picListFl li:hover .pic img {
+    transform: scale(1.05, 1.05);
+    -moz-transform: scale(1.05, 1.05);
+    -webkit-transform: scale(1.05, 1.05);
+    -o-transform: scale(1.05, 1.05);
+}
+.picListFl-5 li{
+    width:18%;
+}
+/* 内容带图片的信息列表_普通式 - 左图片右文字 */
+.txtPicList li {
+    overflow: hidden;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+.txtPicList li .pic {
+    width: 96px;
+    float: left;
+}
+.txtPicList li .pic img {
+    width: 90px;
+    height: 90px;
+    padding: 2px;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+.txtPicList li .pic a:hover img {
+    border-color: #aaa;
+}
+.txtPicList li .con {
+    width: 230px;
+    float: left;
+    padding-left: 8px;
+}
+.txtPicList li .title {
+    height: 28px;
+    line-height: 28px;
+    font-size: 14px;
+    color: #c30000;
+    font-weight: bold;
+}
+.txtPicList li .title a {
+    color: #c30000;
+}
+.txtPicList li .intro {
+    color: #666;
+    line-height: 20px;
+}
+.txtPicList li .intro .more {
+    color: #c30000;
+    font-size: 12px;
+}
+/* 内容带图片的信息列表_普通式 - 上图片下文字 */
+.txtPicListB li .pic img {
+    width: 190px;
+    height: 120;
+    padding: 4px;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+.txtPicListB li .pic a:hover img {
+    border-color: #aaa;
+}
+.txtPicListB li .title {
+    height: 28px;
+    line-height: 28px;
+    font-weight: bold;
+}
+.txtPicListB li .title a {
+    color: #9b770a;
+}
+.txtPicListB li .intro {
+    color: #666;
+}
+.txtPicListB li .intro .more {
+    color: #f60;
+}
+/* 头条图文信息列表_普通式 */
+.topicList .t {
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+}
+.topicList .t .title {
+    font-size: 17px;
+    padding: 0 0 5px 0;
+}
+.topicList .t .tit {
+    color: #1258ad;
+}
+.topicList .t .tit:hover {
+    color: #c30000
+}
+.topicList .t .intro {
+    font-size: 12px;
+    color: #666;
+    text-align: left;
+    line-height: 1.8;
+}
+.topicList .t .intro .more {
+    color: #f00;
+}
+.topicList .n {
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    padding: 0 10px 0 0;
+}
+.topicList .n .tit {
+    padding-left: 18px;
+    background: url(/global/icons.png) 5px -386px no-repeat;
+}
+.topicList .n .date {
+    float: right;
+    color: #999;
+    margin-left: 10px;
+}
+/* 有图片时追加的类 class="topicList topicHasPic"  */
+.topicHasPic .t {
+    position: relative;
+    overflow: hidden;
+    zoom: 1;
+    border-bottom: 1px dashed #ccc;
+}
+.topicHasPic .pic {
+
+    margin-right: 20px;
+    float: left;
+}
+.topicHasPic .pic img {
+    width: 160px;
+    height: 120px;
+}
+.topicHasPic .pic a:hover img {
+    border-color: #aaa;
+}
+.topicHasPic .con {
+    overflow: hidden;
+    zoom: 1;
+}
+.LyDitu  {
+ 
+    overflow: hidden;
+    position: relative;
+
+}
+
+
+/* 焦点图切换-广告 */
+.slideBox {
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+
+}
+.slideBox .hd {
+    position: absolute;
+    z-index: 1;
+    right: 5px;
+    bottom: 10px;
+}
+.slideBox .hd ul {
+    overflow: hidden;
+    zoom: 1;
+    float: left;
+}
+.slideBox .hd ul li {
+    font-size: 12px;
+    float: left;
+    margin-right: 5px;
+    width: 13px;
+    height: 13px;
+    line-height: 13px;
+    text-align: center;
+    background: #fff;
+    cursor: pointer;
+    color: #fff;
+    -webkit-border-radius:13px; -moz-border-radius:13px; border-radius:13px;
+}
+.slideBox .hd ul li span{
+    display:none;
+}
+.slideBox .hd ul li.on {
+    background: #FF5600;
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+.slideBox .bd {
+    position: relative;
+    z-index: 0;
+}
+.slideBox .bd .con {
+    display: none;
+}
+
+
+
+/* 旅游底图切换 */
+.lyslideBox {
+    height: 600px;
+        width:1200px;
+    overflow: hidden;
+    position: relative;
+
+}
+
+.lyslideBox .bd {
+    position: relative;
+    z-index: 0;
+}
+.lyslideBox .bd .con {
+    display: none;
+}
+.lyslideBox .bd img{
+    width:100%;
+    height:600px;
+}
+.lyslideBox .hd{
+    display:none;
+    position:absolute;
+
+}
+
+
+/* 焦点图切换-新闻内容 */
+.focusBox {
+    margin-bottom: 15px; /* width: 100%; */
+    overflow: hidden;
+    position: relative;
+}
+.focusBox .hd {
+    position: absolute;
+    z-index: 1;
+    right: 4px;
+    bottom: 14px;
+}
+.focusBox .hd ul {
+    overflow: hidden;
+    zoom: 1;
+    float: left;
+}
+.focusBox .hd ul li {
+    float: left;
+    margin-right: 5px;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    background: #none;
+    cursor: pointer;
+    border:1px solid  #fff;
+    -webkit-border-radius:14px; -moz-border-radius:14px; border-radius:14px;
+}
+.focusBox .hd ul li.on {
+    background: #fff;
+}
+.focusBox .hd ul li span {
+    display: none;
+}
+.focusBox .bd {
+    position: relative;
+    overflow: hidden;
+}
+.focusBox .bd li {
+    position: relative;
+}
+.focusBox .bd .pic {
+    position: relative;
+    z-index: 0;
+    line-height: 0;
+}
+.focusBox .bd .pic img {
+    width: 100%;
+    height: 260px;
+    border: 0;
+}
+.focusBox .bd .con {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    bottom: 0;
+    height: 46px;
+    line-height: 46px;
+    text-align: left;
+}
+.focusBox .bd .con .title {
+    position: absolute;
+    width: 76%;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    height: 100%;
+    overflow: hidden;
+}
+.focusBox .bd .con .title a {
+    color: #fff;
+    padding-left: 10px;
+    text-decoration: none;
+    font-size:16px;
+}
+.focusBox .bd .con .titleBg {
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+    bottom: 0;
+    left: 0;
+    background: #000;
+    filter: alpha(opacity=60);
+    opacity: 0.6;
+    height: 46px;
+}
+/* url_方块样式分页 */
+.page {
+    font-size: 0;
+    text-align: left;
+    padding: 25px 0;
+    clear: both;
+}
+.page:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.page a, .page span {
+    font-size: 14px;
+    float: left;
+    _display: inline;
+    zoom: 1;
+    border: 1px solid #E1E1E1;
+    padding: 0px 10px;
+    margin: 0 3px 5px 0;
+    line-height: 32px;
+    height: 32px;
+}
+.page a:hover, .page span:hover {
+    border: 1px solid #1258AD;
+    text-decoration: none;
+    color: #1258AD;
+}
+.page .current {
+    background: #1258AD;
+    border: 1px solid #1258AD;
+    color: #fff !important;
+    font-weight: bold;
+}
+.page select, .page input {
+    margin: 0 4px;
+    background: #fff;
+    border: 0 solid #E1E1E1;
+    vertical-align: middle;
+}
+.page input {
+    text-align: center;
+    padding: 0 4px;
+    outline: none;
+}
+/*-- 网站地图 --*/
+.siteMap {
+    /* padding: 15px 10px; */
+    overflow: hidden;
+    zoom: 1;
+}
+.siteMap .li1 {
+    margin-bottom: 20px;
+}
+.siteMap .h1 {
+    height: 40px;
+    line-height: 40px;
+    border: 1px dotted #ccc;
+    background: #fff;
+    background: #f6f6f6;
+}
+.siteMap .h1 .a1 {
+    font: normal 16px/40px "Microsoft YaHei";
+    _font-weight: bold;
+    color: #3269B8;
+    padding-left: 15px;
+}
+.siteMap .ul1 {
+    padding: 10px 20px;
+    zoom: 1;
+}
+.siteMap .li2 {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    padding-right: 50px;
+    vertical-align: top;
+    padding-bottom: 5px;
+}
+.siteMap .a2 {
+    color: #666;
+}
+.siteMap .ul2 {
+    padding: 0 0 20px 0;
+}
+.siteMap .li3 {
+    line-height: 18px;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+}
+.siteMap .a3 {
+    color: #999;
+    padding-right: 10px;
+    margin-right: 10px;
+    border-right: 1px solid #ddd;
+}
+.siteMap .last3 .a3 {
+    border-right: 0;
+}
+.siteMap #liID41 .li2 {
+    display: block;
+}
+
+/* picListFl-A */
+.picListFl-A {
+    margin-right: -30px;
+    overflow: hidden;
+    text-align: center;
+}
+.picListFl-A li {
+    border: 1px solid #ddd;
+    float: left;
+    width: 206px;
+    margin: 0 15px 0 0;
+    _display: inline;
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+}
+.picListFl-A .pic {
+    margin: 3%;
+}
+.picListFl-A .pic img {
+    height: auto;
+    width: 100%;
+}
+.picListFl-A .title, .picListFl-A .titleBg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 94%;
+    margin: 3%;
+    display: block;
+    overflow: hidden;
+    line-height: 28px;
+    padding: 5px 0;
+    height: 28px;
+    z-index: 3;
+    color: #fff;
+    -webkit-transition: 400ms;
+    -o-transition: 400ms;
+    -moz-transition: 400ms;
+    transition: 400ms;
+}
+.picListFl-A .titleBg {
+    background: #000;
+    filter: alpha(opacity=60);
+    opacity: 0.6;
+    z-index: 2;
+}
+.picListFl-A .title a {
+    color: #fff;
+    padding: 0 10px;
+    display: block;
+    font-size: 14px;
+}
+.picListFl-A li:hover {
+    border-color: #bbb;
+    -webkit-box-shadow: #eee 2px 2px 0;
+    -moz-box-shadow: #eee 2px 2px 0;
+    box-shadow: #eee 2px 2px 0;
+}
+.picListFl-A li:hover .title, .picListFl-A li:hover .titleBg {
+    height: 56px;
+}
+
+/*--
+浮动图标
+--*/
+
+
+
+.phTalkAd .adpicNum {
+    position: absolute;
+    z-index: 1;
+    right: 5px;
+    bottom: 10px;
+}
+.phTalkAd .adpicNum ul {
+    overflow: hidden;
+    zoom: 1;
+    float: left;
+}
+.phTalkAd .adpicNum ul li {
+    font-size: 12px;
+    float: left;
+    margin-right: 5px;
+    width: 13px;
+    height: 13px;
+    line-height: 13px;
+    text-align: center;
+    background: #fff;
+    cursor: pointer;
+    color: #fff;
+    -webkit-border-radius:13px; -moz-border-radius:13px; border-radius:13px;
+}
+.phTalkAd .adpicNum ul li span{
+    display:none;
+}
+.phTalkAd .adpicNum ul li.sel {
+    background: #FF5600;
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+
+/*--
+颜色代码
+#1E72B4 深蓝色标题
+#C4DEF8 淡蓝色边框
+--*/

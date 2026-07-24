@@ -1,0 +1,133 @@
+Array.prototype.contains = function(needle) {
+	for (i in this) {
+		if (this[i] == needle){
+			return true;
+		}
+	}
+	return false;
+}
+String.prototype.replaceAll = function(s1,s2){ 
+	return this.replace(new RegExp(s1,"gm"),s2); 
+}
+
+
+var scripts=document.getElementsByTagName("script");
+var thisScript = scripts[scripts.length - 1];
+var appUrl = thisScript.getAttribute("data-appurl");
+var dfsUrl = appUrl + "/DFS";
+if(!appUrl){
+	var lastUrl = thisScript.src;
+	appUrl = lastUrl.replace("front/ui/boshan/ui.js", "");
+	if(appUrl.indexOf("?") > 0){
+		appUrl = appUrl.substring(0, appUrl.indexOf("?"));
+	}
+	dfsUrl = appUrl + "/DFS";
+}
+initUI();
+
+
+function initUI(){
+	if(appUrl == ""){
+		return;
+	}
+	var uis = thisScript.getAttribute("data-ui");
+	//兼容ajaxpage
+	importantJs("jquery/jquery.js");
+	importantJs("jquery/jquery.base64.js");
+	if(!uis){
+		return;
+	}
+	var uiList = uis.split(",");
+	//基本
+	importantJs("template/es5-shim.min.js");
+	importantJs("template/es5-sham.min.js");
+	importantJs("template/template-web.js");
+	importantJs("template/template-bs.js");
+	importantJs("layer/layer.js");
+	importantJs("layer/bs.js");
+	importantCss("layer/bs.css");
+	importantCss("page/channel.css");
+	importantJs("page/page.js");
+	
+	if(uiList.contains("echarts")){
+		importantJs("echarts/echarts.min.js");
+		importantJs("echarts/map/china.js");
+		importantJs("echarts/wordcloud.min.js");
+	}
+	if(uiList.contains("video")){
+		importantJs("jwplayer/jwplayer.js");
+		importantJs("jwplayer/bs.js");
+	}
+	if(uiList.contains("validity")){
+		importantJs("validity/jquery.form.js");
+		importantJs("validity/jquery.validity.js");
+		importantCss("validity/jquery.validity.css");
+	}
+	if(uiList.contains("editor")){
+		importantCss("umeditor/themes/default/css/umeditor.min.css");
+		importantJs("umeditor/umeditor.min.js");
+		importantJs("umeditor/umeditor.config.js");
+	}
+	if(uiList.contains("tree")){
+		importantJs("ztree/js/jquery.ztree.all-3.5.js");
+		importantCss("ztree/css/zTreeStyle/zTreeStyle.css");
+	}
+	if(uiList.contains("mobile")){
+		importantCss("mobile/mui/css/mui.min.css");
+		importantJs("mobile/mui/js/mui.min.js");
+		importantCss("mobile/boshan/mui.css");
+	}
+}
+function importantJs(path){
+	document.write("<script type='text/javascript' src='/front/ui/" + path + "'></script>"); 
+}
+function importantCss(path){
+	document.write("<link type='text/css' rel='stylesheet' href='/front/ui/" + path + "'/>"); 
+}
+function getQueryString(name, url) {
+	if(url == undefined){
+		url = window.location.search.substr(1);
+	}else if(url.indexOf("?") != -1){
+		url = url.substr(url.indexOf("?") + 1)
+	}else{
+		url = "";
+	}
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+	var r = url.match(reg); 
+	if (r != null){
+		return decodeURI(r[2]);
+	}
+	return ""; 
+}
+
+function post(url, setting){
+	var opt = {
+			type:'json',
+			contentType : 'application/x-www-form-urlencoded',
+			error:function(a,b,msg){alert('操作失败');},
+			success:function(){},
+			data:null,
+			async:false
+	};
+	opt = $.extend(opt, setting);
+	url = appUrl + url;
+	//定义一个新的，防止引引用问题被修改
+	var data = {};
+	if(opt.data != null){
+		$.base64.utf8encode = true;
+		for (key in opt.data){
+			var value = $.base64.btoa(opt.data[key] + "");	
+			data[key] = value;
+		}
+	}
+	$.ajax({
+		type: "post",
+		url: url,
+		dataType: opt.type,
+		error : opt.error,
+		contentType : opt.contentType,
+		data:data,
+		success : opt.success,
+		async:opt.async
+	});
+}

@@ -1,0 +1,264 @@
+//拓展脚本
+var extendTools={
+    //设置cookie 
+    setCookie:function(name, value){
+        var argv = setCookie.arguments;
+        var argc = setCookie.arguments.length;
+        var expires = (argc > 2) ? argv[2] : null;
+        if (expires != null) {
+            var LargeExpDate = new Date();
+            LargeExpDate.setTime(LargeExpDate.getTime() + (expires * 1000 * 3600 * 24));
+        }
+        document.cookie = name + "=" + escape(value) + ((expires == null) ? "" : ("; expires=" + LargeExpDate.toGMTString())) + ";path=/;";               //全站设置cookie
+    },
+    // 获取cookie
+    getCookie:function(Name){
+        var search = Name + "="
+        if (document.cookie.length > 0) {
+            offset = document.cookie.indexOf(search);
+            if (offset != -1) {
+                offset += search.length;
+                end = document.cookie.indexOf(";", offset);
+                if (end == -1) end = document.cookie.length;
+                return unescape(document.cookie.substring(offset, end));
+            } else {
+                return '';
+            }
+        }
+    },
+    // 判断是否为低版本浏览器
+    isLowerVersionBrower:function(){
+        var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+        var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器  
+        var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器  
+        var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+        if (isIE) {
+            var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+            reIE.test(userAgent);
+            var fIEVersion = parseFloat(RegExp["$1"]);
+            if (fIEVersion == 7) {
+                return true;
+            } else if (fIEVersion == 8) {
+                return true;
+            } else if (fIEVersion == 9) {
+                return true;
+            } else if (fIEVersion == 10) {
+                return false;
+            } else {
+                return true;//IE版本<=7
+            }
+        } else if (isEdge) {
+            return false;//edge
+        } else if (isIE11) {
+            return false; //IE11  
+        } else {
+            return false;//不是ie浏览器
+        }
+    },
+    // 判断是否为ie浏览器
+    isIeBrower:function(){
+        var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+        var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器  
+        var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器  
+        var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+        if (isIE) {
+            var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+            reIE.test(userAgent);
+            var fIEVersion = parseFloat(RegExp["$1"]);
+            if (fIEVersion == 7) {
+                return true;
+            } else if (fIEVersion == 8) {
+                return true;
+            } else if (fIEVersion == 9) {
+                return true;
+            } else if (fIEVersion == 10) {
+                return true;
+            } else {
+                return true;//IE版本<=7
+            }
+        } else if (isEdge) {
+            return true;//edge
+        } else if (isIE11) {
+            return true; //IE11  
+        } else {
+            return false;//不是ie浏览器
+        }
+    },
+    //低版本浏览器提醒
+    lowerVersionNotice:function(){
+        var noticeStyle_var1='\
+        #IE-warning-bg{background: repeat url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NENFQzlFODk1OUQ0MTFFOUEzRTJCQTBGRjA4NTkwNkEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NENFQzlFOEE1OUQ0MTFFOUEzRTJCQTBGRjA4NTkwNkEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo0QzcxRUU4NjU5RDQxMUU5QTNFMkJBMEZGMDg1OTA2QSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo0Q0VDOUU4ODU5RDQxMUU5QTNFMkJBMEZGMDg1OTA2QSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pm4lrxsAAAAPSURBVHjaYmJgYGgACDAAAI8Ag+R3NvwAAAAASUVORK5CYII="); position: fixed; left: 0; top: 0; right: 0; bottom: 0; z-index: 89; text-align: center;}\
+        #IE-warning{font-size: 14px; height: 97px; width: 100%; border-bottom: #cf1132 3px solid; position: fixed; text-align: center; left: 0px; z-index: 90; line-height: 100px; top: 0px; background-color: white;}\
+        #IE-warning span{font-size: 18px; color: black;}\
+        #IE-warning a{font-size: 18px; text-decoration: none; height: 60px; width: 180px; vertical-align: auto; color: #fff; text-align: center; display: inline-block; line-height: 60px; margin-right: 20px;}\
+        #IE-warning a.google{background-color:#cf1132 ;}\
+        #IE-warning a.edge{background-color:#e43434 ;}';
+        var noticeHtml_var1='\
+        <div id="IE-warning-bg" style="display: none;z-index:9999;" ></div>\
+        <div id="IE-warning" style="display: none;z-index:9999;" >\
+            <img src="data:img/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQyIDc5LjE2MDkyNCwgMjAxNy8wNy8xMy0wMTowNjozOSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTggKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjNGMzQyNjA2MkRFRDExRUJBNTczOTBENzk1NEY1MEUwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjNGMzQyNjA3MkRFRDExRUJBNTczOTBENzk1NEY1MEUwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6M0YzNDI2MDQyREVEMTFFQkE1NzM5MEQ3OTU0RjUwRTAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6M0YzNDI2MDUyREVEMTFFQkE1NzM5MEQ3OTU0RjUwRTAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4noRqpAAABaUlEQVR42mL8z4AXyAJxABC7ArE6EIsBMSMQvwXi20C8B4g3Mfz/fwunCf+xY24gng7Ev4H4PxF4CRCL/wey0DE2w52B+BGRBiPjD0AcTsiCbDIMRsfNuCywIELzdiBeSYS6QHQL2IH4DQFNX5Acc4sISyRBFjBB43oKEAvjT1AMX5DYLxgIgxWwVCRCZNi+RvLBSSL16IJ8EM1AO5AKssCbhhbYgyxQpaEFoiALhGhoAQ8TtGwhBvzHwcYLQBZ8JMOCX0Tq+c4ELRWJAQJArA0tYdWJ1PMKZMEuIhWzAfEVIH4ELbaJAccZgf6WAzIe0iiSrWE5cw0RufIPENcDcQm0XCKk/jxyYccHxL9IKOyuE2GBKnpx7U+EphlA3AXEfwmoy8ZV4TRTocKZQajKDAfiH2QanktMnQzCSkC8hQSDDwCxAbZKn5FAnjcH4hAgtgViSSDmhxYtn6GVznEgXg80aR8uAwACDACr40TYdYOJ0wAAAABJRU5ErkJggg==" style="width: 20px;" />\
+            <span>&nbsp;您使用的浏览器版本过低，可能会影响到您浏览本页面，建议升级浏览器：&nbsp;&nbsp;</span>\
+            <a  class="google" href="https://pc.qq.com/detail/1/detail_2661.html" target=_balnk>谷歌&nbsp;Chrome</a>\
+            <a href="javascript:;"  onclick="extendTools.closeWaring()" ><img style="position: absolute;top: 32.5px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACfklEQVRYR82XPYgTQRiG33cJCEIUUVtPLQS1Ei1UUBCsFRXvRFArCwW7wM5GS83sQLqDs7DSQu7OH9BaEBTUwp/qFCz8az05vENBCPPJhOyxSfYvuYRkmpDdb97vmZlvZt8hCjZjTNlae9zzvCkR2QVgM4Atre6LAH6R/GytnfM875nv+ytFpJkXZIzZLSLXAJwDsCkvvvV+CcAsyWnf9z9l9ckE0FrfJOmSbyiYuDNsWUSmgyC4kdY/FUBr/YLkkT4Tt3UTkZdBEBxN0koECMPwZ2x9B8HgNBaVUls7xboAwjD8CmD7oLJ26HxTSu2IP2sDMMbMi8jZISVvypJ84Pv+ZJRjFaBVcNeHmTzSFpFbUWE2AVpb7c0aqr1X7mWSB90WbQKEYTgD4EqvKmuMv62UusowDDcC+A7A/aY2ETkGYIXkXQB7UwIXROQSgDLJ5zmAvwFM0BhzQUTu5Y1GRA4EQfCuXq/vaTQa8wkQC6VSabJSqXzUWu8n+TZPk+RFNwMPAZzJCwawmiABIutdlvQjB/AewL4CAC4kKRGikWfMTpr8Bwfg1n9bQYAuCPfATXsfyV3XHw7gD4D1PQC0Qbg/fSZ3Xf+OBcDIl2C0RWiMmRWRqQI1MPBtSHKOWutTJB/nAVhrD1er1ddFDqJarXbI87xXeZoictqdhGURcXWQ6ffcUSwi/zzPu5N1FFtrL5NcV+AoXiI5MfqP0Vh8jh3ESA1JVCyDdMJpBdjpkJNM6TAcccTT5YzTbPkwnHGXI3ZUqReTQTrkTiccX57xvZpFlLHL6fk83xgbmfN799d8OY1PlTOvJE+IyEkAO5Ou5wC+kHwiIk+VUg4it/0HuI6GvO0SaA0AAAAASUVORK5CYII=" /></a>\
+        </div>';
+        if (typeof document.createStyleSheet === 'undefined') {
+            document.createStyleSheet = function () {
+              return document.createElement('style');
+            };
+        }
+        var styleEle = document.createStyleSheet();
+        styleEle.cssText = noticeStyle_var1;
+        var bodyEle=document.body;
+        var divEle=document.createElement("div");
+        divEle.innerHTML=noticeHtml_var1;
+        if(bodyEle.append) {
+            // 使用append方法
+            bodyEle.append(styleEle);
+            bodyEle.append(divEle);
+        } else {
+            // 使用appendChild方法
+            bodyEle.appendChild(divEle);
+        }
+    },
+    closeWaring:function(){
+        document.getElementById('IE-warning-bg').style.display='none';
+        document.getElementById('IE-warning').style.display='none';
+        this.setCookie("isLoadWarning",true);
+    },
+    init:function(){
+        var _lowVersionFlag=false;
+        var _openNoticeFlag=this.getCookie("isLoadWarning");
+        _lowVersionFlag=this.isLowerVersionBrower();
+        if(_lowVersionFlag&&!_openNoticeFlag){
+            this.lowerVersionNotice();
+            document.getElementById('IE-warning-bg').style.display='block';
+            document.getElementById('IE-warning').style.display='block';
+        }
+
+    }
+    
+}
+extendTools.init();
+
+function addFavorite() {
+    var url = window.location;
+    var title = document.title;
+    var ua = navigator.userAgent.toLowerCase();
+    if (ua.indexOf("msie 8") > -1) {
+        external.AddToFavoritesBar(url, title, ''); //IE8
+    } else {
+        try {
+            window.external.addFavorite(url, title);
+        } catch (e) {
+            try {
+                window.sidebar.addPanel(title, url, ""); //firefox
+            } catch (e) {
+                alert("加入收藏失败，请使用Ctrl+D进行添加");
+            }
+        }
+    }
+}
+
+// 函数删除页面上所有指定的类名,方法可用于优化页面加载 Jcl add 20241213
+function removeAllClass(className) {
+    // 查询所有具有指定类名的元素
+    var elements = document.querySelectorAll('.' + className);
+    var pattern = new RegExp('(^|\\s)' + className + '(\\s|$)');
+    // 遍历所有元素并移除类名
+    for (var i = 0; i < elements.length; i++) {
+      var element = elements[i];
+      element.className = element.className.replace(pattern, '');
+    }
+}
+removeAllClass("tempNone");
+//用于清理概览中标题标签 Jcl add 20241218
+avalon.filters.replaceTags = function(str) { 
+    return str.replace(/<(?!\/?font)[^<>]*>/ig,'')
+}
+        /*2025年2月5日 新增js懒加载方法，支持回调*/
+  ; !(function (win) {
+      win.loadScripts = function (options) {
+          if (options.url) {
+              scripts.load(options);
+          }
+          else {
+              alert("请输入需要动态加载js的路径!")
+          }
+  
+      }
+      var scripts = {};
+      //添加额外的属性
+      scripts.attr = function (ele, obj) {
+          if (typeof obj == 'object') {
+              for (var name in obj) {
+                  ele.setAttribute(name, obj[name]);
+              }
+          } else {
+              return;
+          }
+      }
+      scripts.load = function (options) {
+  
+          var script = options.url, id = options.id, callback = options.callback, _obj = options.attr;
+          if (typeof (script) != "object") var script = [script];
+  
+          var HEAD = document.getElementsByTagName("head").item(0) || document.documentElement;
+          var s = new Array(), last = script.length - 1, recursiveLoad = function (i) {
+              // 递归
+              s[i] = document.createElement("script");
+              s[i].setAttribute("type", "text/javascript");
+              if (id) {
+                  s[i].setAttribute("id", id);
+              }
+  
+              if (_obj && typeof _obj == 'object') {
+  
+                  scripts.attr(s[i], _obj);
+              }
+  
+              s[i].onload = s[i].onreadystatechange = function () { // Attach handlers for all browsers
+  
+                  if (!/*@cc_on!@*/0 || this.readyState == "loaded" || this.readyState == "complete") {
+                      this.onload = this.onreadystatechange = null; this.parentNode.removeChild(this);
+                      if (i != last) recursiveLoad(i + 1); else if (typeof (callback) == "function") callback();
+                  }
+              }
+              s[i].setAttribute("src", script[i]);
+  
+              HEAD.appendChild(s[i]);
+          }
+          recursiveLoad(0);
+      }
+  
+  }(window))
+	var siteCode = $('meta[name="SiteIDCode"]').attr('content') || '3501000001';
+loadScripts({
+    url: 'https://zfwzgl.www.gov.cn/exposure/jiucuo.js',
+    id: '_jiucuo_',
+    attr: {
+        sitecode: siteCode
+    },
+    callback: function () { }
+});
+// 一号登录注册地址修改 2025-5-14
+SiteInfo.registerUrl="https://iam.e-govt.cn:8901/register?appId=5891dd2b-f89e-4cca-a90e-38a39d82e1df&redirect_uri="
+
+//平台互动更新提醒
+var gItpStatus = SiteInfo.itpStatus||false; //全局是否更新互动提示
+var gItpMessage= SiteInfo.itpMessage||'系统正在升级，为此对您造成的不便敬请谅解！'; //全局提示语
+SiteInfo.itpStatus = gItpStatus;
+SiteInfo.itpMessage = gItpMessage;
+//静态提示
+function $staticDialog(staticDialog,callback) {
+    var d = dialog({
+        title: '温馨提示',
+        content: staticDialog||'系统正在升级，为此对您造成的不便敬请谅解！',
+        width: 300,
+        fixed: true,
+        okValue: "确认",
+        ok: function () {if(typeof(callback)=='function'){callback();} }
+    });
+    d.show();
+    return false;
+}
+//静态提示

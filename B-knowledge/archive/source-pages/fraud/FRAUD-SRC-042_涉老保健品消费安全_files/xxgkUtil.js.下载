@@ -1,0 +1,32 @@
+﻿$(function(){
+	var MenuType=false;
+	$(".sideMenu>h3").click(function(){
+		if($(this).next("ul").is(":hidden")){
+			$(this).addClass("on").siblings("h3").removeClass("on");
+			$(this).next("ul").slideDown().siblings("ul").slideUp();
+		}else{
+			$(this).removeClass("on");
+			$(this).next("ul").slideUp();
+		}
+	})
+	
+	$(".sideMenu ul li").each(function(index) {
+		var strSrc = $(this).find("a:first").attr("href");
+		var IP = "http://xxgk.zezhou.gov.cn";
+		if (strSrc.indexOf(IP) == -1 && strSrc.indexOf("javascript:") == -1) {
+			//$(this).find("a").attr("target", "_blank");
+		}
+	});	
+	
+});
+
+$(function(){
+	//标题图标
+	var icon1 = ["icon-biaoti"],
+		//关闭图标
+		icon2 = ["icon-jiantouarrow487"];
+		//开启图标
+		icon3 = ["icon-jiantouarrow483"];
+	//构造函数
+	new MenuIcon(".menu",icon1,icon2,icon3);
+});

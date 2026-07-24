@@ -1,0 +1,242 @@
+        var images = document.getElementsByClassName('nfw-cms-img');
+        var modal = document.getElementById('imageModal');
+        var modalImg = document.getElementById('modalImage');
+        var captionText = document.getElementById('caption');
+        var closeBtn = document.getElementsByClassName('closed')[0];
+        var zoomInBtn = document.getElementById('zoomIn');
+        var zoomOutBtn = document.getElementById('zoomOut');
+        var resetZoomBtn = document.getElementById('resetZoom');
+        
+        // 图片缩放状态
+        var currentScale = 1;
+        var minScale = 1;
+        var maxScale = 5;
+        var startX = 0;
+        var startY = 0;
+        var offsetX = 0;
+        var offsetY = 0;
+        var isDragging = false;
+        var initialDistance = 0;
+        var initialScale = 1;
+        var initialOffsetX = 0;
+        var initialOffsetY = 0;
+        
+        // 为每张图片添加点击事件
+        for (var i = 0; i < images.length; i++) {
+            images[i].onclick = function() {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                captionText.innerHTML = this.alt;
+                // 重置缩放和位置
+                resetImageTransform();
+                // 阻止页面滚动
+                document.body.style.overflow = "hidden";
+            }
+        }
+        
+        // 点击关闭按钮关闭模态框
+        closeBtn.onclick = function() {
+            closeModal();
+        }
+        
+        // 点击模态框背景也关闭
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+        
+        // 添加键盘支持：按ESC键关闭模态框
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape" && modal.style.display === "block") {
+                closeModal();
+            }
+        });
+        
+        // 缩放按钮事件
+        zoomInBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            zoomImage(1.2);
+        });
+        
+        zoomOutBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            zoomImage(0.8);
+        });
+        
+        resetZoomBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            resetImageTransform();
+        });
+        
+        // 图片触摸事件 - 缩放
+        modalImg.addEventListener('touchstart', function(e) {
+            if (e.touches.length === 2) {
+                // 双指缩放
+                handlePinchStart(e);
+            } else if (e.touches.length === 1 && currentScale > 1) {
+                // 单指拖动
+                handleDragStart(e);
+            }
+        });
+        
+        modalImg.addEventListener('touchmove', function(e) {
+            if (e.touches.length === 2) {
+                // 双指缩放
+                handlePinchMove(e);
+                e.preventDefault();
+            } else if (e.touches.length === 1 && currentScale > 1) {
+                // 单指拖动
+                handleDragMove(e);
+                e.preventDefault();
+            }
+        });
+        
+        modalImg.addEventListener('touchend', function(e) {
+            isDragging = false;
+        });
+        
+        // 鼠标事件 - 桌面支持
+        modalImg.addEventListener('mousedown', function(e) {
+            if (currentScale > 1) {
+                handleDragStart(e);
+            }
+        });
+        
+        modalImg.addEventListener('mousemove', function(e) {
+            if (isDragging) {
+                handleDragMove(e);
+            }
+        });
+        
+        modalImg.addEventListener('mouseup', function() {
+            isDragging = false;
+        });
+        
+        modalImg.addEventListener('mouseleave', function() {
+            isDragging = false;
+        });
+        
+        // 鼠标滚轮缩放
+        modalImg.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (e.deltaY < 0) {
+                // 向上滚动 - 放大
+                zoomImage(1.1);
+            } else {
+                // 向下滚动 - 缩小
+                zoomImage(0.9);
+            }
+        });
+        
+        // 功能函数
+        function closeModal() {
+            modal.style.display = "none";
+            // 恢复页面滚动
+            document.body.style.overflow = "auto";
+        }
+        
+        function zoomImage(factor) {
+            currentScale *= factor;
+            
+            // 限制缩放范围
+            if (currentScale < minScale) currentScale = minScale;
+            if (currentScale > maxScale) currentScale = maxScale;
+            
+            // 应用缩放
+            applyImageTransform();
+        }
+        
+        function resetImageTransform() {
+            currentScale = 1;
+            offsetX = 0;
+            offsetY = 0;
+            applyImageTransform();
+        }
+        
+        function applyImageTransform() {
+            modalImg.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${currentScale})`;
+        }
+        
+        function handlePinchStart(e) {
+            const touch1 = e.touches[0];
+            const touch2 = e.touches[1];
+            
+            // 计算初始距离
+            initialDistance = Math.hypot(
+                touch2.clientX - touch1.clientX,
+                touch2.clientY - touch1.clientY
+            );
+            
+            // 保存当前缩放比例和位置
+            initialScale = currentScale;
+            initialOffsetX = offsetX;
+            initialOffsetY = offsetY;
+        }
+        
+        function handlePinchMove(e) {
+            if (e.touches.length !== 2) return;
+            
+            const touch1 = e.touches[0];
+            const touch2 = e.touches[1];
+            
+            // 计算当前距离
+            const currentDistance = Math.hypot(
+                touch2.clientX - touch1.clientX,
+                touch2.clientY - touch1.clientY
+            );
+            
+            // 计算缩放比例
+            const scaleFactor = currentDistance / initialDistance;
+            currentScale = initialScale * scaleFactor;
+            
+            // 限制缩放范围
+            if (currentScale < minScale) currentScale = minScale;
+            if (currentScale > maxScale) currentScale = maxScale;
+            
+            // 计算缩放中心点
+            const centerX = (touch1.clientX + touch2.clientX) / 2;
+            const centerY = (touch1.clientY + touch2.clientY) / 2;
+            
+            // 计算缩放后的位置偏移
+            const scaleChange = currentScale / initialScale;
+            offsetX = centerX - (centerX - initialOffsetX) * scaleChange;
+            offsetY = centerY - (centerY - initialOffsetY) * scaleChange;
+            
+            // 应用缩放和位置
+            applyImageTransform();
+        }
+        
+        function handleDragStart(e) {
+            isDragging = true;
+            
+            // 获取初始位置
+            if (e.type === 'touchstart') {
+                startX = e.touches[0].clientX - offsetX;
+                startY = e.touches[0].clientY - offsetY;
+            } else {
+                startX = e.clientX - offsetX;
+                startY = e.clientY - offsetY;
+            }
+        }
+        
+        function handleDragMove(e) {
+            if (!isDragging) return;
+            
+            // 计算新位置
+            let clientX, clientY;
+            
+            if (e.type === 'touchmove') {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+            
+            offsetX = clientX - startX;
+            offsetY = clientY - startY;
+            
+            // 应用新位置
+            applyImageTransform();
+        }

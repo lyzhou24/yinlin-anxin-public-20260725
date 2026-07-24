@@ -1,0 +1,18 @@
+$(function(){
+	var head_icon = $(".sel_btn2");
+	$(".sel_btn").click(function(){
+		if(head_icon.is(":hidden")){
+			$(".sel_btn1").hide();
+			head_icon.show()
+			$(".head_pc .top_icon").fadeIn()
+			
+			// var wit = $(".logo").width();
+			$(".top_nav").animate({minHeight:'40px'});
+		}else{
+			$(".sel_btn1").show();
+			head_icon.hide()
+			$(".head_pc .top_icon").fadeOut()
+			$(".top_nav").animate({minHeight:'0px'});
+		}
+	})
+})

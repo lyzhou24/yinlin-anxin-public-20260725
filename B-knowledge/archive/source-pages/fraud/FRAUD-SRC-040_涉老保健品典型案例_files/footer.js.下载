@@ -1,0 +1,21 @@
+document.writeln(`<div class="dnbrk_box"><div class="dnbrk">
+<img src="https://tfile.dahe.cn/4101930001/wap/img/dnbrk.png" alt="">
+<a target="_blank" href="https://www.zzhkgq.gov.cn/?pc=t&v=${Date.parse(new Date()) + Math.ceil(Math.random() * 100)}">电脑版入口</a>
+</div></div>
+<div class="footer">
+<img class="dzjg" src="https://tfile.dahe.cn/4101930001/wap/img/dzjg.png" alt="">
+<div>主办单位：河南郑州航空港经济综合实验区党群工作部</div>
+<div>备案号：<a href="https://beian.miit.gov.cn/#/Integrated/index">豫ICP19010525号</a></div>
+</div>
+<script language="javascript">
+var _yfx_trackdata = _yfx_trackdata || [];  //事件采集
+var _yfx_website = "10000074";   //站点编号（请勿随意更改）
+(function() {
+    var yfxjs = document.createElement("script");
+    yfxjs.charset = "utf-8";
+    yfxjs.src = "//js.henan.gov.cn/count/yeefxcount.js";
+    var yfxjs_t = document.getElementsByTagName("script")[0];
+    yfxjs_t.parentNode.insertBefore(yfxjs, yfxjs_t);
+})();
+</script>
+`)

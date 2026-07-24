@@ -1,0 +1,81 @@
+$(function () {
+	var key = '3132333435363738393041424344454631323334353637383930414243444566';
+	key = CryptoJS.enc.Hex.parse(key)
+	iv = CryptoJS.enc.Hex.parse("30313233343536373839414243444546")
+	// 加密方法
+	function myEncrypt(str) {
+		var enc = CryptoJS.AES.encrypt(str, key, {
+			iv: iv,
+			mode: CryptoJS.mode.CBC,
+			padding: CryptoJS.pad.Pkcs7
+		})
+		return enc.ciphertext.toString()
+	}
+	//解密方法
+	function myDecrypt(str) {
+		var dec = CryptoJS.AES.decrypt(CryptoJS.format.Hex.parse(str), key, {
+			iv: iv,
+			mode: CryptoJS.mode.CBC,
+			padding: CryptoJS.pad.Pkcs7
+		})
+		return CryptoJS.enc.Utf8.stringify(dec)
+	}
+
+	//后端地址
+	 var basePath = "https://www.shenyang.gov.cn/prod-api";
+
+
+	(function (win) {
+		var httpUtils = {};
+		httpUtils.send = function (methodName, params, successFun) {
+			var url = basePath + "/" + methodName + "/" + myEncrypt(params.docId)
+			// var url = basePath + "/" + methodName + "/" + myEncrypt("2941124")
+			$.ajax({
+				url: url,
+				type: "GET",
+				// data: myEncrypt(params),
+				async: true, //允许异步
+				success: function (resultData) {
+					// try {
+					//后端返回的数值不需要解密
+					var enData = resultData
+					// 如果后端返回的数据需要解密var enData = myDecrypt(resultData)
+					// } catch (e) {
+					// }
+					successFun && successFun(enData)
+				},
+				error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+				}
+			})
+		};
+
+		httpUtils.sendPost = function (methodName, params, successFun) {
+			//给后端传参的时候外面加一层body体，
+			var param = {
+				"param": myEncrypt(JSON.stringify(params))
+			}
+			$.ajax({
+				url: basePath + "/" + methodName,
+				type: 'post',
+				dataType: 'json',
+				headers: {
+					'Content-Type': 'application/json;charset=utf8'
+				},
+				//传参外面加一层JSON.stringify()，为json格式，不然加密的时候都转换了
+				data: JSON.stringify(param),
+				success: function (resultData) {
+					// try {
+					//后端返回的数据需要解密
+					var enData = myDecrypt(resultData)
+					// } catch (e) {
+
+					// }
+					successFun && successFun(enData)
+				},
+				error: function (XMLHttpRequest, textStatus, errorThrown) { }
+			});
+		};
+		win.httpUtils = httpUtils
+	})(window)
+})

@@ -1,0 +1,19 @@
+var picUrl="https://pggsc.people.cn/people/2026/07/13470_3_17839313634624.jpg";
+var picwidth=1280;
+var picheight=115;
+var thirdlink="";
+var parLeft=picwidth-38;
+var logosw="1";
+var codeorg="<div class='asbanner' style='overflow:hidden; position:relative; margin:20px 0px 0px 0px; width:"+picwidth+"px;'><div id='banner_20' style='overflow:hidden;'><a href='' target='_blank' id='rectangle13640'><img src='"+picUrl+"' width='"+picwidth+"px' height='"+picheight+"px' border=0 class='bannerimg'></a></div>";
+if(logosw=="1"){
+codeorg+="<img src='https://pggsc.people.cn/people/2025/12/11812_1_17663700903261.png' style='position:absolute; right:0px; top:0px; z-index:9999; width:38px; height:25px' class='flagimg' /><img src='"+thirdlink+"' style='display:none;width:0;height:0' />";
+}
+codeorg+="</div>";
+document.write(codeorg);
+  var landing = "";
+function getid(id){return (typeof id == 'string')?document.getElementById(id):id;}
+  if(landing.length < 8 && typeof(rectangle13640)!='undefined'){
+	getid("rectangle13640").href="javascript:void(0);";
+	getid("rectangle13640").target="_self";
+	getid("rectangle13640").style.cssText="cursor:default;";
+  }

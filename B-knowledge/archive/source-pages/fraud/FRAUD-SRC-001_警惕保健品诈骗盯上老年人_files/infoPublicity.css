@@ -1,0 +1,1602 @@
+@charset "utf-8";
+.side {
+    float: left;
+}
+.side .boxD .hd h3 i {
+    background-position: 10px -1306px;
+}
+.mainContent {
+    float: right;
+}
+.articleCon .property{
+    text-align:center;
+}
+/* 政务公开-公开目录 -----------------------------------------------------*/
+.gkmlList {
+    padding: 10px
+}
+.gkmlList .li1 {
+    padding: 17px 10px;
+    border-bottom: 1px dotted #ccc;
+    overflow: hidden;
+}
+.gkmlList .h1 {
+    margin: 5px 0;
+    font-size: 16px;
+    float: left;
+    padding-right: 10px;
+}
+.gkmlList .h1 a {
+    color: #3269B8
+}
+.gkmlList .ul1 {
+    overflow: hidden;
+    float: left;
+    font-size: 14px;
+}
+.gkmlList .li2 {
+    margin: 5px 0;
+    float: left;
+}
+.gkmlList .li2 .a2 {
+    padding: 0 10px;
+    border-left: 1px solid #ddd;
+}
+/* 政务公开-首页 -----------------------------------------------------*/
+.sideZfxx{
+    margin-bottom:20px;
+}
+.sideZfxx .hd{
+    height:60px;
+    line-height:60px;
+    background:#3269B8;
+    text-align:center;
+    color:#fff;
+    font-size:20px;
+    margin-bottom:10px;
+}
+.sideZfxx .list li{
+    height:46px;
+    line-height:46px;
+    margin-bottom:1px;
+    vertical-align:top;
+    font-size:16px;
+}
+.sideZfxx .list a{
+    display:block;
+    padding-left:65px;
+    background: url(./img/sideIcons.png) 26px 0px no-repeat #EFEFEF;
+    -webkit-transition:400ms;
+    -o-transition:400ms;
+    -moz-transition:400ms;
+    transition:400ms;
+}
+.sideZfxx .list a:hover{
+    background-position:26px -50px;
+    text-decoration:none;
+    color:#fff;
+    background-color:#51ABC9
+}
+.sideZfxx .li2 a{
+    background-position:26px -100px
+}
+.sideZfxx .li3 a{
+    background-position:26px -202px
+}
+.sideZfxx .li4 a{
+    background-position:26px -302px
+}
+.sideZfxx .li5 a{
+    background-position:26px -402px
+}
+.sideZfxx .li6 a{
+    background-position:26px -502px
+}
+.sideZfxx .li7 a{
+    background-position:26px -602px
+}
+.sideZfxx .li8 a{
+    background-position:26px -703px
+}
+.sideZfxx .li9 a{
+    background-position:26px -803px
+}
+.sideZfxx .li2 a:hover{
+    background-position:26px -150px
+}
+.sideZfxx .li3 a:hover{
+    background-position:26px -252px
+}
+.sideZfxx .li4 a:hover{
+    background-position:26px -352px
+}
+.sideZfxx .li5 a:hover{
+    background-position:26px -452px
+}
+.sideZfxx .li6 a:hover{
+    background-position:26px -552px
+}
+.sideZfxx .li7 a:hover{
+    background-position:26px -652px
+}
+.sideZfxx .li8 a:hover{
+    background-position:26px -753px
+}
+.sideZfxx .li9 a:hover{
+    background-position:26px -853px
+}
+.PublicityHomePage .sideZfxx .li8,
+.PublicityHomePage .sideZfxx .li9,
+.PublicityHomePage .sideZfxx .li4{
+    display:none
+}
+.zwgkSideBtns{
+    overflow:hidden;
+    margin-bottom:20px;
+}
+.zwgkSideBtns li{
+    width:124px;
+    height:100px;
+    float:left;
+    text-align:center;
+}
+.zwgkSideBtns .li2{
+    float:right;
+}
+.zwgkSideBtns .li2 a{
+    background-position:center -210px
+}
+.zwgkSideBtns a{
+    display:block;
+    border:1px solid #EAEAEA;
+    background:url(./img/sideBtns.png) center -10px no-repeat #F2F2F2;
+    padding-top:65px;
+    height:33px;
+    -webkit-transition:background-color 400ms;-o-transition:background-color 400ms;-moz-transition:background-color 400ms;transition:background-color 400ms;
+}
+.zwgkSideBtns a:hover{
+    text-decoration:none;
+    background-position:center -110px;
+    background-color:#6692D0;
+    color:#fff;
+}
+.zwgkSideBtns .li2 a:hover{
+    background-position:center -310px
+}
+#indZdly,#sideXwfbh{
+    clear:both;
+    margin-bottom:0;
+}
+#sideXwfbh .bd{
+    padding:17px 10px
+}
+.nodeList{
+    overflow:hidden;
+    margin:0 -10px 10px 0;
+}
+.nodeList li{
+    float:left;
+    overflow:hidden;
+    margin:0 10px 10px 0
+}
+.nodeList a{
+    display:block;
+    border:1px solid #EAEAEA;
+    width: 134px;
+    height: 33px;
+    line-height: 33px;
+    text-align:center;
+}
+.nodeList a:hover{
+    text-decoration:none;
+    background:#f2f2f2
+}
+#mainZxgk .bd{
+    height: 215px;
+}
+.indMainBtns li{
+    float:left;
+    width: 192px;
+    height: 64px;
+    line-height: 64px;
+    margin: 0 20px 25px 0;
+    background:#3FA1D5;
+    position:relative;
+}
+.indMainBtns .li1{
+    width: 234px;
+}
+.indMainBtns .li3{
+    float:right;
+    margin-right:0;
+}
+.indMainBtns a{
+    display:block;
+    height:70px;
+    color:#fff;
+    font-size:18px;
+    padding-left: 75px;
+    background: url(./img/iconsBtn.png) -11px -17px no-repeat;
+    cursor:pointer;
+    -webkit-transition:400ms;
+    -o-transition:400ms;
+    -moz-transition:400ms;
+    transition:300ms;
+}
+.indMainBtns dd{
+    display:none;
+}
+.indMainBtns .li2{
+    background:#50C583
+}
+.indMainBtns .li3{
+    background:#E7973B
+}
+.indMainBtns .li4{
+    background:#03c9d2
+}
+.indMainBtns .li2 a{
+    background-position: -11px -119px;
+}
+.indMainBtns .li3 a{
+    background-position: -9px -217px;
+}
+.indMainBtns .li4 a{
+    background-position: -10px -316px;
+}
+.indMainBtns a:hover{
+    text-decoration:none;
+    margin-top:-3px;
+}
+.zzjgWrap{
+    overflow:hidden
+}
+.zzjgWrap .box{
+    width:425px;
+}
+.zzjgWrap .box .bd{
+    height: 152px;
+}
+/* 信息公开-列表页 -----------------------------------------------------*/
+.publicListContent .mainContent{
+    overflow:visible;
+}
+.govSearch {
+    height: 68px;
+    line-height: 68px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background: #FAFAFA;
+    font-size: 16px;
+}
+.govSearch dt {
+    width: 90px;
+    float: left;
+    height: 68px;
+    background: url(./img/icons-zwgk.png) center -652px no-repeat #3269B8;
+    margin-right: 5%;
+}
+.govSearch dd {
+    overflow: hidden;
+    zoom: 1
+}
+.govSearch .govKW {
+    width: 47%;
+    height: 32px;
+    line-height: 32px;
+    border: 1px solid #CACACA;
+    font-size: 14px;
+    margin: 16px 0 16px 2%;
+    padding: 0 .5%;
+}
+.govSearch a {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    padding: 0 2%;
+    background: #3269B8;
+    line-height: 34px;
+    margin: 16px 0 16px 2%;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+.govSearch .asBtn {
+    background: #C8C8C8;
+    color: #666
+}
+.govSearch a:hover {
+    text-decoration: none;
+}
+.govSearch .sBtn:hover {
+    background: #1160BB;
+}
+.publicTable {
+    border-collapse: collapse;
+    empty-cells: show;
+    width: 100%;
+}
+.publicTable td {
+    background: #fff;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #E5E5E5;
+    line-height:1.5
+}
+.publicTable .interval td,
+.publicTable .title td {
+    background: #F7F7F7;
+}
+.publicTable .symbol {
+    display: none
+}
+.publicTable .title td {
+    text-align: center;
+    color: #3269B8;
+    font-size: 16px;
+    background: #F3F3F3;
+    padding:10px;
+}
+.publicTable .index {
+    width: 23%;
+}
+.publicTable .date {
+    width: 12%;
+}
+.publicTable .type {
+    width: 13%;
+}
+.publicTable .name {
+    text-align: left;
+    z-index: 1;
+}
+.publicTable .on .name {
+    position: relative;
+}
+.publicTable .on .miniTable {
+    display: block;
+}
+.publicTable .miniTable {
+    display: none;
+    left: -50%;
+    position: absolute;
+    color: #333;
+    width: 160%;
+    margin: 10px 0 0 0;
+    padding: 8px;
+    border: 1px solid #3878BD;
+    background: #fff;
+    z-index: 99;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .25);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .25);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .25);
+}
+.publicTable .miniTable table {
+    width: 100%;
+    border: 1px solid #E5E5E5;
+}
+.publicTable .miniTable td {
+    border: 1px solid #E5E5E5 !important;
+    padding: 2px 2px 2px 5px;
+    text-align: left;
+    border: 0;
+    background: #fff;
+    color: #333;
+    width: 30%;
+}
+.publicTable .miniTable table td:nth-of-type(odd) {
+    background: #f3f3f3;
+}
+.publicTable .miniTable .tdL {
+    width: 13%;
+    text-align: right;
+}
+.publicTable .miniTable .last td {
+    border-bottom: 0
+}
+.publicTable .miniTable .intro {
+    color: #999
+}
+.publicTable .miniTable .arrow {
+    display: block;
+    width: 9px;
+    height: 7px;
+    background: url(./img/sideZp.png) 0 -313px no-repeat;
+    position: absolute;
+    top: -7px;
+    left: 5%
+}
+/* 侧栏组配 */
+.zpBox{
+    margin-bottom:20px;
+}
+.zpBox .hd{
+    height:40px;
+    line-height:40px;
+    background:#3269B8;
+}
+.zpBox .hd h3{
+    font-size:18px;
+    color:#fff;
+    text-align:center;
+}
+.zpCate dt{
+    height:44px;
+    line-height:44px;
+    background: url(./img/sideZp.png) 233px -204px no-repeat #EFFBFF;
+    font-size:16px;
+    padding-left:20px;
+    border:1px solid #D9ECF8;
+    margin-top:-1px;
+    color:#3269B8;
+    cursor:pointer;
+}
+.zpCate .on{
+    background-position:233px -100px
+}
+.zpCate dd{
+    border-left:1px solid #D9ECF8;
+    border-right:1px solid #D9ECF8;
+    padding:10px;
+}
+.publicityListContent{
+    padding-bottom:80px !important;
+}
+#sideZfwjss .hd h3{
+    text-align:center;
+    padding-left:0;
+}
+/* 侧栏政府文件搜索 */
+.govSimpleSearch{
+    padding: 10px 0 10px 10px;
+}
+.govSimpleSearch .name{
+    display:none;
+}
+.govSimpleSearch .govKW{
+    height:20px;
+    line-height:20px;
+    width:200px;
+    border:1px solid #ddd;
+    padding:8px;
+    background:#F7F7F7;
+    color:#999
+}
+.govKW::-moz-placeholder { color: #999; }
+.govKW::-webkit-input-placeholder { color:#999; }
+.govKW:-ms-input-placeholder { color:#999; }
+.govSimpleSearch a{
+    display:inline-block;
+    *
+    display:inline;
+    zoom:1;
+    height:34px;
+    line-height:34px;
+    background:#E6E6E6;
+    padding:0 15px;
+    margin: 25px 15px 0 0;
+    width: 71px;
+    text-align:center;
+}
+.govSimpleSearch a:hover{
+    text-decoration:none;
+    background:#ddd
+}
+.govSimpleSearch .sBtn{
+    background:#E1282F;
+    color:#fff;
+}
+.govSimpleSearch .asBtn{
+    margin-right:0
+}
+.govSimpleSearch .sBtn:hover{
+    background:#cc1920
+}
+
+/* 信息公开-内容页 -----------------------------------------------------*/
+.govDetail {
+    padding: 30px 40px;
+    font-size: 16px;
+    background: #fff;
+}
+.govDetailTable td {
+    background: #fff;
+    padding: 5px 15px;
+    width: 35%;
+    border: 1px solid #8DCCFF;
+    color: #969696
+}
+.govDetailTable .tdlab {
+    text-align: right;
+    width: 18%;
+    color: #3269B8;
+    background: #D5ECFE;
+    padding-right: 5px
+}
+.govDetail .title {
+    text-align: center;
+    font-size: 30px;
+    color: #3269B8;
+    margin: 40px 0 30px 0;
+    line-height: 1.6;
+}
+.govDetailContent {
+    line-height: 2
+}
+.govDetailContent img {
+    max-width: 800px;
+    height: auto
+}
+.govDetailContent p {
+    margin-bottom: 20px;
+}
+.govDetailTool {
+    line-height: 36px;
+    padding: 0 0 30px 0;
+    color: #777;
+    overflow: hidden;
+    text-align:right;
+    font-size:14px;
+}
+.govDetailTool a {
+    color: #777
+}
+.govDetailTool .bdsharebuttonbox {
+    float: right;
+}
+/* 选择申请人类型 -----------------------------------------------------*/
+.selectAppType {
+    padding: 50px 0 30px 0;
+    text-align: center;
+}
+.selectAppType a {
+    display: block;
+    width: 260px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    margin: 0 auto 30px auto;
+    background: #3269B8;
+    color: #fff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.selectAppType a:hover {
+    text-decoration: none;
+    background: #067AD2;
+}
+/* 依申请信息公开 -----------------------------------------------------*/
+.eAppGuide {
+    overflow: hidden
+}
+.eAppGuide li {
+    float: left;
+    width: 18%;
+    margin-right: 2.5%;
+    margin-bottom: 20px;
+    height: 42px;
+    line-height: 42px;
+    background: #EDEDED;
+    text-align: center;
+    font-size: 18px;
+    position: relative;
+}
+.eAppGuide li a {
+    display: block;
+}
+.eAppGuide a:hover {
+    text-decoration: none;
+    background: #ddd
+}
+.eAppGuide .last {
+    margin-right: 0;
+    float: right;
+}
+.eAppGuide .on a {
+    background: #3269B8;
+    color: #fff;
+}
+.eAppGuide .on i {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    margin-left: -5px;
+    border-color: transparent;
+    border-style: dashed;
+    border-width: 5px;
+    border-top-color: #3269B8;
+    border-top-style: solid;
+    content: "";
+    display: block;
+    font-size: 0;
+    line-height: 0;
+    width: 0;
+}
+.application .selectType {
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    margin-bottom: -1px;
+}
+.application .selectType li {
+    float: left;
+    height: 52px;
+    line-height: 52px;
+}
+.application .selectType a {
+    display: block;
+    padding: 0 60px;
+    font-size: 18px;
+}
+.application .selectType a:hover {
+    text-decoration: none;
+}
+.application .selectType .on a {
+    background: #FAFAFA;
+    color: #3269B8;
+    border: 1px solid #E9E9E9;
+}
+.application {
+    background: #fff;
+    padding: 20px;
+    font-size: 14px;
+}
+.application .con {
+    padding: 30px;
+    border: 1px solid #E9E9E9;
+}
+.application .bd {
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+.application .tit {
+    font-size: 32px;
+    text-align: center;
+    color: #3269B8;
+    margin: 0;
+}
+.application .hd {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 2px solid #3269B8;
+    overflow: hidden;
+}
+.application .hd h5 {
+    float: left;
+    padding: 0 20px;
+    min-width: 142px;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    background: #3269B8;
+}
+.application .hd .tips {
+    color: #3269B8;
+    margin-left: 10px;
+}
+.applicationTable {
+    width: 100%
+}
+.applicationTable td {
+    line-height: 24px;
+    padding: 8px 5px;
+    vertical-align: top;
+}
+.applicationTable .label {
+    width: 110px;
+    text-align: right;
+}
+.applicationTable .required strong {
+    color: #f00;
+    margin-right: 5px;
+}
+.application .form-control {
+    width: 90%;
+    border: #ccc solid 1px;
+    height: 20px;
+    overflow: hidden;
+    padding: 5px 0px 5px 5px;
+}
+.application textarea.form-control {
+    width: 96%;
+}
+.application .radio {
+    margin-right: 18px;
+}
+.application .radio input {
+    width: 14px;
+    height: 15px;
+    vertical-align: middle;
+}
+.application .bot {
+    text-align: center;
+    padding: 10px 0 30px 0
+}
+.application select {
+    border: #ccc solid 1px;
+    width: 36%;
+    padding: 0;
+    height: 36px;
+    line-height: 36px;
+}
+.application .bot {
+    padding-top: 40px;
+}
+.application .field-validation-error {
+    display: block;
+    color: #f00;
+    font-size: 14px;
+}
+.application .instruction {
+    padding: 5px 10px;
+}
+.application .instruction p {
+    margin-bottom: 5px;
+    color: #666;
+    font-size: 12px;
+}
+.upload-single {
+    width: 220px;
+}
+.upload-single .upload-pick {
+    margin-top: 40px
+}
+.upload-single .upload-file-area {
+    background: #fff;
+    min-height: 100px;
+    border: 2px dashed #ccc;
+}
+.upload-single .upload-pick:hover .webuploader-pick,
+.upload-single .webuploader-pick-hover {
+    background: #077BD4
+}
+.upload-single .webuploader-pick {
+    width: 50%;
+    background: #aaa;
+    height: 30px;
+    line-height: 30px;
+}
+.bot {
+    text-align: center;
+    padding: 20px 0;
+}
+.bot a,
+.bot button {
+    cursor: pointer;
+    display: inline-block;
+    height: 46px;
+    line-height: 46px;
+    padding: 0 10%;
+    font-size: 16px;
+    background: #3269B8;
+    border: 0;
+    color: #fff;
+    margin: 0 2%;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+.bot a:hover,
+.bot button:hover {
+    text-decoration: none;
+    background: #077BD4;
+}
+/* 申请进度查询 -----------------------------------------------------*/
+.applyFormQuery {
+    background: #fff;
+    padding: 3% 0;
+    width: 80%;
+    margin: 30px auto;
+    border: 1px solid #e2e2e2;
+    font-size: 16px;
+}
+.applyFormQuery td {
+    padding: 8px 0
+}
+.applyFormQuery .tdlab {
+    width: 40%;
+    text-align: right;
+}
+.applyFormQuery input{
+    width: 56%;
+    border: #ccc solid 1px;
+    height: 20px;
+    overflow: hidden;
+    padding: 5px 0px 5px 5px;
+}
+.applyFormQuery .bot {
+    text-align: left;
+}
+.applyFormQuery .bot a {
+    margin: 0
+}
+.applyFormQuery .required strong {
+    color: #f00;
+    margin-right: 5px;
+}
+.applyFormQuery .errorMessage {
+    color: #f00;
+}
+.applyFormQuery table {
+    width: 100%;
+    border: 0;
+}
+/* 申请进度查询结果 -----------------------------------------------------*/
+.applyQueryResult {
+    width: 70%;
+    margin: 0 auto;
+}
+.applyQueryResult {
+    background: #fff;
+    border: 1px solid #e2e2e2;
+    margin: 30px auto;
+    font-size: 16px;
+    padding: 30px;
+}
+.applyQueryResult .tit {
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+    font-size: 22px;
+    color: #f00;
+}
+.applyQueryResult .con {
+    padding: 30px 30px 0 30px;
+    line-height: 2
+}
+.applyQueryResult ul {
+    padding: 10px 20px
+}
+.applyQueryResult li {
+    padding: 5px 0
+}
+.applyQueryResult li span {
+    color: #999
+}
+.applicationFeedback .tit {
+    color: #01AD00;
+}
+.applicationFeedback .con {
+    text-align: center;
+}
+.applicationFeedback .number {
+    color: #f00
+}
+/* 政府文件查询 -----------------------------------------------------*/
+.govAdSearch {
+    background: #fff
+}
+.OpenSearch {
+    margin: 0 0 30px 0;
+    padding: 15px 0;
+    background: #fff;
+}
+.OpenSearch td {
+    padding: 8px 5px;
+}
+.OpenSearch .tdlab {
+    text-align: right;
+    width: 26%;
+    line-height: 1.4;
+}
+.OpenSearch .tdlab span {
+    display: block;
+    color: #999
+}
+.OpenSearch input {
+    height: 34px;
+    line-height: 34px;
+    border: 1px solid #CFCFCF;
+    padding: 0 5px;
+    width: 60%;
+}
+.OpenSearch select {
+    height: 36px;
+    line-height: 36px;
+    border: 1px solid #CFCFCF;
+    width: 25%;
+}
+.OpenSearch .bot {
+    text-align: left;
+}
+.OpenSearch .bot button {
+    margin: 35px 0 0 233px;
+    padding: 0 8.8%;
+}
+/* 信息公开-部门目录页.html -----------------------------------------------------*/
+.deptListWrap .mainBox {
+    margin-bottom: 30px;
+}
+.zwgkBmList li {
+
+}
+.zwgkBmList {
+    overflow: hidden
+}
+.zwgkBmList li {
+    float: left;
+    min-width: 23%;
+    _width: 23%;
+    text-align: center;
+    margin: 1% 1% 0 1%;
+    overflow: hidden;
+}
+.zwgkBmList li a {
+    display: block;
+    height: 34px;
+    line-height: 34px;
+    border: 1px solid #E4E4E4;
+    background: #fff;
+    padding: 0 10px;
+}
+.zwgkBmList li a:hover {
+    text-decoration: none;
+    background: #EFEFEF;
+}
+/* 领导之窗 -----------------------------------------------------*/
+.leaderList{
+    overflow:hidden;
+    padding:0 30px;
+    margin-right:-30px;
+}
+.leaderList li{
+    float:left;
+    width: 504px;
+    margin: 30px 60px 30px 0;
+}
+.leaderList .pic{
+    float:left;
+    margin-right:30px;
+}
+.leaderList .pic img{
+    width:110px;
+    height:154px;
+    border:4px solid #EEEEEE;
+}
+.leaderList .con{
+    overflow:hidden;
+}
+.leaderList .title{
+    margin-bottom:0px;
+}
+.leaderList .title a{
+    font-size:18px;
+    color:#3269B8;
+    margin-right:20px;
+}
+.leaderList .intro{
+    line-height:24px;
+    height:92px;
+    overflow:hidden;
+}
+.leaderList .others{
+    overflow:hidden;
+    padding-top: 6px;
+}
+.leaderList .others a{
+    display:block;
+    float:left;
+    height:26px;
+    line-height:26px;
+    border:1px solid #E8E8E8;
+    padding:0 8px;
+    margin-right:10px;
+    -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;
+    font-size:12px;
+}
+.leaderList .others a:hover{
+    text-decoration:none;
+    background:#f2f2f2
+}
+.leaderList .others .a3{
+    display:none;
+}
+.leaderList .intro{
+    text-indent:2em
+}
+.leaderList .first{
+    width: 96%;
+}
+.leaderList .first .pic img{
+    width:135px;
+    height:189px
+}
+.leaderList .first .title a{
+    font-size:22px;
+}
+.leaderList .first .intro{
+    line-height:28px;
+    height:84px;
+    padding-top:10px;
+}
+.leaderList .first .others a{
+    background:#73B6EB;
+    border:0;
+    height:30px;
+    line-height:30px;
+    padding:0 20px;
+    margin-right:20px;
+    color:#fff;
+}
+.leaderList .first .others .a2{
+    background:#E8A26E
+}
+.leaderList .first .others .a3{
+    background:#E56565;
+    display:block;
+}
+.leaderList .first .others .a1:hover{
+    background:#59a0d8
+}
+.leaderList .first .others .a2:hover{
+    background:#cc8550
+}
+.leaderList .first .others .a3:hover{
+    background:#d24a4a
+}
+.sideTitle{
+    height:60px;
+    line-height:60px;
+    background:url(./img/sideLeader.png) 30px 13px #3269B8 no-repeat;
+    padding-left:80px;
+    font-size:22px;
+    color:#fff;
+    margin-bottom:10px;
+}
+.sideLeaderBox {
+    background: #fff;
+    margin-bottom: 10px;
+}
+.sideLeaderBox .hd {
+    height: 46px;
+    line-height: 46px;
+    text-align:center;
+    background: url(./img/sideLeader.png) right -248px no-repeat #3269B8;
+    color:#fff;
+    cursor: pointer;
+    -webkit-transition: 200ms;
+    -o-transition: 200ms;
+    -moz-transition: 200ms;
+    transition: 200ms;
+}
+.sideLeaderBox .hd h3 {
+    font-size: 18px;
+
+}
+.sideLeaderBox .bd {
+    border: 1px solid #EAEAEA;
+    padding: 10px;
+    border-top: 0;
+}
+.sideLeaderBox .hd.on {
+    background-color: #3269B8;
+    color: #fff;
+    border-color: #3269B8;
+    background-position: right -156px;
+}
+.sideLeaderBox .list li {
+    vertical-align: top;
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #EAEAEA;
+    background: #FAFAFA;
+    overflow: hidden;
+    line-height:30px;
+}
+.sideLeaderBox .list li a {
+    float: left;
+    width: 70px;
+    font-size:16px;
+    padding-left: 10%;
+}
+.sideLeaderBox .list li i {
+    display: none
+}
+.sideLeaderBox .list .job {
+    color: #999;
+}
+.sideLeaderBox .list .last {
+    margin-bottom: 0
+}
+.leaderDetailPage .side{
+    width:330px;
+}
+.leaderDetailPage .mainContent{
+    width:800px;
+}
+.leaderContent {
+    background: #fff;
+}
+.leaderDetail {
+    position: relative;
+    overflow: hidden;
+    padding:20px;
+    border:1px solid #EAEAEA
+}
+.leaderWrap{
+    overflow:hidden;
+    margin-bottom:50px;
+}
+.leaderWrap .pic{
+    float:left;
+    margin-right:40px;
+}
+.leaderWrap .pic img{
+    width:150px;
+    border:4px solid #EEEEEE;
+    min-height: 210px;
+}
+.leaderWrap .con{
+    overflow:hidden;
+    padding-top: 15px;
+}
+.leaderDetail .sTitle {
+    height:40px;
+    line-height:40px;
+    overflow:hidden;
+    margin-bottom: 30px;
+}
+.leaderDetail .writeBtn{
+    float:right;
+    display:block;
+    height:30px;
+    line-height:30px;
+    margin:5px 0;
+    padding:0 20px;
+    background:#E56565;
+    color:#fff;
+    -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;
+}
+.leaderDetail .name{
+    font-size:24px;
+    color:#3269B8;
+    margin-right:20px;
+}
+.leaderDetail .job{
+    font-size:16px;
+}
+.leaderDetail .work{
+    position:relative;
+}
+.leaderDetail .work i{
+    position:absolute;
+    top:-16px;
+    left:10px;
+    border-color:transparent;  border-style:dashed; border-width:8px;  border-bottom-color:#F6F6F6; border-bottom-style:solid; content:""; display:block; font-size:0; line-height:0; width:0; 
+}
+.leaderDetail .in{
+    position:relative;
+    padding:15px 30px;
+    background:#F6F6F6;
+    text-indent:2em;
+    min-height:84px;
+}
+.leaderIntroBox .hd{
+    height:17px;
+    border-bottom:1px solid #E3E3E3;
+    position:relative;
+    text-align:center;
+}
+.leaderIntroBox .hd h3{
+    font-size:20px;
+    background:#fff;
+    display:inline-block;
+    padding:0 50px;
+    color:#3269B8;
+    position:relative;
+}
+.leaderIntroBox .hd h3 a{
+    color:#3269B8
+}
+.leaderIntroBox .hd i{
+    display:none;
+    position:absolute;
+    width:1px;
+    height:17px;
+    background:#CCDDF4;
+    left:0;
+    top:8px;
+}
+.leaderIntroBox .hd .r{
+    left:auto;
+    right:0
+}
+.leaderIntroBox .bd{
+    padding:50px 10px;
+}
+.leaderIntro{
+    text-indent:2em;
+}
+.leaderIntroBox .picListFl{
+    margin-right:-3%
+}
+.leaderIntroBox .picListFl li{
+    width: 30.3%;
+    margin-right:3%
+}
+.leaderIntroBox .picListFl .pic img{
+    height:auto;
+}
+/* 重点领域信息公开 -----------------------------------------------------*/
+.zdlyBanner {
+    margin-bottom: 15px;
+}
+.zdlyBanner img {
+    width: 100%
+}
+/* 侧栏 */
+.zdlySideBox {
+    background: #fff;
+    margin-bottom: 15px;
+}
+.zdlySideBox .hd {
+    height: 50px;
+    line-height: 50px;
+    background: #3991E6;
+    overflow: hidden;
+}
+.zdlySideBox .hd h3 {
+    padding-left: 60px;
+    font-size: 18px;
+    color: #fff;
+    font-weight: bold;
+    background: url(./img/gov-zdly.png) 15px 13px no-repeat;
+}
+.zdlySideBox .hd h3 a {
+    color: #fff
+}
+.zdlySideBox .bd {
+    overflow: hidden;
+    border: 1px solid #ECECEC;
+    border-top: 0;
+}
+.zdlyNodeList li {
+    vertical-align: top;
+}
+.zdlyNodeList .a1 {
+    height: 44px;
+    line-height: 44px;
+    display: block;
+    overflow: hidden;
+    border-bottom: 1px solid #ECECEC;
+    padding: 0 5% 0 25%;
+    font-size: 16px;
+    background: url(./img/gov-zdly.png) 97% -210px no-repeat;
+}
+.zdlyNodeList .a1:hover {
+    text-decoration: none
+}
+.zdlyNodeList .ul1 {
+    padding: 10px;
+    border-bottom: 1px solid #ECECEC;
+    display: none;
+}
+.zdlyNodeList .on1 .a1 {
+    color: #3991E6;
+    font-weight: bold;
+    background-position: 97% -152px;
+}
+.zdlyNodeList .on .a1 {
+    background-position: 97% -152px;
+}
+.zdlyNodeList .on1 .ul1,
+.zdlyNodeList .on .ul1 {
+    display: block !important;
+}
+.zdlyNodeList .a2 {
+    color: #3991E6;
+    display: block;
+    padding: 5px 0 5px 25%;
+    line-height: 22px;
+    height: 22px;
+}
+/* 循环 */
+.zdlyLoop {
+    overflow: hidden;
+}
+.zdlyLoop .box{
+    width:49%
+}
+.zdlyLoop .box .bd{
+    height:150px
+}
+.zdlyNodeList{
+    overflow:hidden;
+    padding-bottom:10px;
+}
+.zdlyNodeList li{
+    float:left;
+    margin:0 10px 10px 0;
+}
+.zdlyNodeList a{
+    display:block;
+    height:38px;
+    line-height:38px;
+    border:1px solid #E0E0E0;
+    padding:0 20px;
+    font-size:16px;
+}
+.zdlyNodeList a:hover{
+    text-decoration:none;
+    background:#D1F6FF;
+    color:#3269B8
+}
+#shzzhzjjg .bd,#xyxx .bd{
+    height:156px;
+}
+.links{
+    overflow:hidden;
+}
+.links li{
+    height: 73px;
+    position:relative;
+    background: url('./img/zdly-btn1(1).jpg') 0 0 no-repeat;
+    margin-bottom: 8px;
+}
+.links a{
+    display:block;
+    height: 73px;
+}
+
+.links .li1{height:162px;}
+.links .li1 .a1
+{
+    width: 197px;
+    height: 72px;
+    position:absolute;
+    left: 8px;
+    top: 76px;
+   
+}
+.links .li1 .a2{
+    position:absolute;
+    left: 221px;
+    
+    top: 76px;
+    width: 197px;
+    height: 72px;
+}
+
+
+.links .a3{
+    position:absolute;
+    left: 0;
+    top:0;
+    width: 209px;
+    background:url('./img/zdly-btn2(1).jpg') 0 0 no-repeat;
+    height:73px;
+}
+.links .a4{
+    position:absolute;
+    right: 0;
+    top:0;
+    width: 209px;
+    background: url('./img/zdly-btn2(1).jpg') -220px 0 no-repeat;
+    height:73px;
+}
+.links .li2{
+    background: url('./img/zdly-btn1(1).jpg') 0 -83px no-repeat;
+}
+.links .li3{
+    border:0;
+    background:none;
+}
+.links .li4{
+    background:url('./img/zdly-btn2(1).jpg') 0 -83px no-repeat;
+}
+/* 政府机构设置介绍 -----------------------------------------------------*/
+.zfjghz {
+    text-align: center;
+    padding: 20px 0;
+}
+.zfjghz .tt h2,
+.jcBox .hd h3 {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    padding: 10px 5%;
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+    background: #3269B8
+}
+.zfjghz .bt {
+    overflow: hidden;
+    margin-top: -3px;
+    padding-top: 3px;
+}
+.jcBox {
+    float: left;
+    width: 16.66%;
+    text-align: left;
+}
+.jcBox .hd {
+    text-align: center;
+}
+.jcBox .hd h3 {
+    width: 80%;
+    font-size: 18px;
+    background: #AAD4F5;
+    color: #3269B8;
+    line-height: 1.5;
+    padding: 20px 5%;
+}
+.jcBox .bd {
+    text-align: center;
+    background: #E6F4FF;
+    width: 90%;
+    margin: 0 auto;
+}
+.jcBox li a {
+    display: block;
+    width: 80%;
+    padding: 8% 2%;
+    margin: 0 auto;
+    line-height: 1.5;
+    border-bottom: 1px dashed #ccc
+}
+.jcBox .last a {
+    border-bottom: 0
+}
+.zfjghz .yLine {
+    height: 50px;
+    display: block;
+    width: 1px;
+    overflow: hidden;
+    background: #D2D2D2;
+    margin: 0 auto;
+    font-size: 0;
+    line-height: 0;
+}
+.zfjghz .xLine {
+    width: 100%;
+    display: block;
+    height: 1px;
+    overflow: hidden;
+    background: #D2D2D2;
+    margin-bottom: -3px;
+    font-size: 0;
+    line-height: 0;
+}
+.zfjghz .dot {
+    display: block;
+    width: 6px;
+    height: 6px;
+    background: #CDCDCD;
+    margin: 0 auto;
+}
+.jcBox.first .xLine {
+    width: 50%;
+    margin-left: 50%;
+}
+.jcBox.last .xLine {
+    width: 50%;
+}
+.jcBox:hover .hd h3 {
+    background: #3591DA;
+    color: #fff;
+    border: 1px solid #3591DA;
+    border-bottom: 0;
+    -webkit-box-shadow: 0px 0 10px rgba(0, 0, 0, .2);
+    -moz-box-shadow: 0px 0 10px rgba(0, 0, 0, .2);
+    box-shadow: 0px 0 10px rgba(0, 0, 0, .2);
+}
+.jcBox.on .bd {
+    background: #B8E0FF;
+    border: 1px solid #A3D0F3;
+    -webkit-box-shadow: 0px 0 10px rgba(0, 0, 0, .2);
+    -moz-box-shadow: 0px 0 10px rgba(0, 0, 0, .2);
+    box-shadow: 0px 0 10px rgba(0, 0, 0, .2);
+}
+.jcBox.on li a {
+    border-bottom-color: #90BCDE;
+    color: #3269B8
+}
+.jcBox.on li a:hover {
+    color: #E20500
+}
+/* 政府机构设置介绍--详细页 -----------------------------------------------------*/
+.zfjghzDetail {
+    padding: 2%;
+}
+.zfjghzDetail .deptName {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 30px
+}
+.zfjghzBox .hd {
+    height: 46px;
+    line-height: 46px;
+    background: #F7F7F7;
+    border-top: 2px solid #C9C9C9;
+}
+.zfjghzBox .hd ul {
+    overflow: hidden;
+    margin-top: -2px;
+    height: 48px;
+    line-height: 48px;
+}
+.zfjghzBox .hd li {
+    float: left;
+    font-size: 18px;
+    padding: 0 20px 0 40px;
+    background: url(./img/zfjgszjs-icons.png) 15px 12px no-repeat;
+}
+.zfjghzBox .hd .b {
+    background-position: 15px -80px
+}
+.zfjghzBox .hd .c {
+    background-position: 15px -169px;
+}
+.zfjghzBox .hd .d {
+    background-position: 10px -259px;
+}
+.zfjghzBox .hd .on {
+    background-color: #F32929;
+    color: #fff;
+    background-position: 15px -347px;
+}
+.zfjghzBox .hd .b.on {
+    background-position: 15px -439px;
+}
+.zfjghzBox .hd .c.on {
+    background-position: 15px -528px;
+}
+.zfjghzBox .hd .d.on {
+    background-position: 10px -618px;
+}
+.zfjghzBox .bd {
+    padding: 30px 10px;
+    line-height: 2;
+}
+/* 职能机构 ----------------------------------------------------- */
+.jgList{
+    overflow:hidden;
+    margin-right:-20px;
+}
+.jgList li{
+    float:left;
+    width: 279px;
+    margin:0 15px 15px 0;
+}
+.jgList a{
+    display:block;
+    line-height:20px;
+    padding:10px 12px;
+    border:1px solid #ddd;
+}
+.jgList a:hover{
+    text-decoration:none;
+    background-color:#f2f2f2
+}
+/* 信息公开-年报首页 ----------------------------------------------------- */
+.yearReportBody .mBd .infoList{
+    overflow:hidden;
+    padding-bottom:20px;
+    border-bottom:1px solid #ddd;
+    margin-bottom:20px;
+}
+.yearReportBody .mBd .infoList li{
+    float:left;
+    width:45%;
+}
+
+.bmbsList1 li{ width:220px; height:36px; line-height:36px;    }
+
+/** by lyj **/
+.govDetail .miniTable{
+    margin-bottom:10px;
+}
+.govDetail .miniTable th,
+.govDetail .miniTable td{
+    text-align:center;
+    padding:5px;
+    border:1px solid #E6E6E6;
+    font-size:14px;
+}
+.govDetail .miniTable th{
+    background:#F7F7F7;
+    font-weight:bold;
+}
+/** by lyj **/

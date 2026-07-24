@@ -1,0 +1,110 @@
+function Check_AdobeReader() {
+	var displayString;
+	var acrobat = new Object();
+	acrobat.installed = false;
+	acrobat.version = "0.0";
+
+	if(navigator.plugins && navigator.plugins.length) {
+		for(x = 0; x < navigator.plugins.length; x++) {
+			if(navigator.plugins[x].description.indexOf("Adobe Acrobat") != -1) {
+				acrobat.version = parseFloat(navigator.plugins[x].description.split("Version ")[1]);
+				if(acrobat.version.toString().length == 1) acrobat.version += ".0";
+				acrobat.installed = true;
+				displayString = "Acrobat Version: " + acrobat.version;
+				break;
+			} else if(navigator.plugins[x].description.indexOf("Adobe PDF Plug-In") != -1) {
+				acrobat.installed = true;
+				acrobat.version = "8+";
+				displayString = "Acrobat Version 8 or Above";
+			}
+		}
+	} else if(window.ActiveXObject) {
+		for(x = 2; x < 10; x++) {
+			try {
+				oAcro = eval("new ActiveXObject('PDF.PdfCtrl." + x + "');");
+				if(oAcro) {
+					acrobat.installed = true;
+
+					acrobat.version = x + ".0";
+					displayString = "Acrobat Version: " + acrobat.version;
+				}
+			} catch(e) {}
+		}
+
+		try {
+			oAcro4 = new ActiveXObject("PDF.PdfCtrl.1");
+			if(oAcro4) {
+				acrobat.installed = true;
+				acrobat.version = '4.0';
+				displayString = 'Acrobat Version: ' + acrobat.version;
+			}
+		} catch(e) {}
+
+		try {
+			oAcro7 = new ActiveXObject('AcroPDF.PDF.1');
+			if(oAcro7) {
+				acrobat.installed = true;
+				acrobat.version = '7.0';
+				displayString = 'Acrobat Version: ' + acrobat.version;
+			}
+		} catch(e) {}
+	}
+
+	return acrobat;
+}
+
+function isAcrobatPluginInstall() {
+	var flag = false;
+	var browser = navigator.appName;
+	var b_version = navigator.appVersion;
+	var version = b_version.split(";");
+	var trim_Version = version[1].replace(/[ ]/g, "");
+	// 如果是firefox浏览器 
+//	if(navigator.plugins && navigator.plugins.length) {
+//		//					alert(1);
+//		for(x = 0; x < navigator.plugins.length; x++) {
+//			if(navigator.plugins[x].name == 'Adobe Acrobat') {
+//				flag = true;
+//			}
+//			alert(navigator.plugins[x].name);
+//		}
+//	}
+	// 下面代码都是处理IE浏览器的情况 
+	if((window.ActiveXObject) || (navigator.userAgent.indexOf("Trident") > -1)) {
+		alert(111);
+		if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE8.0") {
+			for(x = 2; x < 10; x++) {
+				try {
+					oAcro = eval("new ActiveXObject('PDF.PdfCtrl." + x + "');");
+					if(oAcro) {
+						flag = true;
+					}
+				} catch(e) {
+					flag = false;
+				}
+			}
+			try {
+				oAcro4 = new ActiveXObject('PDF.PdfCtrl.1');
+				if(oAcro4)
+					flag = true;
+			} catch(e) {
+				flag = false;
+			}
+			try {
+				oAcro7 = new ActiveXObject('AcroPDF.PDF.1');
+				if(oAcro7)
+					flag = true;
+			} catch(e) {
+				flag = false;
+			}
+		}
+	}
+	if(flag) {
+		return true;
+
+	} else {
+		alert("对不起,您还没有安装PDF阅读器软件呢,为了方便预览PDF文档,请选择安装！");
+		//					location = 'js/foxit_Offline_FoxitInst.exe';
+	}
+	return flag;
+}

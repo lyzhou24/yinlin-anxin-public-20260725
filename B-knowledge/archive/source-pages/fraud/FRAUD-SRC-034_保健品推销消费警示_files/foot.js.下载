@@ -1,0 +1,181 @@
+document.writeln("<style>");
+document.writeln(".ffoot{clear:both;width: 100%;background: #0f5497;padding-top:20px;}\n" +
+".ffootcontrol{width: 1200px;margin: 0 auto;}\n" +
+        ".clear{clear:both;height:0px;overflow:hidden;}\n" +
+".fbtol{margin-bottom: 20px;position:relative;}\n" +
+".fbtol dd:first-child{margin-left: 0;}\n" +
+".fbtol dd{float: left;font-size: 15px;margin-left: 10px;}\n" +
+".fbtol dd>span{border:1px solid #446b9a;width: 232px;padding:0 20px;height: 28px;color: #fff;line-height: 28px;display: block;cursor: pointer;text-align: center; }\n" +
+".fbtol dd .fvnis{left:0;position:absolute; background: #efefef;width: 1200px;height: 125px;padding: 0 20px;z-index: 1;border: 1px solid #446B9A;border-top: none;overflow-y: auto;display: none;}\n" +
+".fbtol dd .fvnis li{float: left;width: 16.5%;line-height: 20px;padding: 5px 0;}\n" +
+".fbtol dd .fvnis li a{color: #333;}\n" +
+".ffr{float: right;}\n" +
+".ffl{float: left;}\n" +
+".fwkg{width: 690px;border-right:1px solid #446b9a;height: auto;}\n" +
+".fwkg span{color: #fff;font-size: 15px;margin-left: 25px;margin-bottom:15px;display: block;float: left;}\n" +
+".fwkg a{color: #fff;font-size: 15px;margin-left: 25px;margin-bottom:15px;display: block;float: left;}\n" +
+".fwkg a:hover{color:#fff;}\n" +
+".fwkg span i{margin:0 15px;margin-right: 5px}\n" +
+".flxwm{overflow: hidden;width: 240px;}\n" +
+".flxwm li{float: left;font-size: 15px;width: 50%;}\n" +
+".flxwm li a{display: block;border-left:1px solid #dfe4ed;text-align: center;margin-bottom: 15px;color: #dfe4ed;}\n" +
+".flxwm li:first-child a,.flxwm li:first-child +li+li a{border-left: none;}\n" +
+".flxwm li a{color:#dfe4ed }\n" +
+".fjc a{display: block;height: 60px;border-right: 1px solid #446b9a;float: left;}\n" +
+".fjc a img{margin:0 25px;}\n" +
+".flxwm li:first-child a, .flxwm li:first-child +li+li a{border-left: none;}\n" +
+"#_span_jiucuo{text-align: center;width: 160px;height: 60px;display: inline-block;}\n" +
+".fbtol dd:hover .fvnis{display: block;}" +
+"@media screen and (max-width: 768px) {\n" +
+".ffoot{width: 100%;padding-top: 15px;padding-bottom: 15px;}\n" +
+".ffootcontrol{width: 90%;text-align: center;}\n" +
+".fbtol{margin-bottom: 10px;}\n" +
+".fbtol dd{width: 47%;margin-left: 0;margin-bottom: 10px;}\n" +
+".fbtol dd>span{width: 90%;padding: 0 5%;}\n" +
+".fbtol dd .fvnis{width: 90%;height: 300px;padding: 0 5%;}\n" +
+".fbtol dd .fvnis li{width: 100%;float: none;margin-right: 0;}\n" +
+".flxwm{margin-right: 1.5%;margin-top: -50px;float: right;width: 47.5%;margin-bottom: 20px;}\n" +
+".flxwm li{width: 90%;text-align: left;}\n" +
+".flxwm li a{color: #fff;padding: 6.5px 5%;border: none;text-align: center;height: auto;margin-bottom: 0;}\n" +
+".fwkg{float: left;width: 100%;height: auto;border-right: none;margin-bottom: 20px;}\n" +
+".fwkg span, .fwkg a{text-align: center;margin: 0 auto;float: none;margin-bottom: 10px;color: #fff;display: block;}\n" +
+".fjc a{display: block;height: auto;border-right: 1px solid #fff;float: left;}\n" +
+"}\n" +
+"@media screen and (max-width: 400px) {\n" +
+".fbtol dd{font-size: 13px;}\n" +
+".flxwm li a{font-size: 13px;line-height: 13px;}\n" +
+".fwkg span{font-size: 13px;}\n" +
+".fwkg a{font-size: 13px;}\n" +
+"}");
+document.writeln("</style>");
+document.writeln("<div class=\"ffoot\">");
+document.writeln("<div class=\"ffootcontrol\">");
+document.writeln("<dl class=\"fbtol\">");
+document.writeln("	<dd>");
+document.writeln("		<span>国家部委网站</span>");
+document.writeln("		<ul style=\"-webkit-overflow-scrolling: touch;\" class=\"fvnis\">");
+document.writeln("<li><a href=\"http://www.gov.cn/\" target=\"_blank\">中国政府网</a></li>");
+document.writeln("<li><a href=\"http://www.npc.gov.cn/\" target=\"_blank\">全国人大</a></li>");
+document.writeln("<li><a href=\"http://www.cppcc.gov.cn/\" target=\"_blank\">全国政协</a></li>");
+document.writeln("<li><a href=\"http://www.ccdi.gov.cn/\" target=\"_blank\">国家监察委员会</a></li>");
+document.writeln("<li><a href=\"http://www.court.gov.cn/\" target=\"_blank\">最高人民法院</a></li>");
+document.writeln("<li><a href=\"http://www.spp.gov.cn/\" target=\"_blank\">最高人民检察院</a></li>");
+document.writeln("		</ul>");
+document.writeln("	</dd>");
+document.writeln("	<dd>");
+document.writeln("		<span>各省市政府网站</span>");
+document.writeln("		<ul style=\"-webkit-overflow-scrolling: touch;\" class=\"fvnis\">");
+document.writeln("<li><a href=\"http://www.hebei.gov.cn/\" target=\"_blank\">河北</a></li>");
+document.writeln("<li><a href=\"http://www.beijing.gov.cn\" target=\"_blank\">北京</a></li>");
+document.writeln("<li><a href=\"http://www.tj.gov.cn\" target=\"_blank\">天津</a></li>");
+document.writeln("<li><a href=\"http://www.shanxi.gov.cn\" target=\"_blank\">山西</a></li>");
+document.writeln("<li><a href=\"http://www.nmg.gov.cn\" target=\"_blank\">内蒙古</a></li>");
+document.writeln("<li><a href=\"http://www.ln.gov.cn\" target=\"_blank\">辽宁</a></li>");
+document.writeln("<li><a href=\"http://www.jl.gov.cn\" target=\"_blank\">吉林</a></li>");
+document.writeln("<li><a href=\"http://www.hlj.gov.cn\" target=\"_blank\">黑龙江</a></li>");
+document.writeln("<li><a href=\"http://www.shanghai.gov.cn\" target=\"_blank\">上海</a></li>");
+document.writeln("<li><a href=\"http://www.jiangsu.gov.cn\" target=\"_blank\">江苏</a></li>");
+document.writeln("<li><a href=\"http://www.zj.gov.cn/\" target=\"_blank\">浙江</a></li>");
+document.writeln("<li><a href=\"http://www.ah.gov.cn\" target=\"_blank\">安徽</a></li>");
+document.writeln("<li><a href=\"http://www.fujian.gov.cn\" target=\"_blank\">福建</a></li>");
+document.writeln("<li><a href=\"http://www.jiangxi.gov.cn\" target=\"_blank\">江西</a></li>");
+document.writeln("<li><a href=\"http://www.shandong.gov.cn\" target=\"_blank\">山东</a></li>");
+document.writeln("<li><a href=\"http://www.henan.gov.cn\" target=\"_blank\">河南</a></li>");
+document.writeln("<li><a href=\"http://www.hubei.gov.cn\" target=\"_blank\">湖北</a></li>");
+document.writeln("<li><a href=\"http://www.hunan.gov.cn\" target=\"_blank\">湖南</a></li>");
+document.writeln("<li><a href=\"http://www.gd.gov.cn\" target=\"_blank\">广东</a></li>");
+document.writeln("<li><a href=\"http://www.gxzf.gov.cn\" target=\"_blank\">广西</a></li>");
+document.writeln("<li><a href=\"http://www.hainan.gov.cn\" target=\"_blank\">海南</a></li>");
+document.writeln("<li><a href=\"http://www.cq.gov.cn\" target=\"_blank\">重庆</a></li>");
+document.writeln("<li><a href=\"http://www.sc.gov.cn\" target=\"_blank\">四川</a></li>");
+document.writeln("<li><a href=\"http://www.gzgov.gov.cn\" target=\"_blank\">贵州</a></li>");
+document.writeln("<li><a href=\"http://www.yn.gov.cn\" target=\"_blank\">云南</a></li>");
+document.writeln("<li><a href=\"http://www.xizang.gov.cn\" target=\"_blank\">西藏</a></li>");
+document.writeln("<li><a href=\"http://www.shaanxi.gov.cn\" target=\"_blank\">陕西</a></li>");
+document.writeln("<li><a href=\"http://www.gansu.gov.cn\" target=\"_blank\">甘肃</a></li>");
+document.writeln("<li><a href=\"http://www.nx.gov.cn\" target=\"_blank\">宁夏</a></li>");
+document.writeln("<li><a href=\"http://www.qh.gov.cn\" target=\"_blank\">青海</a></li>");
+document.writeln("<li><a href=\"http://www.xinjiang.gov.cn\" target=\"_blank\">新疆</a></li>");
+document.writeln("<li><a href=\"http://www.gov.hk\" target=\"_blank\">香港</a></li>");
+document.writeln("<li><a href=\"http://portal.gov.mo/web/guest/citizen\" target=\"_blank\">澳门</a></li>");
+document.writeln("<li><a href=\"http://www.xjbt.gov.cn\" target=\"_blank\">新疆生产建设兵团</a></li>");
+document.writeln("</ul>");
+document.writeln("</dd>");
+document.writeln("<dd>");
+document.writeln("<span>省内各市政府</span>");
+document.writeln("<ul style=\"-webkit-overflow-scrolling: touch;\" class=\"fvnis\">");
+document.writeln("<li><a href=\"http://www.sjz.gov.cn\" target=\"_blank\">石家庄</a></li>");
+document.writeln("<li><a href=\"http://www.zjk.gov.cn\" target=\"_blank\">张家口</a></li>");
+document.writeln("<li><a href=\"http://www.qhd.gov.cn\" target=\"_blank\">秦皇岛</a></li>");
+document.writeln("<li><a href=\"http://www.tangshan.gov.cn\" target=\"_blank\">唐山</a></li>");
+document.writeln("<li><a href=\"http://www.lf.gov.cn\" target=\"_blank\">廊坊</a></li>");
+document.writeln("<li><a href=\"http://www.bd.gov.cn\" target=\"_blank\">保定</a></li>");
+document.writeln("<li><a href=\"http://www.cangzhou.gov.cn\" target=\"_blank\">沧州</a></li>");
+document.writeln("<li><a href=\"http://www.hengshui.gov.cn\" target=\"_blank\">衡水</a></li>");
+document.writeln("<li><a href=\"http://www.xingtai.gov.cn\" target=\"_blank\">邢台</a></li>");
+document.writeln("<li><a href=\"http://www.hd.gov.cn\" target=\"_blank\">邯郸</a></li>");
+document.writeln("</ul>");
+document.writeln("</dd>");
+document.writeln("	<dd>");
+document.writeln("<span>各县区政府</span>");
+document.writeln("<ul style=\"-webkit-overflow-scrolling: touch;\" class=\"fvnis\">");
+document.writeln("<li><a href=\"http://www.sqq.gov.cn/\" target=\"_blank\">双桥区</a></li>");
+document.writeln("<li><a href=\"http://www.slq.gov.cn/\" target=\"_blank\">双滦区</a></li>");
+document.writeln("<li><a href=\"http://www.ysyz.gov.cn/\" target=\"_blank\">营子区</a></li>");
+document.writeln("<li><a href=\"http://www.cdx.gov.cn/\" target=\"_blank\">承德县</a></li>");
+document.writeln("<li><a href=\"http://www.weichang.gov.cn/\" target=\"_blank\">围场县</a></li>");
+document.writeln("<li><a href=\"http://www.fengning.gov.cn/\" target=\"_blank\">丰宁县</a></li>");
+document.writeln("<li><a href=\"http://www.hebeilonghua.gov.cn/\" target=\"_blank\">隆化县</a></li>");
+document.writeln("<li><a href=\"http://www.lpx.gov.cn/\" target=\"_blank\">滦平县</a></li>");
+document.writeln("<li><a href=\"http://www.pingquan.gov.cn/\" target=\"_blank\">平泉市</a></li>");
+document.writeln("<li><a href=\"http://www.hbxl.gov.cn/index.html\" target=\"_blank\">兴隆县</a></li>");
+document.writeln("<li><a href=\"http://www.hbkc.gov.cn/\" target=\"_blank\">宽城县</a></li>");
+document.writeln("<li><a href=\"http://www.cdkfq.gov.cn/\" target=\"_blank\">开发区</a></li>");
+document.writeln("		</ul>");
+document.writeln("	</dd>");
+document.writeln("	<dd>");
+document.writeln("		<span>各政府部门</span>");
+document.writeln("	<ul style=\"-webkit-overflow-scrolling: touch;\" class=\"fvnis\">");
+document.writeln("<li><a href=\"http://drc.chengde.gov.cn/\" target=\"_blank\">发展和改革委员会</a></li>");
+document.writeln("<li><a href=\"http://jyj.chengde.gov.cn\" target=\"_blank\">教育局</a></li>");
+document.writeln("<li><a href=\"http://kxjsj.chengde.gov.cn\" target=\"_blank\">科学技术局</a></li>");
+document.writeln("<li><a href=\"http://ga.chengde.gov.cn\" target=\"_blank\">公安局</a></li>");
+document.writeln("<li><a href=\"http://sfj.chengde.gov.cn/\" target=\"_blank\">司法局</a></li>");
+document.writeln("<li><a href=\"http://rsj.chengde.gov.cn\" target=\"_blank\">人力资源和社会保障局</a></li>");
+document.writeln("<li><a href=\"http://zrgh.chengde.gov.cn\" target=\"_blank\">自然资源和规划局</a></li>");
+document.writeln("<li><a href=\"http://shj.chengde.gov.cn\" target=\"_blank\">生态环境局</a></li>");
+document.writeln("<li><a href=\"http://nyncj.chengde.gov.cn\" target=\"_blank\">农业农村局</a></li>");
+document.writeln("<li><a href=\"http://lcj.chengde.gov.cn\" target=\"_blank\">林业和草原局</a></li>");
+document.writeln("<li><a href=\"http://swj.chengde.gov.cn/\" target=\"_blank\">商务局</a></li>");
+document.writeln("<li><a href=\"http://lywh.chengde.gov.cn/\" target=\"_blank\">旅游和文化广电局</a></li>");
+document.writeln("<li><a href=\"http://wjw.chengde.gov.cn/\" target=\"_blank\">卫生健康委员会</a></li>");
+document.writeln("<li><a href=\"http://yjglj.chengde.gov.cn/\" target=\"_blank\">应急管理局</a></li>");
+document.writeln("<li><a href=\"http://tjj.chengde.gov.cn\" target=\"_blank\">统计局</a></li>");
+document.writeln("<li><a href=\"http://xzspj.chengde.gov.cn/\" target=\"_blank\">行政审批局</a></li>");
+document.writeln("<li><a href=\"http://wwj.chengde.gov.cn/\" target=\"_blank\">文物局</a></li>");
+document.writeln("<li><a href=\"http://ylbzj.chengde.gov.cn/\" target=\"_blank\">医疗保障局</a></li>");
+document.writeln("<li><a href=\"http://tyjr.chengde.gov.cn/\" target=\"_blank\">退役军人事务局</a></li>");
+document.writeln("<li><a href=\"http://gzw.chengde.gov.cn/\" target=\"_blank\">国有资产监督管理委员会</a></li>");
+document.writeln("</ul>");
+document.writeln("</dd>");
+document.writeln("<div class=\"clear\"></div>");
+document.writeln("</dl>");
+document.writeln("<div>");
+document.writeln("<ul class=\"flxwm ffr\">");
+document.writeln("<li><a  href=\"/col/col9320/index.html\" target=\"_blank\">网站地图</a></li>");
+document.writeln("</ul>");
+document.writeln("<div class=\"fwkg ffr\">");
+document.writeln("<span>双桥区人民政府主办  双桥区对外宣传局承办</span>");
+document.writeln("<span>联系电话：0314-2056659</span>");
+document.writeln("<span>承德市双桥区人民政府版权所有</span>");
+document.writeln(" <a href=\"https://beian.miit.gov.cn/\" target=\"_blank\"> 冀ICP备05027609号-1</a>");
+document.writeln("<span>网站标识码：1308020002</span><a href=\"http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13080202000783\" target=\"_blank\"><i><img src=\"/picture/0/1912260102120735619.png\" alt=\"\"></i>	冀公网安备 13080202000783号</a>");
+document.writeln("</div>");
+document.writeln("<div class=\"fjc ffl\">");
+document.writeln("<a target=\"_blank\" href=\"//bszs.conac.cn/sitename?method=show&id=3EB623033FD1566AE053022819AC2B3F\"><img src=\"/picture/0/1912252251427625976.png\" ></a>");
+document.writeln("<span><script id=\"_jiucuo_\" sitecode=\'1308020002\' src=\'https://zfwzgl.www.gov.cn/exposure/jiucuo.js\'></script></span>");
+document.writeln("</div>");
+document.writeln("<div class=\"clear\"></div>");
+document.writeln("</div>");
+document.writeln("</div>");
+document.writeln("</div>");

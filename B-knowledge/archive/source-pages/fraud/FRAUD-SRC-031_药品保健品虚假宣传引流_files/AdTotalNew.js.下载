@@ -1,0 +1,237 @@
+function ViewAdView(AdList, ObjName, RoleID, Title, Url, IsType, GroupWidth, GroupHeight, AdNum, palyTime) {
+    var HtmlStr = [];
+    var myDate = new Date();
+    //var myDate = new Date(new Date().toLocaleDateString());
+
+    var Time = myDate.getTime();
+	
+    for (var i = 0; i < AdList.length; i++) {
+        if (!RoleID && AdList[i][0] != RoleID) {
+            $("div[data-id=\"" + AdList[i][4] + "\"]").remove();
+			AdList.splice(i, 1);
+            i--;
+            continue;
+        } else if (!Title && Title.length>0 && AdList[i][1] != Title) {
+            $("div[data-id=\"" + AdList[i][4] + "\"]").remove();
+			AdList.splice(i, 1);
+            i--;
+            continue;
+        }
+        if (AdList[i][2] != '' && parseFloat(AdList[i][2]) > Time) {
+            $("div[data-id=\"" + AdList[i][4] + "\"]").remove();
+			AdList.splice(i, 1);
+            i--;
+            continue;
+        }
+        if (AdList[i][3] != '' && parseFloat(AdList[i][3]) < Time) {
+            $("div[data-id=\"" + AdList[i][4] + "\"]").remove();
+			AdList.splice(i, 1);
+            i--;
+            continue;
+        }
+        HtmlStr.push(AdList[i][4]);
+		$(".SyCmsAd").css("display", "block");
+    }
+    
+    if (HtmlStr.length > 0) {
+        if (IsType == 1) {
+            if (HtmlStr.length > 1) {
+                var i = parseInt(getCookie(ObjName));
+                if (isNaN(i)) {
+                    i = 0;
+                } else {
+                    i++;
+                    if (i >= HtmlStr.length) {
+                        i = 0;
+                    }
+                }
+                SetCookie(ObjName, i);
+                for (var j = 0; j < HtmlStr.length; j++) {
+                    if (j != i) {
+                        $("div[data-id=\"" + HtmlStr[j] + "\"]").remove();
+                    }
+                }
+				HtmlStr = [HtmlStr[i]];
+            } else {
+                $("div[data-id=\"" + HtmlStr[j] + "\"]").show();
+            }
+        } else if (IsType == 2) {
+			// 当IsType =2  （轮播）
+			// 广告随机
+			//打乱数组顺序
+			function getArrRandom (arr) {
+				var len = arr.length;
+				for (var i = len - 1; i >= 0; i--) {
+				  var randomIndex = Math.floor(Math.random() * (i + 1));
+				  var itemIndex = arr[randomIndex];
+				  arr[randomIndex] = arr[i];
+				  arr[i] = itemIndex;
+				}
+				return arr;
+			}
+		  
+			//截取打乱后的数组的前AdNum位
+			function getRandomArr (num) {
+				var tmpArr = getArrRandom(HtmlStr);
+				var arrList = [];
+				for (var i = 0; i < num; i++) {
+				  arrList.push(tmpArr[i]);
+				};
+				for (var j = 0; j < arrList.length; j++) {
+				    $("div[data-id=\"" + HtmlStr[j] + "\"]").remove();
+				}
+				HtmlStr = HtmlStr.splice(num, AdNum);
+			}
+			getRandomArr(HtmlStr.length - AdNum);
+			
+			//轮播js
+			var ObjClass = '.' + ObjName;
+			//判断ie浏览器版本
+			function appNameIE(){
+				if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.match(/7./i)=="7.") 
+				{ 
+					return 7
+				} 
+				else if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.match(/8./i)=="8.") 
+				{ 
+					return 8
+				} 
+				else if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.match(/9./i)=="9.") 
+				{ 
+					return 9
+				} 
+				else if(navigator.appName == "Microsoft Internet Explorer") 
+				{ 
+					return 6
+				} else{
+					return 99
+				}
+			}
+			if($(ObjClass + ' .swiper-slide').length) {
+				var imgWidth = GroupWidth;
+				var imgHeight = GroupHeight;
+				$(ObjClass + ' img').css("width", $(ObjClass).width());
+				$(ObjClass + ' img').css("height", (imgHeight/imgWidth) * $(ObjClass).width());
+				$(window).bind('resize', function (){
+					$(ObjClass + ' img').css("width", $(ObjClass).width());
+					$(ObjClass + ' img').css("height", (imgHeight/imgWidth) * $(ObjClass).width());
+				});
+			}
+			if($(ObjClass + ' .swiper-slide').length > 1) {
+				var swiper_effect = 'fade';
+				if(appNameIE()<10){
+					swiper_effect = 'slide';
+				}
+				var adplay = palyTime ? palyTime : 3000;
+				console.log(palyTime);
+				console.log(adplay);
+				var adSwiper = $(ObjClass + ' .swiper-container').swiper({
+					autoplayStopOnLast: false,
+					autoplay: adplay,
+					speed: 600,
+					autoHeight: true,
+					simulateTouch: false,
+					pagination: ObjClass + ' .pagination',
+					paginationClickable: true,
+					effect: swiper_effect,
+					onSlideChangeEnd: function(swiper){
+						// 轮播图记录ev pv
+						if (AdListMess.length > 0) {
+							var sWidth = $(window).width();
+							var sHeight = $(window).height();
+							var sTop = $(window).scrollTop();
+							var sLeft = $(window).scrollLeft();
+							var vGroup = getElCoordinate($(ObjClass).get(0));
+							var sId = $(ObjClass + ' .SyCmsAd').eq(swiper.activeIndex).attr("data-id");
+							
+							$(window).bind("resize", function () {
+							    sWidth = document.body.clientWidth;
+							    sHeight = document.body.clientHeight;
+							});
+							$(window).bind("scroll", function () {
+							    sTop = $(window).scrollTop();
+							    sLeft = $(window).scrollLeft();
+							});
+							
+							if (vGroup.right < sLeft + sWidth && vGroup.bottom < sHeight + sTop) {
+								for (var i = 0; i < AdListMess.length; i++) {
+									if(sId == AdListMess[i].id) {
+										AjaxFun(Url, "type=ev&id=" + sId);
+										// console.log("type=ev&id="  + sId);
+										AdListMess.splice(i, 1);
+										i--;
+									}
+								}
+							}
+							
+						}
+					}
+				});
+				$(ObjClass + ' .swiper-container').mouseenter(function() {
+					adSwiper.stopAutoplay();
+				});
+				$(ObjClass + ' .swiper-container').mouseleave(function() {
+					adSwiper.startAutoplay();
+				});
+			}
+			
+		} else {
+            $("div[data-id=\"" + HtmlStr[j] + "\"]").show();
+        }
+    }
+	
+	EVSetFunction(Url, IsType, HtmlStr);
+}
+var AdListMess = new Array(); //跟踪pv ev值数组
+function EVSetFunction(Url, IsType, HtmlStr) {
+	var AdGroup = $("div.SyCmsAdGroup[GroupId]");
+    if (HtmlStr.length > 0) {
+        var Width = $(window).width();
+        var Height = $(window).height();
+        var Top = $(window).scrollTop();
+        var Left = $(window).scrollLeft();
+		
+        for (var i = 0; i < HtmlStr.length; i++) {
+			var id = HtmlStr[i];
+			var AdListDiv = $("div.SyCmsAd[AdId=" + id + "]");
+			var v = getElCoordinate(AdListDiv.get(0));
+			AdListDiv.removeAttr("AdId");
+            if (v.right < Left + Width && v.bottom < Height + Top && AdListDiv.hasClass('swiper-slide-active')) {
+                AjaxFun(Url, "type=evpv&id=" + id);
+				// console.log("type=evpv&id="  + id);
+				
+            } else {
+                AjaxFun(Url, "type=pv&id=" + id);
+				// console.log("type=pv&id=" + id);
+                AdListMess.push({
+                    id: id,
+                    left: v.left,
+                    width: v.width,
+                    height: v.height,
+                    bottom: v.bottom,
+                    right: v.right
+                });
+            }
+        }
+        $(window).bind("resize", function () {
+            Width = document.body.clientWidth;
+            Height = document.body.clientHeight;
+        });
+        if (AdListMess.length > 0) {
+            $(window).bind("scroll", function () {
+                Top = $(window).scrollTop();
+                Left = $(window).scrollLeft();
+                for (var i = 0; i < AdListMess.length; i++) {
+                    if (AdListMess[i].right < Left + Width && AdListMess[i].bottom < Height + Top && AdListDiv.hasClass('swiper-slide-active')) {
+
+                        AjaxFun(Url, "type=ev&id=" + AdListMess[i].id);
+						// console.log("type=ev&id=" + AdListMess[i].id);
+                        AdListMess.splice(i, 1);
+                        i--;
+                    }
+                }
+				
+            });
+        }
+    }
+}

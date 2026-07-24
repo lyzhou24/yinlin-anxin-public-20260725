@@ -1,0 +1,12 @@
+window.onload = function(){
+	var li_len = $("#xgxw ul li").length;
+	if(li_len!=0){
+		$("#xgxw").show();
+	}
+	
+	
+}
+
+
+
+

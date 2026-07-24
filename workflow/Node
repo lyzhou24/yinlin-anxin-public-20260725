@@ -1,0 +1,25 @@
+async function main() {
+  const url = "https://wxzr85dnjt.coze.site/run";
+  const headers = {
+      "Authorization": "Bearer <removed>",
+      "Content-Type": "application/json"
+  };
+  const res = await fetch(url, {
+    method: "POST",
+    headers,
+    //测试时，这里请更换图片url为你自己的图片url,若未使用图床，类型可能需改成jpeg等
+    body: JSON.stringify({"image":{"url":"https://picui.ogmua.cn/s1/2026/07/17/6a59b9f0cbb74.webp","file_type":"image"}})
+  });
+  console.log("status:", res.status);
+  if (!res.ok) {
+    const errText = await res.text();
+    console.log(errText);
+    return;
+  }
+  const text = await res.text();
+  console.log(text);
+}
+
+main().catch(err => {
+  console.error(err);
+});

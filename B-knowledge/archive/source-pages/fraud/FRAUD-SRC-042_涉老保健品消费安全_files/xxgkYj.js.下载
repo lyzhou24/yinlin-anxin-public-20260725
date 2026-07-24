@@ -1,0 +1,4 @@
+﻿$(function(){
+	$("."+$("#ParentChid").val()).click();
+	$("."+$("#Chid").val()).addClass("on");			
+});

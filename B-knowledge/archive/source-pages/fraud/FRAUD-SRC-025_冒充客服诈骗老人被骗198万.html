@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835//images/ajax.js"></script>
+    <link rel="stylesheet" type="text/css" href="/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/article.css">
+    <link rel="stylesheet" type="text/css" href="/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/index.css">
+    <link rel="stylesheet" type="text/css" href="/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/jsmodern-1.1.1.min.css">
+    <link rel="stylesheet" type="text/css" href="/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/H-base.css">
+    <link rel="stylesheet" type="text/css" href="/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/H-header.css">
+	<link rel="stylesheet" type="text/css" href="/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/oldCss.css" id="oldcss">
+
+    <script src="/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/jquery-1.8.3.min.js"></script>
+<script src="/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/jsmodern-1.1.1.min.js"></script>
+    <script>
+         $(document).ready(function(){
+            var ua = navigator.userAgent.toLowerCase();
+            var bIpad=ua.match(/ipad/i)=="ipad";
+            var bIphoneOs=ua.match(/iphone os/i)=="iphone os";
+            var bMidp=ua.match(/midp/i)=="midp";
+            var bUc7=ua.match(/rv:1.2.3.4/i)=="rv:1.2.3.4";
+            var bUc=ua.match(/ucweb/i)=="ucweb";
+            var bAndroid=ua.match(/android/i)=="android";
+            var bCE=ua.match(/windows ce/i)=="windows ce";
+            var bWM=ua.match(/windows mobile/i)=="windows mobile";
+            console.log("00",localStorage.getItem('oldMode'))
+            var mode1=localStorage.getItem('oldMode');
+            var mode=localStorage.getItem('oldMode');
+            var obj = document.getElementById("oldcss");
+            if(mode1==2){
+                obj.setAttribute("href","/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/oldCss.css");
+                $("#old1").html('退出老年模式')
+                $("#old2").html('退出老年模式')
+            }
+            else{
+                obj.setAttribute("href","");
+                $("#old1").html('进入老年模式')
+                $("#old2").html('进入老年模式')
+            }
+            console.log("mode",mode1)
+            if(bIpad||bIphoneOs||bMidp||bUc7||bUc||bAndroid||bCE||bWM){
+                $("#isWeb").show();
+                $("#isPC").hide();
+            }
+            else if(mode==2){
+                $("#isWeb").show();
+                $("#isPC").hide();
+            }
+             else{
+                $("#isWeb").hide();
+                $("#isPC").show();
+            }
+            $('#old1').click(function(){
+                mode=localStorage.getItem('oldMode');
+                if(mode==2){
+                    localStorage.setItem('oldMode',1)
+                    obj.setAttribute("href","");
+                    mode=localStorage.getItem('oldMode');
+                    if(mode==1){
+                        $("#old1").html('进入老年模式')
+                        $("#old2").html('进入老年模式')
+                    }
+                    if(mode==2){
+                        $("#old1").html('退出老年模式')
+                        $("#old2").html('退出老年模式')
+                    }
+                    if(bIpad||bIphoneOs||bMidp||bUc7||bUc||bAndroid||bCE||bWM){
+                        $("#isWeb").show();
+                        $("#isPC").hide();
+                    }
+                    else if(mode==2){
+                        $("#isWeb").show();
+                        $("#isPC").hide();
+                        $("#old")
+                    }
+                    else{
+                        $("#isWeb").hide();
+                        $("#isPC").show();
+                    }
+                }
+                else{
+                    localStorage.setItem('oldMode',2)
+                    obj.setAttribute("href","/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/oldCss.css");
+                    mode=localStorage.getItem('oldMode');
+                    if(mode==1){
+                        $("#old1").html('进入老年模式')
+                        $("#old2").html('进入老年模式')
+                    }
+                    if(mode==2){
+                        $("#old1").html('退出老年模式')
+                        $("#old2").html('退出老年模式')
+                    }
+                    if(bIpad||bIphoneOs||bMidp||bUc7||bUc||bAndroid||bCE||bWM){
+                        $("#isWeb").show();
+                        $("#isPC").hide();
+                    }
+                    else if(mode==2){
+                        $("#isWeb").show();
+                        $("#isPC").hide();
+                    }
+                    else{
+                        $("#isWeb").hide();
+                        $("#isPC").show();
+                    }
+                }
+            })
+            $('#old2').click(function(){
+                mode=localStorage.getItem('oldMode');
+                if(mode==2){
+                    localStorage.setItem('oldMode',1)
+                    obj.setAttribute("href","");
+                    mode=localStorage.getItem('oldMode');
+                    if(mode==1){
+                        $("#old1").html('进入老年模式')
+                        $("#old2").html('进入老年模式')
+                    }
+                    if(mode==2){
+                        $("#old1").html('退出老年模式')
+                        $("#old2").html('退出老年模式')
+                    }
+                    if(bIpad||bIphoneOs||bMidp||bUc7||bUc||bAndroid||bCE||bWM){
+                        $("#isWeb").show();
+                        $("#isPC").hide();
+                    }
+                    else if(mode==2){
+                        $("#isWeb").show();
+                        $("#isPC").hide();
+                    }
+                    else{
+                        $("#isWeb").hide();
+                        $("#isPC").show();
+                    }
+                }
+                else{
+                    localStorage.setItem('oldMode',2)
+                    obj.setAttribute("href","/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/oldCss.css");
+                    mode=localStorage.getItem('oldMode');
+                    if(mode==1){
+                        $("#old1").html('进入老年模式')
+                        $("#old2").html('进入老年模式')
+                    }
+                    if(mode==2){
+                        $("#old1").html('退出老年模式')
+                        $("#old2").html('退出老年模式')
+                    }
+                    if(bIpad||bIphoneOs||bMidp||bUc7||bUc||bAndroid||bCE||bWM){
+                        $("#isWeb").show();
+                        $("#isPC").hide();
+                    }
+                    else if(mode==2){
+                        $("#isWeb").show();
+                        $("#isPC").hide();
+                    }
+                    else{
+                        $("#isWeb").hide();
+                        $("#isPC").show();
+                    }
+                }
+            })
+            $(".content-delite").attr("aria-region","true");
+            $(".content-delite").attr("aria-regiontype","6");
+            $(".content-delite").attr("aria-label","正文区");
+        }); 
+
+	</script>
+    
+	  <style>
+	  body {
+	  background: rgb(255,255,255);
+	  }
+iframe {
+    width: 100% !important;
+height: 400px;
+}
+a span {
+    word-break: normal;
+    width: auto;
+    display: block;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+.content-delite p{overflow: hidden;}
+table td p,table td p span{
+    word-break: break-all;
+    font-size: 14px;
+}
+table{
+			width:100% ;	
+			}
+	  .H-detail-con .mess p img{ max-width:100% ;width:100% !important ;height:100% !important ;text-indent: 0em !important;}
+	  .H-detail-con .mess p a{text-indent: 0em !important;}
+	  .H-detail-con .title{ text-align: center;}
+.H-detail-con .mess div img{ max-width:100% ;}
+	  .H-detail-con .mess p video{ max-width:100% ;}
+.H-detail-con .mess div video{ max-width:100% ;}
+    .content-delite video{
+        max-width: 100% !important;
+    }
+    .content-delite img{
+        max-width: 100% !important;
+    }
+  .crumbs{
+        padding:13px 10px;
+        color: #666;
+    }
+    .crumbs table{  
+        width: 80% !important;
+        display: inline-block;
+    }
+    .crumbs table a{
+        color: #666;
+    }
+.H-crumbs a, .H-crumbs span{
+margin: 0.06rem;
+}
+    </style>
+<style>
+        .footimg{
+            clear: both;
+            text-align: center;
+        }
+        .footimg .img{
+            float: none;
+            margin:0;
+        }
+        .article-foot{
+            height: 540px;
+        }
+    </style>
+<script src="/cms_files/default/script/jslib/jquery.js"></script>
+ <script src="/cms_files/default/script/jslib/jquery.cookie.js"></script>
+ <script src="/cms_files/default/script/layui/layui.all.js"></script>
+ <script src="/cms_files/default/script/layui/layer/layer.js"></script>
+ <script src="/script/webglobal.js"></script>
+ <script src="/plugins/libs/require.js"></script>
+ <script src="/plugins/libs/load.js"></script>
+ <script src="/script/webgray.js"></script>
+ <script src="/script/webgray_1228937620_58930120.js"></script>
+ <link rel="stylesheet" href="/cms_files/default/css/iconfont.css" />
+<link rel="stylesheet" href="/cms_files/default/script/layui/css/layui.css" />
+<title>有老人被骗198万！警惕“冒充客服”诈骗！</title>
+<meta name="ColId" content="1228937620">
+<meta name="SiteName" content="杭州市公安局">
+<meta name="SiteDomain" content="police.hangzhou.gov.cn">
+<meta name="SiteIDCode" content="3301000032">
+<meta name="ColumnName" content="防骗">
+<meta name="ColumnType" content="防骗">
+<meta name="ArticleTitle" content="有老人被骗198万！警惕“冒充客服”诈骗！">
+<meta name="PubDate" content="2025-03-04 15:45">
+<meta name="ContentSource" content="上城分局">
+<meta name="Keywords" content="">
+<meta name="Author" content="">
+<meta name="Description" content="">
+<meta name="Url" content="/art/2025/3/4/art_1228937620_58930120.html">
+<meta name="server" content="/art/2025/3/4/art_1228937620_58930120.html">
+<meta name="extend1" content="0">
+<meta id="pagetype" content="1">
+</head>
+<body><div id='barrierfree_container' pageTimestamp= '1776393719388'>
+
+	<!-- pc端 -->
+    <div id="isPC">
+<script src="/cms_files/jcms1/web3384/site/script/0/2106021428118935.js"></script> 
+    <div class="blue"></div>
+    <div class="art-content">
+<div class="crumbs"><a href="/index.html" class="bt_link">首页</a>
+ >> <a href="/col/col1228937625/index.html" class="bt_link">警民互动</a>
+ >> <a href="/col/col1228937618/index.html" class="bt_link">安全防范</a>
+ >> <a href="/col/col1228937620/index.html" class="bt_link">防骗</a>
+</div> 
+          <label class="content-title">有老人被骗198万！警惕“冒充客服”诈骗！</label>
+        <div class="title-delite">
+            <span>来源：上城分局</span>
+            <span>时间:2025-03-04</span>
+            <span>阅读量:<lable id="artcount"></lable></span>
+        </div>
+        <div class="content-delite"><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">近日，杭州市上城区发生一起冒充“短视频平台客服”实施电信网络诈骗的案件，居民徐某（化名）被骗198万元！</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">诈骗分子利用老年人对手机操作不熟悉、担心扣费或影响征信的心理，诱导其泄露个人信息或转账，造成严重财产损失。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">现结合真实案例，提醒广大市民加强防范，守护家中老人“钱袋子”！</span></p><p style="text-indent: 2em; font-size: 16px; text-align: center; margin-bottom: 5px;"><a href="/cms_files/jcms1/web3384/site/picture/0/bf179c11661149c98f520ae078de17ce.jpg" target="_blank"><img title="1诈骗.jpg" alt="1诈骗.jpg" src="/cms_files/jcms1/web3384/site/picture/-1/250304154345409110.jpg" width="674" height="410" style="border: none;" /></a></p><h3 style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">真实案例警示</span></h3><h3 style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">近日，75岁的徐某在家接到了“某短视频平台客服”的来电，对方称其已加入平台购物团，后续每月将自动扣费800元。徐某一听，赶忙表示要取消该业务。“客服”随即表示会为徐某转接“高级客服”，以协助其完成取消操作。随后“高级客服”的电话便立即打了进来。</span></h3><h3 style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">由于徐某年事已高，对智能手机的操作并不熟练，想要取消业务，只能听从对方的指导。徐某按指示下载了“天e云”会议软件，并开启了“屏幕共享”功能，在对方手把手的指导下，一次次进行密码操作和人脸识别。直到卡内余额被全部转出，返款却迟迟未到账，徐某这才意识到被骗，共计损失198万元。</span></h3><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">诈骗目标分析</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">这类电信网络诈骗的主要目标是中老年人，尤其是50-75岁群体。这背后有着诸多复杂因素：</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">1、网络安全意识薄弱：该年龄段接触互联网相对较晚，网络安全意识普遍薄弱。诈骗分子深谙此道，利用其对短视频平台知名度获取受害人信任。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">2、掌握家庭财政：这一群体常掌管家庭财政，账户资金相对充裕，成为诈骗分子觊觎目标。一句 “账户问题影响资金安全”，就能击中他们对家庭财产负责的心理，促使其按指示操作。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">3、信息流通不畅：社交圈相对固定，信息更新慢。年轻群体能通过互联网快速获取防骗资讯，而该群体却难以及时接收。亲友间防骗宣传不到位，也使他们在面对新骗术时孤立无援。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">4、手机操作不熟悉：难以辨别虚假链接、远程软件风险，易被诱导开启“屏幕共享”功能或下载非法APP。</span></p><h3 style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">诈骗套路揭秘</span></h3><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">1、冒充身份，制造恐慌</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">骗子自称“某短视频平台客服”，谎称受害人“误开通会员服务”，如不取消将每月自动扣费数百元，甚至影响征信、子女入学等，利用老年人恐慌心理实施操控。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">2、诱导操作，远程控制</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">以“指导关闭服务”为由，要求下载远程会议软件，并开启“屏幕共享”功能，趁机窃取银行卡密码、验证码等信息。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">3、层层设套，掏空钱包</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">进一步以“验资”“刷流水”等借口，诱导老人向指定账户转账，或通过网贷平台借款，直至资金被转移一空。</span></p><h3 style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">致家属的防范建议</span></h3><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">1、多沟通，普及反诈知识</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">向家中老人强调：短视频平台官方不会主动联系用户关闭付费服务，更不会要求转账、共享屏幕或提供验证码。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">提醒老人遇“扣费”“征信”等陌生电话，立即挂断并告知子女亲属。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">2、定期检查手机设置</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">协助家中老人检查是否安装不明软件（如远程会议类APP），及时卸载并关闭“屏幕共享”功能。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">关闭小额免密支付，绑定银行卡的账户设置每日转账限额。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">3、牢记“三不”原则</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">不轻信：自称“客服”“退款”的陌生电话、短信、链接。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">不泄露：银行卡号、密码、验证码等个人信息。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">不转账：凡要求向“安全账户”转账或网贷借款的，均为诈骗！</span></p><p></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">诈骗手段不断升级</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">子女亲属的关心和提醒是保护家中老人的关键！</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">未经官方渠道核实的信息</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">务必通过官方客服电话或平台进行核实</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">切勿随意下载不明软件或点击不明链接</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">更不要向对方提供</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">银行账户、密码、验证码等重要信息</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">一旦发现被骗</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">应立即报警求助</span></p><p><br /></p><p><br /></p>
+           
+        </div>
+ 
+
+        <div class="article-foot">
+            <div class="foot-left">
+ 
+            </div>
+            <div class="share">
+                <div class="phon">
+                    <p class="share-title">手机分享</p>
+                    <image class="phon-img" src="/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/foot.png"></image>
+                </div>
+                <div class="webpage box">
+                  <p class="webpage-title">网页分享</p>
+                  <div id="share-sina"><a href="" style="width:30px;height:30px;display:inline-block;" id="sina"></a></div>
+                  <div id="share-qq"></div>
+                  <div id="share-qzone"></div>
+                </div>
+            </div>
+            <div class="footimg"> 
+            <image class="img" src="/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/foot.png"> </image>
+             <image class="img" src="/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/police.png"> </image>
+            </div>
+           
+        </div>
+    </div>
+<script src="/cms_files/jcms1/web3384/site/script/0/2102260958429266.js"></script> 
+	</div>
+   <script>
+   function linkSina() {
+            var href = window.location.href;
+            var a = document.getElementById('sina');
+            a.href = 'https://service.weibo.com/share/share.php?url=' + href
+        };
+        linkSina();
+   jsModern.share({
+			    qrcode: "#share-qrcode",
+			    douban: "#share-douban",
+			    qzone: "#share-qzone",
+			    sina: "#share-sina",
+			    qq: "#share-qq"
+			});  
+</script>
+
+
+
+
+    <!-- web端 -->
+	<div id="isWeb">
+<script src="/cms_files/jcms1/web3384/site/script/0/2110081324316855.js"></script> 
+	
+	<div class="H-crumbs">
+<div class="crumbs"><a href="/index.html" class="bt_link">首页</a>
+ >> <a href="/col/col1228937625/index.html" class="bt_link">警民互动</a>
+ >> <a href="/col/col1228937618/index.html" class="bt_link">安全防范</a>
+ >> <a href="/col/col1228937620/index.html" class="bt_link">防骗</a>
+</div> 
+	</div>
+	
+   <div class="H-detail-con">
+
+
+        <div class="title"> 有老人被骗198万！警惕“冒充客服”诈骗！ </div>
+	<div class="con-info">
+			<p class="left" style=".12rem"> 来源：上城分局 </p>
+			<p class="right"> <span style=".12rem">2025-03-04</span> <span style=".12rem">阅读量:<lable id="artcount"></lable></span> </p>
+	</div>
+	<div class="mess">
+		<p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">近日，杭州市上城区发生一起冒充“短视频平台客服”实施电信网络诈骗的案件，居民徐某（化名）被骗198万元！</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">诈骗分子利用老年人对手机操作不熟悉、担心扣费或影响征信的心理，诱导其泄露个人信息或转账，造成严重财产损失。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">现结合真实案例，提醒广大市民加强防范，守护家中老人“钱袋子”！</span></p><p style="text-indent: 2em; font-size: 16px; text-align: center; margin-bottom: 5px;"><a href="/cms_files/jcms1/web3384/site/picture/0/bf179c11661149c98f520ae078de17ce.jpg" target="_blank"><img title="1诈骗.jpg" alt="1诈骗.jpg" src="/cms_files/jcms1/web3384/site/picture/-1/250304154345409110.jpg" width="674" height="410" style="border: none;" /></a></p><h3 style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">真实案例警示</span></h3><h3 style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">近日，75岁的徐某在家接到了“某短视频平台客服”的来电，对方称其已加入平台购物团，后续每月将自动扣费800元。徐某一听，赶忙表示要取消该业务。“客服”随即表示会为徐某转接“高级客服”，以协助其完成取消操作。随后“高级客服”的电话便立即打了进来。</span></h3><h3 style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">由于徐某年事已高，对智能手机的操作并不熟练，想要取消业务，只能听从对方的指导。徐某按指示下载了“天e云”会议软件，并开启了“屏幕共享”功能，在对方手把手的指导下，一次次进行密码操作和人脸识别。直到卡内余额被全部转出，返款却迟迟未到账，徐某这才意识到被骗，共计损失198万元。</span></h3><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">诈骗目标分析</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">这类电信网络诈骗的主要目标是中老年人，尤其是50-75岁群体。这背后有着诸多复杂因素：</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">1、网络安全意识薄弱：该年龄段接触互联网相对较晚，网络安全意识普遍薄弱。诈骗分子深谙此道，利用其对短视频平台知名度获取受害人信任。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">2、掌握家庭财政：这一群体常掌管家庭财政，账户资金相对充裕，成为诈骗分子觊觎目标。一句 “账户问题影响资金安全”，就能击中他们对家庭财产负责的心理，促使其按指示操作。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">3、信息流通不畅：社交圈相对固定，信息更新慢。年轻群体能通过互联网快速获取防骗资讯，而该群体却难以及时接收。亲友间防骗宣传不到位，也使他们在面对新骗术时孤立无援。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">4、手机操作不熟悉：难以辨别虚假链接、远程软件风险，易被诱导开启“屏幕共享”功能或下载非法APP。</span></p><h3 style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">诈骗套路揭秘</span></h3><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">1、冒充身份，制造恐慌</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">骗子自称“某短视频平台客服”，谎称受害人“误开通会员服务”，如不取消将每月自动扣费数百元，甚至影响征信、子女入学等，利用老年人恐慌心理实施操控。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">2、诱导操作，远程控制</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">以“指导关闭服务”为由，要求下载远程会议软件，并开启“屏幕共享”功能，趁机窃取银行卡密码、验证码等信息。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">3、层层设套，掏空钱包</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">进一步以“验资”“刷流水”等借口，诱导老人向指定账户转账，或通过网贷平台借款，直至资金被转移一空。</span></p><h3 style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">致家属的防范建议</span></h3><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">1、多沟通，普及反诈知识</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">向家中老人强调：短视频平台官方不会主动联系用户关闭付费服务，更不会要求转账、共享屏幕或提供验证码。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">提醒老人遇“扣费”“征信”等陌生电话，立即挂断并告知子女亲属。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">2、定期检查手机设置</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">协助家中老人检查是否安装不明软件（如远程会议类APP），及时卸载并关闭“屏幕共享”功能。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">关闭小额免密支付，绑定银行卡的账户设置每日转账限额。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">3、牢记“三不”原则</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">不轻信：自称“客服”“退款”的陌生电话、短信、链接。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">不泄露：银行卡号、密码、验证码等个人信息。</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px;"><span style="font-size: 16px;">不转账：凡要求向“安全账户”转账或网贷借款的，均为诈骗！</span></p><p></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">诈骗手段不断升级</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">子女亲属的关心和提醒是保护家中老人的关键！</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">未经官方渠道核实的信息</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">务必通过官方客服电话或平台进行核实</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">切勿随意下载不明软件或点击不明链接</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">更不要向对方提供</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">银行账户、密码、验证码等重要信息</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">一旦发现被骗</span></p><p style="text-indent: 2em; font-size: 16px; margin-bottom: 5px; text-align: center;"><span style="font-size: 16px;">应立即报警求助</span></p><p><br /></p><p><br /></p></p>
+	</div> 
+	
+        
+ 
+         
+	
+		<div class="flex-center">
+			<img src="/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/H_police.png" alt="" width="144" style="margin-right: 6px;">
+			<img src="/cms_files/webhangzhougongan/pubtplobject/defaultSet/645835/images/H_foot.png" alt="" width="144">
+		</div>
+   </div>
+	
+<script src="/cms_files/jcms1/web3384/site/script/0/2109261926365222.js"></script> 
+	</div>
+
+	
+<script src="/cms_files/filemanager/1570140/script/juba/jubascript.js?v=4.5.12.1-ZJSJYH-U36"></script>
+ </div></body>
+
+</html>

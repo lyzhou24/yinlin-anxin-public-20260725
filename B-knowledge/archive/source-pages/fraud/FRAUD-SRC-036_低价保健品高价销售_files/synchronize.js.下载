@@ -1,0 +1,1205 @@
+// 唤起app
+(function (root, factory) {
+    if (typeof exports === 'object' && typeof module === 'object')
+        // commonjs
+        module.exports = factory()
+    else if (typeof define === 'function' && define.amd)
+        // amd
+        define([], factory)
+    else if (typeof exports === 'object')
+        // commonjs
+        exports['rmwLink'] = factory()
+    else
+        // 全局对象, 浏览器中是 window
+        root['rmwLink'] = factory()
+})(this, function() {
+	const ua = navigator.userAgent;
+	const isIos = !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+	const isAdr = ua.indexOf('Android') > -1 || ua.indexOf('Linux') > -1;
+	const isWx = !!ua.match(/MicroMessenger/i);
+	const isWeiBo = !!ua.match(/WeiBo/i);
+	const isinMini = !!ua.match(/miniprogram/i);
+	const isQQ = ua.toLowerCase().indexOf('qqtheme') > -1;
+	const QQbrw = ua.indexOf('MQQBrowser') > -1
+	const isPC = !ua.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+	const isHarmony = ua.indexOf("OpenHarmony")>-1;
+	function rmwLink(obj={}){
+		let that = this;
+		if(!(obj instanceof Object)){
+			return false;
+		}
+		that.dom = obj.button||[];
+		that.params = obj.params||{};
+		that.wxShare = false;//obj.wxShare||false
+		that.clickFn = obj.clickFn||function(){};
+		let goAppUrl='peopleplus://peopleplus.cn/openArticle?';
+		let appUrlParams=Object.keys(this.params).map(i=>`${i}=${encodeURIComponent(this.params[i]||'')}`).join('&');
+		that.plhparams=goAppUrl+appUrlParams;
+		if((isIos||isHarmony)&&isWx){
+			that.createCoverDom();
+		}
+		
+		for (var i = 0; i <that.dom.length; i++) {
+			// 添加微信标签时，需要处理的事件 start
+			let stylePosition=window.getComputedStyle(that.dom[i]).getPropertyValue('position')
+			if(stylePosition=='static'||stylePosition==""){
+				that.dom[i].style.position = 'relative';
+			}
+			if(isWx&&that.wxShare){
+				that.createWXDom(that.dom[i]);
+			}
+			// end
+			that.dom[i].onclick = function () {
+				that.showApp();
+			}
+		}
+		if(isWx&&that.wxShare){
+			let wxOpenLaunchApp = document.querySelectorAll('wx-open-launch-app');
+			for (var i = wxOpenLaunchApp.length - 1; i >= 0; i--) {
+				wxOpenLaunchApp[i].addEventListener('error', function (e) {
+					setTimeout(() => {
+						isAdr? window.location.href = "https://a.app.qq.com/o/simple.jsp?pkgname=com.peopletech.peopleplus&android_schema="+ that.plhparams
+						: that.showCoverDom();
+					},400);
+				});
+				wxOpenLaunchApp[i].onclick= function (e) {
+					// 可添加埋点
+					if(typeof that.clickFn == 'function'){
+						that.clickFn();
+					}
+				}
+			}
+		}
+	}
+	rmwLink.prototype.jump = function (url) {
+	    var el = document.createElement('a');
+		el.target = "_blank";
+		el.href = url;
+		$("body").append(el);
+		el.click();
+		$(el).remove()
+	}
+	rmwLink.prototype.createWXDom=function(dom){
+	    const elementStr = '<wx-open-launch-app style="position:absolute;top: 0;left: 0;width: 100%;height: 100%;" class="wx-open-launch-mobile-container" appid="wxefa60233f28c2955" extinfo='+this.plhparams+'> <script type="text/wxtag-template"> <style> *{-webkit-tap-highlight-color:transparent;} .wx-open-launch-app-inner-container {position:absolute;top: 0;left: 0; width:100%; height: 100%;} </style> <div style="position:absolute;top: 0;left: 0;width: 100%;height: 100%;"></div></wx-open-launch-app>';
+		dom.insertAdjacentHTML('beforeend', elementStr);
+	}
+	rmwLink.prototype.createCoverDom=function(){
+		let that = this;
+		if(document.querySelector('.rmwAppMeng')){
+			return false;
+		}
+		const elementStr = '<div class="rmwAppMeng" style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0,0,0,0.75);z-index: 22021;display:none;"><img src="https://rmwapp.oss-cn-beijing.aliyuncs.com/static/img/openApp.png" style="width:228px;height:105px;position:absolute;right:10px;top:6px;"/></div>';
+		document.body.insertAdjacentHTML('beforeend', elementStr);
+		document.querySelector('.rmwAppMeng').onclick = function(){
+		    that.hideCoverDom();
+		}
+	}
+	rmwLink.prototype.showCoverDom=function(){
+		document.querySelector('.rmwAppMeng').style.display = 'block';
+		document.body.style.overflow = 'hidden';
+	}
+	rmwLink.prototype.hideCoverDom=function(){
+		document.querySelector('.rmwAppMeng').style.display = 'none';
+		document.body.style.overflow = '';
+	}
+	rmwLink.prototype.showApp=function(){
+		let that = this;
+		// 可添加埋点
+		if(typeof that.clickFn == 'function'){
+			that.clickFn();
+		}
+		let goAppUrl='peopleplus://peopleplus.cn/openArticle?';
+		let appUrlParams=Object.keys(this.params).map(i=>`${i}=${encodeURIComponent(this.params[i]||'')}`).join('&');
+		let params=goAppUrl+appUrlParams;
+		let baseUrl =  "https://h5-app.people.cn";
+		if(isWx){
+			if(isAdr||isHarmony){
+				window.location.href = `http://app.people.cn/h5/static/download/openApp.html?url=${encodeURIComponent(this.params.voteUrl)}`;
+				return false;
+			}else if(isIos){
+				// let id = window.rmwFn.getId();
+				let id = $("meta[name='contentid']").attr("content");
+				window.location.href = `http://app.people.cn/h5/detail/normal/${id}`;
+				return false;
+			}
+		}
+		if(isWx||isQQ){
+			let url = "https://a.app.qq.com/o/simple.jsp?pkgname=com.peopletech.peopleplus"
+			if(isAdr){
+				url+="&android_schema=peopleplus://peopleplus.cn/openArticle?"+appUrlParams;
+				window.location.href = url;
+				return false;
+			}
+		};
+		if(isPC){
+			// window.location.href = "http://www.people.cn/app/download.html";
+			that.jump("http://www.people.cn/app/download.html")
+			return false;
+		}else{
+			if(isHarmony){
+				if(isWx){
+					that.showCoverDom();
+				}else{
+					window.location.href = `${baseUrl}/oap?url=${encodeURIComponent(params)}`;
+				}
+				return false;
+			}
+			window.location.href = params;
+		}
+		
+		// 微信页面打开
+		if(isWx){
+			// ios特殊处理
+			if(isIos){
+				that.showCoverDom();
+				return false;
+			}
+		};
+		let times=2000;
+		if(isWeiBo){
+			times=1000;
+		}
+		setTimeout(function() {
+			let hidden = (window.document.hidden || window.document.mozHidden || window.document).msHidden || window.document.webkitHidden;
+			if (typeof hidden == "undefined" || hidden == false) {
+				//应用宝下载地址
+				let url = "https://a.app.qq.com/o/simple.jsp?pkgname=com.peopletech.peopleplus"
+				if(isAdr){
+					if(isWx||isQQ){
+						url+="&android_schema=peopleplus://peopleplus.cn/openArticle?"+appUrlParams;
+					}else{
+						url="http://www.people.cn/app/download.html"
+					}
+				}else if(isHarmony){
+					url = 'https://appgallery.huawei.com/app/detail?id=cn.people.plus.hm'
+				}else{
+				    if(isWx){
+						that.showCoverDom();
+					}else if(isWeiBo||isQQ){
+						url="https://apps.apple.com/us/app/人民网/id1542555380"
+					}else{
+						url="http://www.people.cn/app/download.html"
+					}
+				}
+				window.location.href = url
+			}
+		}, times);
+	}
+    return rmwLink;
+});
+(function (root, factory) {
+    if (typeof exports === 'object' && typeof module === 'object')
+        // commonjs
+        module.exports = factory()
+    else if (typeof define === 'function' && define.amd)
+        // amd
+        define([], factory)
+    else if (typeof exports === 'object')
+        // commonjs
+        exports['columnList'] = factory()
+    else
+        // 全局对象, 浏览器中是 window
+        root['columnList'] = factory()
+})(this, function() {
+	function columnList(obj={}){
+		this.article=obj.article||{};
+		this.dom = obj.dom;
+		this.id = obj.index;
+		this.init();
+	}
+	columnList.prototype.init=function(){
+		let self = this;
+		let content = "",tagSpans = "";
+		let article = this.article;
+		if(article.source){
+			tagSpans += `<span class="tag">${article.source}</span>`
+		}
+		if(!(article.source&&article.source.length>7)&&!article.showLikes){
+			tagSpans += `<span class="tag">${this.dateCompared(article.date)}</span>`
+		}
+		if(!(article.source&& article.source.length>7)&&article.likes<10000&&article.showLikes){
+			tagSpans += `<span class="tag">${this.dateCompared(article.date)}</span>`
+		}
+		if(!(article.source&&article.source.length>7)&&article.type != 'link'&&article.likes>=10000&&article.showLikes){
+			if(article.likeButton!=1){
+				tagSpans += `<span class="tag-likeOther">${this.getLikesCount(article.likes)}</span>`
+			}else{
+				tagSpans += `<span class="tag-like">${this.getLikesCount(article.likes)}</span>`
+			}
+		}
+		// 三图
+		if(article.viewType==='three'){
+			let tag_label="",imgItem = "";
+			if(article.tags&&article.type==='subject'){
+				tag_label = `<span class="tag_label">${article.tags}</span>`;
+			}
+			article.images.map(item=>{
+				imgItem += `<div class="img"><img src="${item}" class="imgItem"/></div>`
+			})
+			content = `<div style="height:100%;width:100%;">
+				<div class="title mult_line_ellipsis_2">${tag_label}${article.listTitle || article.title}</div>
+				<div class="three-list flex">
+					${imgItem}
+				</div>
+				<div class="flex date ellipsis">
+					${tagSpans}
+				</div>
+			</div>`
+		}else if (article.viewType==='bannerSmall'){//链接通栏横图
+			let imgDiv="";
+			if(article.images){
+				imgDiv = `<div class="img-bac" style="background:url(${article.images[0]}) no-repeat;background-size:100%"></div>`
+			}
+			content = `<div style="width:100%;">
+				<div class="img-frame-small">${imgDiv}</div>
+			</div>`
+		}else if (article.viewType==='bigimage_notitle'){
+			let bigImageUrl="";
+			if(article.bigImageUrl){
+				bigImageUrl = `<img src="${article.bigImageUrl}" class="bigimage_notitle"/>`
+			}
+			content = `<div style="width:100%;">
+				${bigImageUrl}
+			</div>`
+		}else if (article.type === 'live'){
+			let tag_label="";
+			if(article.tags && article.type==='subject'){
+				tag_label = `<span class="tag_label_2">${article.tags}</span>`;
+			} 
+			content = `<div style="height:100%;width:100%">
+				<div class="flex flex-main-justify">
+					<div class="info">
+						<div class="title mult_line_ellipsis titleCount"><img class="living-label" src="${this.livinglabel(article.liveStatus,article)}">${tag_label}${article.listTitle || article.title}</div>
+						<div class="flex date ellipsis overThree1">
+							${tagSpans}
+						</div>
+					</div>
+					<div 
+						class="thumbnail" 
+						style="background-image: ${article.images?'url(' + article.images[0] + ')':'url(https://cdn2-app.people.cn/static/img/live-default.png)'}" 
+					>
+					</div>
+				</div>
+				<div class="flex date ellipsis overThree2 hidden">
+				${tagSpans}
+				</div>
+			</div>`
+		}else if((article.viewType==='banner'&&(article.type !== 'common'&& article.type !== 'image'&& article.type!=='link'&& article.type!=='sound')) ||  article.viewType==='bigimage' || article.viewType=='hot_subject'){
+			let tag_label="",content2="";
+			if(article.tags && article.type==='subject'){
+				tag_label = `<span class="tag_label">${article.tags}</span>`;
+			}
+			if(article.type === 'normal'){//新闻
+				content2 = `<div>
+					<div class="pic-wrap">
+						<img src="${article.image}" alt="">
+					</div>
+					<div class="title mult_line_ellipsis_2">${tag_label}${article.listTitle || article.title}</div>
+					<div class="description">${article.description}</div>
+					<div class="flex date ellipsis">
+					${tagSpans}
+					</div>
+				</div>`
+			}else if(article.type === 'video'){//视频
+				let mediasTimes="",picWrap="";
+				if(article.medias){
+					mediasTimes = `<i class="video-icon2">${article.medias[0].times}</i>`
+				}
+				if(article.images){
+					picWrap = `<div class="pic-wrap">
+						<img src="${article.images[0]}" alt="">
+						<i class="content-button"></i>
+						${mediasTimes}
+					</div>`
+				}
+				content2 = `<div>
+					<div class="title mult_line_ellipsis_2">${tag_label}${article.listTitle || article.title}</div>
+					${picWrap}
+					<div class="flex date ellipsis">
+					${tagSpans}
+					</div>
+				</div> `
+			}else if(article.type === 'subject'){//专题
+				let className="subject ",tagDiv="",picWrap="";
+				if(article.viewType=='hot_subject'){
+					className += "hot_subject";
+				}else{
+					tagDiv = `<div class="flex date ellipsis">${tagSpans}</div>`;
+				}
+				if(article.images){
+					picWrap = `<div class="pic-wrap">
+						<img src="${article.images[0]}" alt="">
+						<div class="topic-label">专题</div>
+						<div class="title"><div class="mult_line_ellipsis">${article.listTitle || article.title}</div></div>
+					</div>`
+				}
+				content2 = `<div class="${className}">
+					${picWrap}
+					${tagDiv}
+				</div>`
+			}else if(article.type === 'theme'){
+				let picWrap="";
+				if(article.images){
+					picWrap = `<div class="pic-wrap">
+							<img src="${article.images[0]}" alt="">
+							<div class="topic-label">话题</div>
+							<div class="title"><div class="mult_line_ellipsis">${article.listTitle || article.title}</div></div>
+						</div>`
+				}
+				content2 = `<div>
+					<div class="subject theme2">
+						${picWrap}
+					</div>
+					<div class="flex date ellipsis">
+					${tagSpans}
+					</div>
+				</div>`
+			}
+			content = `<div style="height:100%;width:100%">
+				${content2}
+			</div>`
+		}else if(article.type != 'live'){
+			let tag_label="",video_div="",video_div_icon="";
+			if(article.tags && article.type==='subject'){
+				tag_label = `<span class="tag_label_2">${article.tags}</span>`;
+			} 
+			if(article.images && article.viewType!='noimage'){
+				if(article.type=='video' && article.medias){
+					video_div_icon+=`<i class="video-icon">${article.medias[0].times}</i>`
+				}
+				if(article.type=='image' && article.medias){
+					video_div_icon+=`<i class="image-icon">${article.medias.length}</i>`
+				}
+				if(article.type=='common' && article.videoCount){
+					video_div_icon+=`<i class="video-icons"></i>`
+				}
+				if(article.type=='audio' && article.medias){
+					video_div_icon+=`<i class="audio-icon">${article.medias[0].times}</i>`
+				}
+				video_div=`<div class="thumbnail" style="background-image: url(${article.images[0]})">
+							${video_div_icon}
+						</div>`
+			}
+			content = `<div style="height:100%;width:100%">
+					<div class="flex flex-main-justify">
+						<div class="info">
+							<div class="title mult_line_ellipsis titleCount">${tag_label}${article.listTitle || article.title}</div>
+							<div class="flex date ellipsis overThree1">
+							${tagSpans}
+							</div>
+						</div>
+						${video_div}
+					</div>
+					<div class="flex date ellipsis overThree2 hidden">
+					${tagSpans}
+					</div>
+				</div>`
+		}
+		let dom = `<li class="recommendLi${this.id}">
+		<div class="li flex flex-main-justify">${content}</div></li>`
+		this.dom[0].innerHTML+= dom;
+		window.setTimeout(()=>{
+			self.created();
+			$(`.recommendLi${self.id}`).on("click",function(){
+				self.goPath();
+			})
+		},0);
+	};
+	columnList.prototype.created = function(){
+		const DescEl = $(`.recommendLi${this.id} .titleCount`)[0];
+		if(DescEl){
+			const finalStyle = window.getComputedStyle(DescEl, null)
+			if(parseFloat(finalStyle.height) > parseFloat(finalStyle.lineHeight)* 2){
+				$(`.recommendLi${this.id} .overThree1`).addClass("hidden");
+				$(`.recommendLi${this.id} .overThree2`).removeClass("hidden");
+			}else{
+				$(`.recommendLi${this.id} .overThree1`).removeClass("hidden");
+				$(`.recommendLi${this.id} .overThree2`).addClass("hidden");
+			}
+		}
+	}
+	columnList.prototype.formatDecimal=function(num, decimal) {
+		num = num.toString()
+		let index = num.indexOf('.')
+		if (index !== -1) {
+			num = num.substring(0, decimal + index+1 )
+		} else {
+			num = num.substring(0)
+		}
+		return parseFloat(num).toFixed(decimal)
+	}
+	columnList.prototype.goPath = function(){
+		const { 
+			listTitle, 
+			pushDate, 
+			source, 
+			likes, 
+			imageUrl, 
+			articleId, 
+			type, 
+			sysCode,
+			pageStyle 
+		} = this.article;
+		
+		const obj = {
+			listTitle, 
+			pushDate, 
+			source, 
+			likes, 
+			imageUrl, 
+			articleId: articleId,
+			type: type,
+			sysCode: sysCode,
+			pageStyle
+		}
+		let video = $('video')
+		let videoArr = Array.from(video);
+		videoArr.map((item,index) => {
+			item.pause()
+		})
+		if(window.appapi && window.appapi.isSharePage()){
+			let url = this.article.shareUrl;
+			if(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone|Tablet)/i)){
+				window.location.href = url
+			}else{
+				var el = document.createElement('a');
+				el.target = "_blank";
+				el.href = url;
+				$("body").append(el);
+				el.click();
+				$(el).remove()
+			}
+		}else{
+			window.appapi.appPostMessage("goNewsDetail", JSON.stringify(obj));
+		}
+	}
+	columnList.prototype.dateCompared= function(date){
+		let result = moment(date).startOf('minute').fromNow();
+		let curYear = new Date().getFullYear()
+		if (result.indexOf('秒') > -1){
+			result= '1分钟前'
+		}
+	
+		if(
+			result.indexOf('天') > -1 && 
+			result != '1天前' &&
+			result != '2天前' &&
+			result != '3天前' &&
+			result != '4天前' &&
+			result != '5天前' &&
+			result != '6天前' &&
+			result != '7天前' || result.indexOf('月') > -1
+		){
+			result = moment(date).format('MM-DD')
+		} 
+		
+		if(result.indexOf('年') > -1 || date.indexOf(curYear)== -1) {
+			result = moment(date).format('YYYY-MM-DD');
+		}
+		return result
+	}
+	columnList.prototype.formatDesc = function(){
+		window.setTimeout(function() {
+			// 计算内容高度，设置展开全文
+			const DescEl = this.$refs.title
+			if(DescEl){
+				const finalStyle = window.getComputedStyle(DescEl, null)
+				if(parseFloat(finalStyle.height) > parseFloat(finalStyle.lineHeight)* 2){
+					this.overThree = true
+				}else{
+					this.overThree = false
+				}
+			}
+		},50);
+	}
+	columnList.prototype.livinglabel = function(status,article){
+	    let preLiveFlag = true;//是否预播，默认预播
+		preLiveFlag=new Date().getTime()>new Date(article.liveTime).getTime()?false:true;
+		if(status==1&&preLiveFlag){
+			return "https://cdn2-app.people.cn/static/img/live_pre_live.png";
+		}else if(status==2||(!preLiveFlag&&(status==1||status==2))){
+			return "https://cdn2-app.people.cn/static/img/live_living.gif"
+		}else{
+			if(article.playback){
+				return "https://cdn2-app.people.cn/static/img/live_playback.png"
+			}else{
+				return "https://cdn2-app.people.cn/static/img/live_living_over.png"
+			}
+		}
+	}
+	columnList.prototype.getLikesCount = function(likes){
+				
+		if(likes<10000){
+			return likes
+		}
+		else if(likes>=10000 && likes<=99999){
+			let num =this.formatDecimal(likes/10000,1)
+			
+			return num+'万'
+		}else if(likes>=100000 && likes<=99999999){
+			return '10万+'
+		}else if(likes>=100000000 && likes<=999999999){
+			let num=this.formatDecimal(likes/100000000,1)
+			return num+'亿'
+		}else {
+			return '10亿+'
+		}
+	}
+	return columnList;
+});
+(function (root, factory) {
+    if (typeof exports === 'object' && typeof module === 'object')
+        // commonjs
+        module.exports = factory()
+    else if (typeof define === 'function' && define.amd)
+        // amd
+        define([], factory)
+    else if (typeof exports === 'object')
+        // commonjs
+        exports['rmwAd'] = factory()
+    else
+        // 全局对象, 浏览器中是 window
+        root['rmwAd'] = factory()
+})(this, function() {
+	function rmwAd(obj={}){
+		this.cAdCode = obj.cAdCode||"";
+		this.type = obj.type||"1";
+		this.dom = obj.dom;
+		this.init();
+	}
+	rmwAd.prototype.init=function(){
+		let dom = `<div  id="banner${this.cAdCode}" class="ad adss">
+		</div>`
+		this.dom.html(dom);
+		// 初始化
+		var secScript = document.createElement("script");
+		secScript.setAttribute("type", "text/javascript");
+		secScript.setAttribute("src", `http://pgg.people.com.cn/s?z=people&c=${this.cAdCode}`);
+		secScript.setAttribute("charset", "gbk");
+		secScript.onload= ()=>{
+			setTimeout(()=>{
+				if(!window.appapi.isSharePage()){
+					$(`#banner${this.cAdCode} a`).bind('click',function (e){
+						if($(this)[0].getAttribute('data-isopenapp')==1){
+							let url = $(this)[0].href
+							e.stopPropagation()
+							window.appapi.appPostMessage('awakeBrowser',JSON.stringify({url:url}))
+							return false;
+						}
+					})
+				}
+			},500)
+		}
+		this.dom[0].appendChild(secScript);
+	};
+	return rmwAd;
+});
+// appapi,rmwFn自定义方法
+(function() {
+	let u = navigator.userAgent;
+	let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+	let isAndroid = u.indexOf("Android") > -1 || u.indexOf("Adr") > -1 || u.indexOf("OpenHarmony") > -1; //android终端
+	window.appapi = {
+		articleId:"",//文章id
+		isShowVoice:true,//app客户端是否显示语音播放按钮
+		isVoice:false,//播放语音开关状态
+		voicePlayFlag:0,//语音是否播放
+		timeStamp:"",//语音播放时间戳
+		versionFlag:true,//app版本号能否显示
+		changeFontSize(fontSize){
+			fontSizeNum=fontSize;
+			// $("#content").addClass("font-size-"+fontSizeNum);
+		},
+		getModeType(modeType){
+			window.rmwModeType = modeType
+		},
+		pauseVideo(){
+			console.log('视频关闭pauseVideo')
+			let video = $('video')
+			let videoArr = Array.from(video);
+			videoArr.map((item,index) => {
+				if (!item.paused) {
+					item.pause()
+				}
+			})
+		},
+		isSharePage: () => {
+			let result = true
+			if (isAndroid) {
+				try {
+					let a = typeof window.jsobj.voiceRead
+					result = false
+					console.log(a,'a')
+				}catch (e) {
+					console.log(e);
+				}
+			} else if (isiOS) {
+				try {
+					let a = typeof window.webkit.messageHandlers.voiceRead.postMessage;
+					result = false
+					console.log(a,'a')
+				}catch (e) {
+					console.log(e);
+				}
+			}
+			return result
+		},
+		appPostMessage (name, value='') {
+			// console.log(name, value);
+			if (isAndroid) {
+				try {
+					window.jsobj[name](value);
+				}catch (e) {
+					// console.log(e);
+				}
+			} else if (isiOS) {
+				try {
+					window.webkit.messageHandlers[name].postMessage(value);
+				}catch (e) {
+					// console.log(e);
+				}
+			}
+		},
+		changeVoiceStatus(articleId,isShowVoice,status,timeStamp){
+			console.log(articleId,isShowVoice,status,timeStamp);
+			if(timeStamp>window.appapi.timeStamp){
+				console.log('是最新的');
+				if(articleId==window.appapi.articleId){
+					window.appapi.isShowVoice = isShowVoice
+					window.appapi.voicePlayFlag = status;
+					if(isShowVoice&&window.appapi.isVoice){
+						$('.voice-wrap').show();
+						$('.voice-container').css({visibility:'visible'})
+					}else{
+						$('.voice-wrap').hide();
+					}
+					if(!status){
+						$(".voice-img1").show();
+						$(".voice-img2").hide();
+					}else{
+						$(".voice-img1").hide();
+						$(".voice-img2").show();
+					}
+				}else{
+					window.appapi.isShowVoice = isShowVoice;
+					if(isShowVoice&&window.appapi.isVoice){
+						$('.voice-wrap').show();
+						$('.voice-container').css({visibility:'visible'})
+					}else{
+						$('.voice-wrap').hide();
+					}
+					window.appapi.voicePlayFlag = 0;
+					$(".voice-img1").show();
+					$(".voice-img2").hide();
+				}
+			}else{
+				console.log('不是最新的');
+			}
+		},
+	};
+	window.rmwFn = {
+		init(){
+			// 浏览器地址不包含"-app.people.cn"，则不执行下面操作
+			if(!(window.location.href.indexOf("-app.people")>-1)){
+				return false;
+			}
+			let contentId = $("meta[name='contentid']").attr("content");
+			window.appapi.articleId = contentId;//文章id
+			if(window.appapi.isSharePage()){
+				// 分享页面
+				new rmwLink({
+					button:document.querySelectorAll('.voice-container'),
+					params: {voteUrl:window.location.href},//唤起app传参
+					clickFn:function(){},//埋点函数
+					wxShare:true//是否支持微信唤起app
+				});
+			}else{
+				// 非分享页面
+				let version = this.getVersion();
+				if(this.compareVersions(version, '4.7.0') >= 0){
+					window.appapi.appPostMessage('getVoiceStatus',JSON.stringify({
+						articleId:window.appapi.articleId,
+					}))
+				}else{
+					window.appapi.versionFlag = false;
+					// voice-wrap隐藏
+					$('.voice-wrap').hide();
+				}
+				// 判断是否是鸿蒙系统
+				if(navigator.userAgent.indexOf('OpenHarmony')>-1){
+					$('.voice-wrap').hide();
+				}
+				$('.voice-container').click(function(){
+				    window.appapi.appPostMessage('notifyVoiceStatus',JSON.stringify({
+						articleId:window.appapi.articleId,
+						status: window.appapi.voicePlayFlag==0?1:0
+					}))
+				})
+			}
+			// 设置浏览量
+			this.getPageView();
+			// 百度埋点
+			var _hmt = _hmt || [];
+            (function() {
+              var hm = document.createElement("script");
+              hm.src = "https://hm.baidu.com/hm.js?6e66779c665aabb84cef00732ee54f8e";
+              var s = document.getElementsByTagName("script")[0]; 
+              s.parentNode.insertBefore(hm, s);
+            })();
+			// 友盟埋点
+			if(u.toLowerCase().indexOf('peopleplus')==-1){
+				var _czc = _czc || []; 
+		            (function () {
+		                var um = document.createElement("script"); 
+		                um.src = "https://v1.cnzz.com/z.js?id=1281408372&async=1"; 
+		                var s = document.getElementsByTagName("script")[0]; 
+		                s.parentNode.insertBefore(um, s); 
+		            })(); 
+			}
+			this.maidian();
+			let that = this;
+			setTimeout(()=>{
+				that.videoPlay();//判断视频是否横屏
+			},1000);
+			(function() {
+				var link = document.createElement('link');
+				link.type = 'image/x-icon';
+				link.rel = 'shortcut icon';
+				link.href = 'http://app.people.cn/h5/static/img/favicon.ico';
+				document.getElementsByTagName('head')[0].appendChild(link);
+				// 初始化
+				if(window.appapi.isSharePage()){
+					let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+					if(scrollTop>document.getElementById('common-top-nav').offsetHeight){
+						document.querySelector('.app-bot-wrap').style.display='block'
+					}else{
+						document.querySelector('.app-bot-wrap').style.display='none'
+					}
+				}
+			}());
+			$("video").attr({"webkit-playsinline":"true", "playsinline":"true", "x5-playsinline":"true", "x-webkit-airplay":"allow"});
+			// $(".rm_txt_con a").attr("target","_blank");
+			this.initMoment();
+			$(".rmwApp").show();
+			$(".app-bot-wrap-box,.relevant-news").hide();
+			$(".app_main .app-bot-wrap").css({"box-shadow": "0 44px #fff" })
+			// 分享页面需要显示的内容
+			if(window.appapi.isSharePage()){
+				// 打开按钮唤起app
+				new rmwLink({
+					button:document.querySelectorAll('.openApp'),
+					params: {voteUrl:window.location.href},//唤起app传参
+					clickFn:function(){},//埋点函数
+					wxShare:true//是否支持微信唤起app
+				});
+				// $(".rmwApp").show();
+				$(".share-wrap,.relevant-news").hide();
+				// 页面高度和视图窗口相比，大于等于id为common-top-nav时显示底部
+				if((document.body.scrollHeight-window.innerHeight)>=document.getElementById('common-top-nav').offsetHeight){
+					document.querySelector('.app-bot-wrap-box').style.display='block'
+				}
+				// 监听窗口滚动
+				window.addEventListener('scroll', function (e) {
+					let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+					if(scrollTop>document.getElementById('common-top-nav').offsetHeight){
+						if((document.body.scrollHeight-window.innerHeight)>=document.getElementById('common-top-nav').offsetHeight){
+							document.querySelector('.app-bot-wrap-box').style.display='block'
+						}else{
+							document.querySelector('.app-bot-wrap-box').style.display='none'
+						}
+						document.querySelector('.app-bot-wrap').style.display='block'
+					}else{
+						if((document.body.scrollHeight-window.innerHeight)>=document.getElementById('common-top-nav').offsetHeight){
+							document.querySelector('.app-bot-wrap-box').style.display='block'
+						}else{
+							document.querySelector('.app-bot-wrap-box').style.display='none'
+						}
+						document.querySelector('.app-bot-wrap').style.display='none'
+					}
+				})
+			}else{
+				$(".rmwApp").hide();
+				let ua = navigator.userAgent.toLowerCase();
+				let isHarmony = ua.indexOf("peopleplus_harmony")>-1; //新增 鸿蒙终端 判断
+				if(!isHarmony){
+					$(".share-wrap").show();
+					let el = document.querySelectorAll('.share-btn');
+					el.forEach((item)=>{
+						item.addEventListener('click',(e)=>{
+							let el=e.target.getAttribute('datatype');
+							window.appapi.appPostMessage('doShare',el)
+						});
+					});
+				}
+			}
+		},
+		// 初始化moment
+		initMoment(){
+			moment.locale('zh-cn', {
+				months: '一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月'.split('_'),
+				monthsShort: '1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月'.split('_'),
+				weekdays: '星期日_星期一_星期二_星期三_星期四_星期五_星期六'.split('_'),
+				weekdaysShort: '周日_周一_周二_周三_周四_周五_周六'.split('_'),
+				weekdaysMin: '日_一_二_三_四_五_六'.split('_'),
+				longDateFormat: {
+					LT: 'HH:mm',
+					LTS: 'HH:mm:ss',
+					L: 'YYYY-MM-DD',
+					LL: 'YYYY年MM月DD日',
+					LLL: 'YYYY年MM月DD日Ah点mm分',
+					LLLL: 'YYYY年MM月DD日ddddAh点mm分',
+					l: 'YYYY-M-D',
+					ll: 'YYYY年M月D日',
+					lll: 'YYYY年M月D日 HH:mm',
+					llll: 'YYYY年M月D日dddd HH:mm'
+				},
+				meridiemParse: /凌晨|早上|上午|中午|下午|晚上/,
+				meridiemHour: function (hour, meridiem) {
+					if (hour === 12) {
+						hour = 0;
+					}
+					if (meridiem === '凌晨' || meridiem === '早上' ||
+						meridiem === '上午') {
+						return hour;
+					} else if (meridiem === '下午' || meridiem === '晚上') {
+						return hour + 12;
+					} else {
+						// '中午'
+						return hour >= 11 ? hour : hour + 12;
+					}
+				},
+				meridiem: function (hour, minute, isLower) {
+					const hm = hour * 100 + minute;
+					if (hm < 600) {
+						return '凌晨';
+					} else if (hm < 900) {
+						return '早上';
+					} else if (hm < 1130) {
+						return '上午';
+					} else if (hm < 1230) {
+						return '中午';
+					} else if (hm < 1800) {
+						return '下午';
+					} else {
+						return '晚上';
+					}
+				},
+				calendar: {
+					sameDay: '[今天]LT',
+					nextDay: '[明天]LT',
+					nextWeek: '[下]ddddLT',
+					lastDay: '[昨天]LT',
+					lastWeek: '[上]ddddLT',
+					sameElse: 'L'
+				},
+				dayOfMonthOrdinalParse: /\d{1,2}(日|月|周)/,
+				ordinal: function (number, period) {
+					switch (period) {
+						case 'd':
+						case 'D':
+						case 'DDD':
+							return number + '日';
+						case 'M':
+							return number + '月';
+						case 'w':
+						case 'W':
+							return number + '周';
+						default:
+							return number;
+					}
+				},
+				relativeTime: {
+					future: '%s内',
+					past: '%s前',
+					s: '几秒',
+					ss: '%d秒',
+					m: '1分钟',
+					mm: '%d分钟',
+					h: '1小时',
+					hh: '%d小时',
+					d: '1天',
+					dd: '%d天',
+					M: '1个月',
+					MM: '%d个月',
+					y: '1年',
+					yy: '%d年'
+				},
+				week: {
+					// GB/T 7408-1994《数据元和交换格式·信息交换·日期和时间表示法》与ISO 8601:1988等效
+					dow: 1, // Monday is the first day of the week.
+					doy: 4  // The week that contains Jan 4th is the first week of the year.
+				}
+			  })  
+		},
+		compareVersions(v1, v2) {
+			const parts1 = v1.split('.').map(Number);
+			const parts2 = v2.split('.').map(Number);
+			for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
+				const num1 = parts1[i] || 0;
+				const num2 = parts2[i] || 0;
+				
+				if (num1 > num2) return 1;
+				if (num1 < num2) return -1;
+			}
+			
+			return 0;
+		},
+		getVersion() {
+			let UserAgent = navigator.userAgent.toLowerCase();
+			let version = '';
+			if(UserAgent.indexOf('peopleplus')>-1){
+				if(isiOS){
+					version = UserAgent.match(/peopleplus_ios\/([\d.]+)/)[1];
+				}else if(isAndroid){
+					version = UserAgent.match(/peopleplus_android\/([\d.]+)/)[1];
+				}else {
+					version = UserAgent.match(/peopleplus_harmony\/([\d.]+)/)[1];
+				}
+			}
+			return version;
+		},
+		// platform_type(){
+		// 	const ua = navigator.userAgent;
+		// 	const isIos = !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+		// 	const isAdr = ua.indexOf('Android') > -1 || ua.indexOf('Linux') > -1;
+		// 	const isPC = !ua.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+		// 	const isHarmony = ua.indexOf("OpenHarmony")>-1;
+		// },
+		getPageView(){
+			let contentId = $("meta[name='contentid']").attr("content");
+			window.appapi.articleId = contentId;
+			let pageViewUrl=`https://api-app.people.cn/api/v2/articles/detail/`+contentId;
+			let self = this;
+			$.ajax({
+				url: pageViewUrl,
+				type: "GET",
+				dataType: "json",
+				data:{
+					_t: Date.parse(new Date()) / 1000
+				},
+				success(res){
+					const result = res.item;
+					if (res.code === 0) {
+						if(result.showHits&&result.hitCount>0){
+							let hitCount = self.getHitsCount(result.hitCount);
+							$(".hit-count").html(hitCount);
+							$(".rmw-page-view").css({display:"inline-block"});
+						}else{
+							$(".rmw-page-view").hide();
+						}
+						// 语音播报逻辑
+						window.appapi.isVoice = result.isVoice;
+						if(result.isVoice&&window.appapi.versionFlag&&navigator.userAgent.indexOf('OpenHarmony')==-1){
+							$('.voice-wrap').show();
+							$('.voice-container').css({visibility:'visible'})
+							if(!window.appapi.isShowVoice){
+								$('.voice-wrap').hide();
+							}
+						}else{
+							$('.voice-wrap').hide();
+						}
+						if(result.isVoice){
+							let voiceNum = (result.content&& result.content.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,'').replace(/<\/?[^>]+(>|$)/g, '').length||0)+result.title.length;
+							// 每265个字1分钟（每秒4.417字），输出格式为：多少分多少秒
+							let voiceTime = Math.ceil(voiceNum/4.417);
+							let minute = Math.floor(voiceTime/60);
+							let second = voiceTime%60;
+							let voiceTimes = minute>0?minute+'分'+(second>0?(second+'秒'):''):second+'秒';
+							$(".voice-text p").html("点击播报本文，约"+voiceTimes);
+						}
+						// 原生app 渲染完调用
+                        window.appapi.appPostMessage('renderFinish')
+					}else{
+						$('.voice-wrap').hide();
+					}
+				}
+			})
+		},
+		getHitsCount(likes){
+            if(likes<10000){
+                return likes
+            }
+            else if(likes>=10000 && likes<100000000){
+                let num =this.formatDecimal(likes/10000,1)
+                return num+'万'
+            }else if(likes>=100000000 && likes<=999999999){
+                let num=this.formatDecimal(likes/100000000,1)
+                return num+'亿'
+            }else {
+                return '10亿+'
+            }
+        },
+		formatDecimal(num, decimal) {
+            num = num.toString()
+            let index = num.indexOf('.')
+            if (index !== -1) {
+                num = num.substring(0, decimal + index+1 )
+            } else {
+                num = num.substring(0)
+            }
+            return parseFloat(num).toFixed(decimal)
+        },
+		getHotList(){
+			// if(window.rmwModeType == 'forold'){
+			// 	$(".relevant-news").addClass("forold");
+			// }
+			let contentId = $("meta[name='contentid']").attr("content");
+			let hotListUrl=`https://api-app.people.cn/api/v2/articles/listRecommend`
+			$.ajax({
+				url: hotListUrl,
+				type: "GET",
+				data: {
+				    articleId: contentId,
+				},
+				dataType: "json",
+				success(res){
+					const result = res.item || res.data
+					if (res.code === 0) {
+						// result 为undefined是置顶新闻
+						if (result) {
+							result.map(
+								(i,index) => {
+									let imgArray = i.imageUrl || i.image
+									if (imgArray) {
+										if (imgArray.indexOf(",") != -1) {
+											i.imageUrl = imgArray.split(",");
+										} else {
+											i.imageUrl = [imgArray];
+										}
+									}
+									new columnList({
+										article: i,
+										dom: $(".recommendUl"),
+										index
+									})
+									return i;
+								}
+							);
+							$(".relevant-news").show();
+							$(".relevant-news-title .name").html('<i class="icon-block"></i>热点推荐');
+						}else{
+							$(".relevant-news").hide();
+						}
+					}
+				}
+			})
+			// 广告隐藏
+			// this.getArticleDetail();
+		},
+		// 正则获取url的id
+		getId(){
+		    const url = window.location.href;
+			const pattern = /c\d+-(\d+)-?/;
+			const match = url.match(pattern);
+			return match ? match[1] : null;
+		},
+		getArticleDetail(){
+			let that = this;
+		    let articleId = this.getId();
+			let detailsUrl = `https://api-app.people.cn/api/v2/articles/detail/${articleId}`;//${articleId}
+			$.ajax({
+				url: detailsUrl,
+				type: "GET",
+				dataType: "json",
+				data: {
+				    _t:Date.parse(new Date()) / 1000
+				},
+				success(res){
+					if(res.code ==0){
+					    let detailsData = res.item;
+						if(detailsData.hasAd){
+							that.getAdData();
+						}
+					}
+				}
+			})
+		},
+		getAdData(){
+			$.ajax({
+				url: "http://api-app.peopleurl.cn/api/v2/version/adConfig",
+				type: "GET",
+				dataType: "json",
+				success(res){
+					if(res.code ==0){
+						let result  = res.item;
+						let all_ads=result.all_ads&&result.all_ads.isOnline;
+						
+						if(all_ads&&result.articleDetail.isOnline){
+							new rmwAd({
+								cAdCode: Number(result.articleDetail.id),
+								type:"1",
+								dom: $(".adWrap1")
+							});
+							$(".adWrap1").show();
+						}
+						if(all_ads && result.articleRecommend.isOnline){
+							new rmwAd({
+								cAdCode: Number(result.articleRecommend.id),
+								type:"2",
+								dom: $(".adWrap2")
+							});
+							$(".relevant-news").show();
+							$(".relevant-news-title .name").html('<i class="icon-block"></i>热点推荐');
+							$(".adWrap2").show();
+						}
+					}
+				}
+			})
+		},
+		maidian(){
+			//埋点
+			var hmv = document.createElement("script");
+			hmv.src = "https://cdn2-app.people.cn/static/sensorsdata.min.js";
+			var s = document.getElementsByTagName("script")[0]; 
+			s.parentNode.insertBefore(hmv, s);
+			hmv.onload=function(){
+				let server_url = 'https://renminwangdata.savip.sensorsdata.cn/sa?project=production'; //正式地址请把default改成production
+				var sensors = window['sensorsDataAnalytic201505'];
+				//埋点初始化
+				sensors.init({
+					server_url:server_url,
+					app_js_bridge:true,
+					is_track_single_page:true,
+					use_client_time:true, 
+					send_type:'beacon',
+					heatmap: {
+						clickmap:'default',
+						scroll_notice_map:'default'
+					}   
+				});
+				let ua = navigator.userAgent.toLowerCase();
+				let platform_type = 'h5';
+				let isiOS2 = ua.indexOf("peopleplus_ios") > -1 || ua.indexOf("peopeplus_ios") > -1; //ios终端
+				let isAndroid2 = ua.indexOf("peopeplus_android") > -1 || ua.indexOf("peopleplus_android") > -1; //android终端
+				let isHarmony = ua.indexOf("peopleplus_harmony")>-1; //新增 鸿蒙终端 判断
+				if(isiOS2){
+					platform_type = 'iOS';
+				}else if(isAndroid2){
+					platform_type = 'Android';
+				}else if(isHarmony){
+					platform_type = 'Harmony';
+				}
+				sensors.quick('autoTrack',{
+					platform_type,
+					platform_type2:"h5"
+				});
+				sensors.use('PageLeave');
+				//埋点结束
+			};
+		},
+		// 监听video的播放事件
+		videoPlay(){
+		    // 1. 获取页面中所有video元素（返回数组）
+			const videoList = document.querySelectorAll('video');
+			if (videoList.length == 1 && isAndroid) {
+			    videoList.forEach((video, index) => {
+					let currentVideo = video.currentSrc;
+					window.appapi.appPostMessage('videoControl',JSON.stringify({
+						videoUrl:currentVideo,
+						eventKey:'play'
+					}))
+				});
+			}
+		}
+	}
+})();

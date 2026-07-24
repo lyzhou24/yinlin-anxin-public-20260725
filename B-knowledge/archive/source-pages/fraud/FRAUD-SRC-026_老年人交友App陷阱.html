@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand"/>
+    <meta name="renderer" content="webkit"/>
+    <title>江阴市人民政府门户网-【风险提示】老年人请注意 当心这些“交友App”陷阱</title>
+    <meta name="keywords" content="中国江阴，江阴市政府">
+	    <meta name="description" content="中国江阴·江阴市人民政府·江阴市人民政府门户网站">
+        <!-- 网站标签 -->
+<meta name="SiteName" content="江阴市人民政府门户网" />
+<meta name="SiteDomain" content="http://www.jiangyin.gov.cn" />
+<meta name="SiteIDCode" content="3202810016" />
+
+<!-- 栏目标签 -->
+<meta name="ColumnName" content="风险提示">
+<meta name="ColumnDescription" content="政府信息公开，工作动态，公告公示，政民互动，政务服务等">
+<meta name="ColumnKeywords" content="信息公开，政策法规，法规解读，公告公示，互动交流">
+<meta name="ColumnType" content="风险提示">
+
+<!-- 内容页标签 -->
+<meta name="ArticleTitle" content="【风险提示】老年人请注意 当心这些“交友App”陷阱">
+<meta name="PubDate" content="2022-06-02">
+<meta name="ContentSource" content="本站">
+<meta name="Author" content="jy-xyb-wzfb2">
+<meta name="Url" content="/doc/2022/06/02/1046880.shtml">
+    <link rel="stylesheet" href="/cxjy_2022/css/jquery.simplePagination.css">
+    <link href="/cxjy_2022/css/alert.css" rel="stylesheet" type="text/css">
+    <link href="/cxjy_2022/css/newcommon2020.css" rel="stylesheet" type="text/css">
+    <link href="/cxjy_2022/css/column2020.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/cxjy_2022/js/jquery-1.9.1.min.js"></script>
+    <script language="javascript" type="text/javascript" src="/cxjy_2022/js/jquery.tab.js"></script> 
+
+
+</head>
+<body>
+<script type="text/javascript" src="//www.wuxi.gov.cn/static/js/jquery.cookies.js"></script>
+<script type="text/javascript" src="//wza.wuxi.gov.cn/wza/wza2.min.js?appid=Bnl9F4DtJkhnfe6"></script>
+<!-- 新检索JS -->
+<script src="//www.wuxi.gov.cn/static_common/js/wzq_search_common.js"></script>
+<script>
+$(function(){
+    //var daname = $.getUrlParam("daname");
+    //alert(daname);
+    $("#alert_url").val("");
+    var ok = $.cookie("cxjy_token");
+    var username = $.cookie("cxjy_username");
+    var str = ""; 
+    if(ok == undefined || ok == null){
+      str += '<div class="login_before"><a href="/cxjy/fzlm/qydl/index.shtml">登录</a></div>';
+    }else{
+      str += '<div class="login_after"><strong>'+username+'</strong><ul><li><a href="/cxjy/fzlm/xyxxzyzc/index.shtml">信用信息自愿注册</a></li><li><a href="javascript:void(0);" onclick="getXybgFile();">专项信用报告下载</a></li><li><a href="javascript:void(0);" onclick="getOut();">退出</a></li></ul></div>';
+    }
+    
+    $("#login").html(str);
+});
+
+function getOut(){
+  $.cookie("cxjy_token",null,{path:'/'});
+  $.cookie("cxjy_username",null,{path:'/'});
+  var str = '<div class="login_before"><a href="/cxjy/fzlm/qydl/index.shtml">登录</a></div>';
+  $("#login").html(str);
+  window.location.href = "/cxjy/index.shtml";
+}  
+
+function getXybgFile(){
+  var username = $.cookie("cxjy_username");
+    $.ajax({
+      type:"get",
+      url:"/cxjy_public/supervision-service/pdf/creditReportVerify",
+      data:{
+        "entName":username,
+        "regNo":""
+      },
+      dataType:'json',
+      success:function(data){
+        var map = data;
+        //alert(map);
+        if(data.code == -1){
+            alert(data.msg);
+        }else if(data.code == 1){
+            //window.open("/cxjy_public/supervision-service/pdf/creditReportDownload?entName="+username);
+            window.location.href = "/cxjy_public/supervision-service/pdf/creditReportDownload?entName="+username;
+        }else{
+            alert("获取错误");
+        }
+        
+      },
+      error:function(XMLHttpRequest, textStatus, errorThrown) {
+        var msg = XMLHttpRequest.responseText;
+        var map = JSON.parse(msg);
+        alert("获取错误");
+        //alert(map.error_description);
+      }
+  });
+}
+</script>
+<div class="header">
+        <div class="header-mid">
+            <div class="container">
+                <div class="logo"><img src="/static_common/images/guohui/jy_guohui_cxjy.png"></div><!--/cxjy_2022/images/logo.png-->
+                <div class="header-search" id="tbss_index">
+                    <ul>
+                        <li class="cur">信用查询</li>
+                        <li>内部文章</li>
+                    </ul>
+                    <div class="search_content">
+                        <input class="search_input" id="xysearch_input" type="text" placeholder="请输入主体名称或者统一社会信用代码">
+                        <input class="search_btn" type="button" onclick="xycxsearch();" value="查询">
+                    </div>
+                    <div class="search_content" style="display: none;">
+                        <input class="search_input" id="wzsearch_input" type="text" placeholder="请输入文章关键词">
+                        <input class="search_btn" type="button" onclick="docsearch();" value="查询">
+                    </div>
+                </div>
+                <div class="login" id="login">
+                  
+                </div>
+            </div>
+            <script type="text/javascript">
+      //<![CDATA[
+           $("#tbss_index").tab({
+              tabs: "ul li",
+              evtype: "click",
+              box: ">.search_content",
+          });
+      //]]>
+      </script>
+      <script>
+      
+      function xycxsearch(){
+        var searchStr = $("#xysearch_input").val();
+        if(searchStr == ""){
+          var MM = {};  // alert 自定义弹窗
+          //alert("关键字不能为空！");
+          if( !searchStr.toString() || searchStr.toString() == "") {
+                MM.dialog = jqueryAlert({
+                    'style'   : 'pc',
+                    'title'   : '提示',
+                    'content' :  "请输入关键字",
+                    'modal'   : true,
+                    'contentTextAlign' : 'center',
+                    'animateType': 'scale',
+                    'bodyScroll' : 'true',
+                    'buttons' : {
+                        '关闭' : function(){
+                            MM.dialog.close();
+                        }
+                    }
+                });
+                $('#xysearch_input').blur();
+          }
+          return false;
+        }
+        window.open("/cxjy/fzlm/qyxxcxjg/index.shtml?keyword="+encodeURI(encodeURI(searchStr)),'_blank');;
+      }
+      
+      function docsearch(){
+        var docsearchStr = $("#wzsearch_input").val();
+        if(docsearchStr == ""){
+          var MMn = {};  // alert 自定义弹窗
+          //alert("关键字不能为空！");
+          if( !docsearchStr.toString() || docsearchStr.toString() == "") {
+                MMn.dialog = jqueryAlert({
+                    'style'   : 'pc',
+                    'title'   : '提示',
+                    'content' :  "请输入关键字",
+                    'modal'   : true,
+                    'contentTextAlign' : 'center',
+                    'animateType': 'scale',
+                    'bodyScroll' : 'true',
+                    'buttons' : {
+                        '关闭' : function(){
+                            MMn.dialog.close();
+                        }
+                    }
+                });
+                $('#wzsearch_input').blur();
+          }
+          return false;
+        }
+        var chandst = "诚信江阴";
+        var dst = "江阴市人民政府";
+        //window.open('siteId=4&siteName='+encodeURIComponent(dst)+'&channel='+encodeURIComponent(chandst)+'&kind=5&keyword='+encodeURIComponent(docsearchStr),'_blank');
+        search_2024_wzq(encodeURIComponent(dst),encodeURIComponent(docsearchStr),'');
+      }
+      </script>
+        </div>
+        <div class="nav" title="页面头部导航区，有网站首页，工作动态，通知公告，政策法规等">
+           <!--<div class="nav-1">-->
+               <ul class="container">
+                   <li class="active"><a href="/cxjy/index.shtml">网站首页</a></li>
+                   <li><a href="/cxjy/gzdt/index.shtml">工作动态</a></li>
+                   <li><a href="/cxjy/tzgg/index.shtml">通知公告</a></li>
+                   <li><a href="/cxjy/zcfg/index.shtml">政策法规</a></li>
+                   <li><a href="/zt/sgs/index.shtml" target="_blank">双公示</a></li>
+                   <li><a href="/cxjy/fzlm/xycn/index.shtml">信用承诺</a></li>
+                   <li><a href="/cxjy/fzlm/xyxflczy/index.shtml">信用修复</a></li>
+                   <li><a href="/cxjy/cxwh/index.shtml">诚信文化</a></li>
+                   <li><a href="/cxjy/fzlm/xxgs/index.shtml">信息公示</a></li>
+                   <li><a href="/cxjy/fxts/index.shtml">风险提示</a></li>
+                   <li><a href="/cxjy/fzlm/xy/index.shtml">信易＋</a></li>
+               </ul>
+           <!--</div>-->
+            <!--<div class="nav-1">-->
+                <!--<ul class="container">-->
+                    <!---->
+                <!--</ul>-->
+            <!--</div>-->
+        </div>
+    </div>
+
+
+<div class="container">
+    <div class="path"><a href="/cxjy/index.shtml">首页</a> > <a href="/cxjy/index.shtml" target="_self">诚信江阴</a> > <a href="/cxjy/fxts/index.shtml" target="_self">风险提示</a></div>
+    <div class="detail">
+       
+        <!--<h1>【风险提示】老年人请注意 当心这些“交友App”陷阱
+            <small>发布时间：2022/06/02</small>
+          </h1>-->
+        
+          <h1>【风险提示】老年人请注意 当心这些“交友App”陷阱
+            <small>发布时间：2022/06/02</small>
+          </h1>
+       
+       
+        <div class="zhengwen">
+<p>当前，我国老年人口规模日益庞大，随着老年人口占比提升，老年人正由原来的家庭依附群体、社会边缘群体转变为重要的社会利益群体。随着老年网民人数的不断上升，众多互联网App软件也开始紧盯老年群体，如&ldquo;赚钱App&rdquo;&ldquo;养老App&rdquo;等，为老年群体设下一个个数字陷阱。</p>
+
+<p>近期出现的老年人&ldquo;交友App&rdquo;，通过一些高流量平台进行引流，以实名认证、真人陪聊、视频相亲、老年关怀模式等博取眼球，打起精准营销算盘，紧盯有情感需求的空巢中老年人，利用其涉网不深、冲动消费的特征诱导付费充值。社交软件虽然拥有较强的自主互动功能，但也存在信息不实等问题，老年人对互联网信息真伪辨别能力整体较弱，更容易成为其背后灰色产业的受害人。这类付费交友App引发的乱象，亟须引起重视。</p>
+
+<p>网络监管盲区广，缺乏相关法律。虽然《中华人民共和国网络安全法》对于用户隐私及网络安全治理有明确规定，但许多社交软件打着正规交友的旗号，其背后运转的灰色产业却让监管部门缺乏抓手。有消费者反映，在杭州每次科技有限公司旗下的&ldquo;中老年生活&rdquo;App注册账号，仅需手机号就可以申请账号，并不需要多重实名认证。注册成功后，系统会推送许多&ldquo;美女&rdquo;&ldquo;帅哥&rdquo;的个人信息及照片。但用户若想主动和异性聊天，就需要付费充值会员，会员费每月128元。由于相关法律法规尚未明确此种营销模式是否合规，这类软件凭借灰色地带带来的红利，诱导老年人付费充值，给监管部门调查取证增加了很大难度。</p>
+
+<p>用户情感需求大，滋长暧昧经济。付费交友软件能活跃于老年这个特定年龄段人群，其背后体现的是空巢老人不被重视的情感需求。他们拥有大把时间，却缺少子女陪伴、社交圈狭小、精神空虚。第六次人口普查数据显示，老年人丧偶比例占老年人口数的27%，其中80%的丧偶老人有再婚需求。需求催生市场，根据《中国老龄产业发展报告》预测，从2014年到2050年，我国老年人口的消费潜力将从约4万亿元增加到约106万亿元。《付费交友App盯上老年人，&ldquo;适老化防护&rdquo;要匹配市场新动态》一文指出，中老年社交软件背后的运营团队投入重金培养女聊天员，在&ldquo;选角&rdquo;招募、人设包装、话术培训等环节，完全投老年人之所好，吃透用户的心理诉求、审美偏好、经济状况等。这类&ldquo;交友App&rdquo;正是瞄准了老年网民的群体特征，设下重重数字陷阱，将老年人当作新一轮的流量和资本收割对象。老年人一旦进坑，自然会越陷越深，进而冲动消费。</p>
+
+<p>预警机制不完善，缺少技术支撑。不少交友软件首页都有提醒用户理性消费、谨防诈骗的信息。但充值会员、打赏送礼都是出于用户个人意愿的支出，丰俭由人，其提示作用收效甚微。许多不法分子借此对渴望&ldquo;黄昏恋&rdquo;的老年人群实施网络诈骗，稍有不慎，用户就会落入伤钱又伤心的地步。</p>
+
+<p>腾讯110平台发布的《中老年人反欺诈白皮书》显示，2019年上半年，腾讯110平台共受理中老年人受骗举报量超过2万次。97%受骗的中老年人曾遭资金损失，涉案金额从百元到数万元不等，其中利用交友软件进行诈骗的举报量占比超20%。</p>
+
+<p>为保护老年群体合法权益，切实增强老年人防范意识，浙江省杭州市余杭区市场监管局提出以下建议：健全法律法规，加强宣传引导。相关部门应加快网络安全法律法规建设，为网络软件应用程序的市场准入和运行监管提供制度依据。通过健全相关法律法规，落实主体责任，执法部门才能延伸监管触角，协同配合、精准发力，有据可依。着力整治规范以老年人赚钱、投资、养老、交友为名的涉诈问题风险隐患，切实铲除养老诈骗滋生土壤。</p>
+
+<p>同时，也应强化反诈宣传，将倡导理性消费、反诈骗作为一项常态化工作做细做实。通过家庭、村社街道、社会单位、新闻媒体等多方力量协同参与，科普互联网付费交友软件和其背后的新型诈骗手段，揭露诈骗套路，提高老年网民的数字素养能力，帮助老年人建立必要的网络识骗防骗意识，才能引导该群体形成针对数字骗局的&ldquo;群体免疫力&rdquo;。</p>
+
+<p>加强社区服务，促进互动氛围。目前，我国老年网民的总体数字素养水平不高，大多数老年人基本处于日常社交软件的信息层面，信息辨别、沟通表达与网络维权等数字能力普遍缺乏。这也是该群体容易被各类App套路，以及被骗后难以成功维权的主要原因。空巢老人往往更容易成为付费交友软件&ldquo;围猎&rdquo;的受害者。针对这类人群，村社基层组织应定期走访，了解中老年人身体状况、生活情况和心理需求，加强其与子女沟通，对老年人&ldquo;点对点&rdquo;发布风险提示和预警信息，定期开展集体活动，增强邻里间互动，拓展老年人社交圈，促进良好交流氛围。</p>
+
+<p>完善预警机制，强化技术支撑。网信部门要对利用互联网、手机App等设置套路，诱导老年人消费、投资、交友等涉诈骗隐患，依法查处违法违规网站平台及账号。运营方应对软件风险预警模块加以支撑，在用户付费时进行弹窗提醒，对高频、高额的经济往来启动快速响应机制。此外，若用户不慎落入消费陷阱，运营方应及时追踪，配合相关部门调查。</p>
+
+<p>&nbsp;</p>
+        </div>
+    </div>
+
+</div>
+<p class="clr"></p>
+
+<link href="/dep/css/style_05info.css" rel="stylesheet" type="text/css">
+<div class="mh46" style="margin-top:30px;">
+			<div class="bg"></div>
+			<div class="mh00"> 
+				<table cellpadding="0" cellspacing="0" border="0" class="mh17">
+					<tr>  
+						<td width="72" class="mh17-1">
+                          <span id="_ideConac" wza-palette="true" class=""><a href="https://bszs.conac.cn/sitename?method=show&amp;id=084568BAE2924C49E053012819AC066A" title="党政机关" target="_blank" wza-palette="true" class=""><img id="imgConac" vspace="0" hspace="0" border="0" src="https://dcs.conac.cn/image/red.png" data-bd-imgshare-binded="1" aria-label="党政机关" class=""></a></span>				
+                            
+						</td>
+						<td class="mh18">
+							<p>
+                            <a href="/doc/2019/07/19/779466.shtml" target="_blank">网站声明&nbsp;|&nbsp;</a>
+                            <a href="/doc/2022/07/06/1055172.shtml" target="_blank">联系我们&nbsp;|&nbsp;</a>
+                            <a href="/wzdt/index.shtml" target="_blank">网站地图</a>
+							</p>
+							<p>江阴市人民政府办公室版权所有 江阴市人民政府办公室主办</p>
+							<p>
+								<a href="http://beian.miit.gov.cn" target="_blank">苏ICP备05002806号</a>
+								<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32028102000565"><img src="/main/images/bottom4.png" />&nbsp;苏公网安备 32028102000565号</a> 
+                                <span>网站标识码：3202810016</span></p>
+						</td>
+						<td class="mh17-2"><img src="/main/images/bottom2.png" /></td>
+						<td align="right" class="mh17-3" id="zhaocuo">
+                        	<a href="https://zfwzgl.www.gov.cn/exposure/jiucuo.html?site_code=3202810016&url=http%3A%2F%2Fwww.jiangyin.gov.cn%2F" title="政府网站找错" target="_blank"><img src="/main/images/2021_jiucuo.png" /></a>
+							
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7be5a0acc6d8a44e8274088f49321abc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script language="javascript" type="text/javascript" src="/static_older/main/hotkeys.js"></script>
+<script language="javascript" type="text/javascript" src="/static_older/subsite/subsite_extend.js"></script>
+<script language="javascript" type="text/javascript" src="/static_older/subsite/older_subsite.js"></script>
+
+
+<script src="/cxjy_2022/js/alert.js"></script>
+<script src="/cxjy_2022/js/newother2020.js"></script>
+
+</body>
+</html>

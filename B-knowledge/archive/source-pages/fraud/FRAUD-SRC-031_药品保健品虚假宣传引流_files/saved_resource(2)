@@ -1,0 +1,1 @@
+$('#dianjicishu').each(function(){$(this).html('495')});

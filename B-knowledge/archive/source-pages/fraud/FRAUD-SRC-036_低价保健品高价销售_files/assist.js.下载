@@ -1,0 +1,168 @@
+var baseUrl = "//wzaslh.people.com.cn/dist";
+var timer
+var whenReady = (function () {
+    //这个函数返回whenReady()函数
+    var funcs = []; //当获得事件时，要运行的函数
+    var ready = false; //当触发事件处理程序时,切换为true
+
+    //当文档就绪时,调用事件处理程序
+    function handler(e) {
+        if (ready) return; //确保事件处理程序只完整运行一次
+
+        //如果发生onreadystatechange事件，但其状态不是complete的话,那么文档尚未准备好
+        if (e.type === "onreadystatechange" && document.readyState !== "complete") {
+            return;
+        }
+
+        //运行所有注册函数
+        //注意每次都要计算funcs.length
+        //以防这些函数的调用可能会导致注册更多的函数
+        for (var i = 0; i < funcs.length; i++) {
+            funcs[i].call(document);
+        }
+        //事件处理函数完整执行,切换ready状态, 并移除所有函数
+        ready = true;
+        funcs = null;
+    }
+    //为接收到的任何事件注册处理程序
+    if (document.addEventListener) {
+        document.addEventListener("DOMContentLoaded", handler, false);
+        document.addEventListener("readystatechange", handler, false); //IE9+
+        window.addEventListener("load", handler, false);
+    } else if (document.attachEvent) {
+        document.attachEvent("onreadystatechange", handler);
+        window.attachEvent("onload", handler);
+    }
+    //返回whenReady()函数
+    return function whenReady(fn) {
+        if (ready) {
+            fn.call(document);
+        } else {
+            funcs.push(fn);
+        }
+    };
+})();
+function getAriaAppId() {
+    var AriaQueryString = {
+        val: function (argname, query) {
+            query = query || location.search.substring(1);
+            var reg = new RegExp("(^|/?|&)" + argname + "=([^&]*)(/s|&|$)", "i");
+            if (reg.test(query)) {
+                return RegExp.$2;
+            } else {
+                return "";
+            }
+        },
+    };
+    function getCurrentScript() {
+        //兼容获取正在运行的js
+        //取得正在解析的script节点
+        if (document.currentScript) {
+            //firefox 4+
+            return document.currentScript;
+        }
+        var nodes = document.getElementsByTagName("script"); //只在head标签中寻找
+        for (var i = 0, node; (node = nodes[i++]);) {
+            if (node.readyState === "interactive") {
+                return (node.className = node);
+            }
+        }
+        var stack, i;
+        try {
+            a.b.c(); //强制报错,以便捕获e.stack
+        } catch (e) {
+            stack = e.stack;
+            if (!stack && window.opera) {
+                stack = (String(e).match(/of linked script \S+/g) || []).join(" ");
+            }
+        }
+        if (stack) {
+            stack = stack.split(/[@ ]/g).pop(); //取得最后一行,最后一个空格或@之后的部分
+            stack = stack[0] == "(" ? stack.slice(1, -1) : stack;
+            var s = stack.replace(/(:\d+)?:\d+$/i, ""); //去掉行号与或许存在的出错字符起始位置
+            var d = document.getElementsByTagName("script"); //获取tag名称为script的html元素们
+            for (i = 0; i < d.length; i++) {
+                if (s.indexOf(d[i].src) > -1 && d[i].src && d[i].src.length > 1) {
+                    d[i].id = "aiimport-all";
+                    return document.getElementById("aiimport-all");
+                }
+            }
+        }
+    }
+    var curjs = getCurrentScript();
+
+    window.ariaAppId =
+        curjs.getAttribute("appId") || AriaQueryString.val("appid", curjs.src);
+}
+whenReady(function () {
+
+    // 按需调用无障碍
+    // document.querySelector('#cniil_wza').addEventListener("click", function () {
+    //   loadAriaJS().then(() => {
+    //     aria.start()
+    //   })
+    // })
+    function checkCookie(cookieName) {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie==='ariaStatus=true') {
+            loadAriaJS();
+            };
+        }
+    }
+    checkCookie('ariaStatus')
+    document.querySelector('#cniil_wza').addEventListener("click", function () {
+        if (document.querySelector('#ariascripts')) {
+            clearTimeout(timer)
+        } else {
+            loadAriaJS();
+            timer = setTimeout(() => {
+                aria.start()
+            }, 1000)
+        }
+    })
+
+    // your-script.js
+
+    //   function clearOldJS() {
+    //     var script1 = document.querySelector("#ariascripts");
+    //     if (script1) {
+    //       script1.parentNode.removeChild(script1);
+    //     }
+    //   }
+    function loadAriaJS(callback) {
+        var script = document.createElement("script");
+        var fn = callback || function () { };
+        if (document.getElementById("ariaAllscripts")) {
+            fn();
+            return;
+        }
+        script.type = "text/javascript";
+        script.setAttribute("id", "ariascripts");
+        script.setAttribute("appid", "711624bde0b07f55d40e87189b692549");
+        script.setAttribute("loaddata", "false");
+        script.setAttribute("wapforceoldfixed", "false");
+        script.defer = true;
+        script.async = true;
+        if (script.readyState) {
+            script.onreadystatechange = function () {
+                if (script.readyState == "loaded" || script.readyState == "complete") {
+                    script.onreadystatechange = null;
+                    fn();
+                }
+            };
+        } else {
+            script.onload = function () {
+                console.log("onload");
+                fn();
+            };
+        }
+        script.setAttribute("charset", "utf-8");
+        script.src = baseUrl + "/aria.js?v=" + Math.random();
+        document.body.appendChild(script);
+
+    }
+    getAriaAppId();
+});
+

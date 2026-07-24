@@ -1,0 +1,305 @@
+//多个连接
+var hyzxarg={},loginxx={};
+var wyxxlink="//www.weh.gov.cn/weh/wyxx/wyxx.shtml"; //写信地址
+var userpath="https://zwfw.xinjiang.gov.cn/xjwwrz/rest";
+// var userpath="http://220.171.42.82:32492/xjwwrz/rest";
+// /rest/extranetNeedLoginInterfaceapp/getUserDataForAppEntryt
+var usertoke=getCookie("access_token"); //token
+var xjurl="//www.weh.gov.cn/weh/header/userlogin.shtml?redirecturl=";
+var userloginurl=xjurl+window.location.href;
+ //cookie 提示
+// function insertJs() {
+// 	var script1 = document.createElement('script'); //创建script标签节点
+// 	script1.setAttribute('type', 'text/javascript'); //设置script类型
+// 	script1.setAttribute('src', 'https://www.xinjiang.gov.cn/xinjiang/xhtml/js/aes.js'); //设置js地址
+// 	document.body.appendChild(script1); //将js追加为body的子标签
+// }
+// insertJs()
+ //aes解密
+function decodecrypt(results) {
+	var key = CryptoJS.enc.Utf8.parse("xjwwrz2020032318");
+	var encryptedHexStr=CryptoJS.enc.Hex.parse(results);
+	var encryptedBase64Str = CryptoJS.enc.Base64.stringify(encryptedHexStr);
+	var decrypt = CryptoJS.AES.decrypt(encryptedBase64Str, key, {
+		mode: CryptoJS.mode.ECB,
+		padding: CryptoJS.pad.Pkcs7
+	});
+	decrypt = CryptoJS.enc.Utf8.stringify(decrypt).toString();
+	return decrypt;
+}
+
+
+//cookies设置
+function setCookie(name, value) {
+	var Days = 10; 
+    var exp = new Date(); 
+    exp.setTime(exp.getTime() + Days*60*60*1000); 
+    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString()+";path=/;domain=.xinjiang.gov.cn"; 
+}
+
+//cookies读取
+function getCookie(name) {
+	var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+ 
+    if(arr=document.cookie.match(reg))
+ 
+        return unescape(arr[2]); 
+    else 
+        return null; 
+}
+
+//cookies删除
+function delCookieall(name) {
+	var exp = new Date();
+	exp.setTime(exp.getTime() - 1);
+	var cval = getCookie(name);
+	if (cval != null)
+		document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString() + ";path=/;domain=.xinjiang.gov.cn";
+}
+
+function delCookie(name) {
+	var exp = new Date();
+	exp.setTime(exp.getTime() - 1);
+	var cval = getCookie(name);
+	if (cval != null)
+		document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString() + ";path=/";
+
+}
+
+
+// 获取localStorage
+function getlocalStorage(arg){
+	if(!localStorage.getItem(arg)){
+		localStorage.setItem(arg,(new Date()).valueOf()+Math.random());
+	}else{
+		return localStorage.getItem(arg)
+	}
+}
+
+
+//页面链接传值
+function getUrlParam(name,url) {
+	url=url||window.location.search;
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+	var r = url.substr(1).match(reg); //匹配目标参数
+	if (r != null) return unescape(r[2]);
+	return null; //返回参数值
+}
+
+//参数处理
+function argstr(arg){
+	var props = "";
+	for(var p in arg){
+		props+=p + "="+ arg[p] + "&";
+	}
+	return props;
+}
+// 跳转登陆
+function judgelogin(arg,us){
+	// if(confirm("请先登录") && !arg) open(us);
+	if(confirm("请先登录") && !arg){
+		open(us);
+	}else{
+		window.close();
+	}
+}
+function judgelogin1(arg,us){
+	// if(confirm("请先登录") && !arg) open(us);
+	if(confirm("请先登录") && !arg){
+		window.open(us,'_self');
+	}else{
+		if($(window).width()<768){
+			window.open('https://weh.gov.cn','_self');
+		}else{
+			window.close();
+		}
+	}
+}
+function replaceStart (str,frontLen,endLen){
+	// str：字符串，frontLen：前面保留位数，endLen：后面保留位数。
+	var len = str.length-frontLen-endLen;
+	var start = '';
+	for (var i=0;i<len;i++) {
+	  start+='*';
+	}
+	return str.substring(0,frontLen)+start+str.substring(str.length-endLen);
+}
+function userdata(){
+    var _data={
+        "token": "Epoint_WebSerivce_**##0601",
+        "params": {
+            "access_token":usertoke
+        }
+    }
+    $.ajax({
+        type: "post",
+        // url: userpath+"/extranetNeedLoginInterface/getUserData",
+        url: userpath + "/extranetNeedLoginInterfaceapp/getUserDataForAppEntryt",
+        data:JSON.stringify(_data),
+        dataType: "json",
+        contentType: "application/json",
+        beforeSend: function(xhr) { 
+            xhr.setRequestHeader("Authorization","Bearer "+usertoke);  
+        },
+        success: function (response) {
+			// 核心优化1：多层级有效性校验，确保response、custom、displayname存在且有效
+            var isValidUser = response && 
+                              response.custom && 
+                              (response.custom.displayname || response.custom.agentname); // 兼容个人/代理两种用户类型
+            
+            if (!isValidUser) {
+                // 核心优化2：用户信息无效，清除access_token（两种删除方法确保清理干净）
+                delCookie('access_token');
+                delCookieall('access_token');
+                // 重置登录状态并引导重新登录
+                loginxx.sfdl = false;
+                judgelogin1(loginxx.sfdl,userloginurl);
+                return; // 终止后续逻辑执行
+            }
+            
+            // 原有逻辑：保存有效token并解析用户信息
+			setCookie('access_token',usertoke);
+			if(response.custom.usertype==1){
+				loginxx.id=response.custom.accountguid;
+// 				loginxx.realName=response.custom.clientname;
+                loginxx.realName=response.custom.displayname;
+// 				loginxx.idNo=response.custom.idnumber;
+                loginxx.idNo=decodecrypt(response.custom.idnumber);
+// 				loginxx.mobile=response.custom.contactmobile;
+                loginxx.mobile=decodecrypt(response.custom.mobile);
+			}else{
+				loginxx.id=response.custom.accountguid;
+				loginxx.realName=response.custom.agentname;//name
+				loginxx.idNo=decodecrypt(response.custom.agentidnumber);// nameid
+				loginxx.mobile=decodecrypt(response.custom.agentmobile); //phone
+			}
+			var loginHtml='<a href="javascript:void(0);"><span>欢迎您：'+loginxx.realName+'</span></a>'
+							+'<dl class="header-user"><dd><a href="https://www.xinjiang.gov.cn/usercenter/home" target="_blank">个人中心</a></dd>'
+							+'<dd><a href="javascript:void(0);" onclick="logout()">退出登录</a></dd></dl>';
+			$('.header-toolbar .dl').html(loginHtml);
+			$('.header-toolbar li.zc').hide();
+			// $('.header-toolbar .dl').hover(function(){
+			// 	$('.header-user').show();
+			// })
+            var xhname=loginxx.realName;
+            var xhphone=loginxx.mobile;
+            var xhfromIdCard=loginxx.idNo;
+             xhname=replaceStart(xhname,0,1);
+            xhphone=replaceStart(xhphone,3,4);
+             xhfromIdCard=replaceStart(xhfromIdCard,0,4);
+			
+			$('#userName').val(xhname);
+			$('#firstname').val(loginxx.realName);
+			$('#phone').val(xhphone);
+			// $('#mobilephone').val(xhphone);
+			$('#fromIdCard').val(xhfromIdCard);
+			$('#name').val(xhname);
+			$('#tel').val(xhphone);
+			$('#idcard').val(xhfromIdCard);
+			$('#gmIdcard').val(loginxx.idNo);
+			$('#displayName').val(xhname);
+
+            if($('.xxly').length>0){
+                // $("#netizenId").attr("value",loginxx.id);
+                $("#userName").attr("value",xhname).attr("disabled","disabled");
+                // $("#fromIdCard").attr("value",xhfromIdCard).attr("disabled","disabled");
+                $("#phone").attr("value",xhphone).attr("disabled","disabled");
+            }
+            // if($('.hd_myzj_details')>0){
+            //     $("#netizenId").attr("value",loginxx.id);
+            //     $("#loginx").attr("value",loginxx.sfdl);
+            //     $("#phone").attr("value",xhphone).attr("disabled","disabled");
+            //     $("#nickName").attr("value",xhname).attr("disabled","disabled");
+            // }
+        },
+        // 核心优化3：增加ajax错误回调，处理网络异常、token过期等请求失败场景
+        error: function(xhr, status, error) {
+            // 请求失败直接判定为token无效，清除并引导登录
+            delCookie('access_token');
+            delCookieall('access_token');
+            loginxx.sfdl = false;
+            judgelogin1(loginxx.sfdl,userloginurl);
+            console.error("用户信息获取失败：", status, error); // 增加错误日志，便于调试
+        }
+    });
+}
+
+function logout(){
+	delCookie('access_token');
+	delCookieall('access_token');
+	window.location.replace("//zwfw.xinjiang.gov.cn/xjwwrz/rest/oauth2/logout?redirect_uri="+window.location.href)
+}
+$(function(){
+	if(usertoke==undefined){
+		loginxx.sfdl=false;
+		$('.header-toolbar .dl a').attr("href",userloginurl);
+	}else{
+		loginxx.sfdl=true;
+		userdata();
+	}
+
+//意见征集提交提示登录
+	// $('#Writeletters2').click(function(){
+	// 	if(!loginxx.sfdl){
+	// 		judgelogin(loginxx.sfdl);
+	// 		return false;
+	// 	}
+	// });
+	if(window.location.href.indexOf('wyxx') != -1){
+		if(!loginxx.sfdl){
+			var xxurl=xjurl+wyxxlink
+			judgelogin(loginxx.sfdl,xxurl);
+		}
+	}
+	if(window.location.href.indexOf('ysqgk') != -1){
+		if(!loginxx.sfdl){
+			judgelogin1(loginxx.sfdl,userloginurl);
+		}
+	}
+	// if(window.location.href.indexOf('yjzj_detail') != -1){
+	// 	if(!loginxx.sfdl){
+	// 		judgelogin1(loginxx.sfdl,userloginurl);
+	// 	}
+	// }
+	if(window.location.href.indexOf('wsdc_detail') != -1){
+		if(!loginxx.sfdl){
+			judgelogin1(loginxx.sfdl,userloginurl);
+		}
+	}
+	$('textarea').click(function () {
+	    if(!loginxx.sfdl){
+			judgelogin1(loginxx.sfdl,userloginurl);
+		}
+	})
+	//我要写信控制
+	$('#Writeletters').click(function(){
+		if(!loginxx.sfdl){
+			var xxurl=xjurl+wyxxlink
+			judgelogin(loginxx.sfdl,xxurl);
+		}else{
+			window.open(wyxxlink);
+		}
+	});
+	//我要写信多个
+	$('.Writeletters').on("click",function(){
+		if(!loginxx.sfdl){
+			var xxurl=xjurl+wyxxlink;
+			judgelogin(loginxx.sfdl,xxurl);
+		}else{
+			// window.open($(this).attr("name"));
+			window.open(wyxxlink);
+		}
+	})
+	// $('.jjjdjb').on("click",function(){
+	// 	if(!loginxx.sfdl){
+	// 		// var xxurl=xjurl+$(this).attr("name");
+	// 		var xxurl=xjurl+wyxxlink+'?sourceId=5926625655a04a8c8686868afbd8e218';
+	// 		judgelogin(loginxx.sfdl,xxurl);
+	// 	}else{
+	// 		// window.open($(this).attr("name"));
+	// 		//window.open(wyxxlink+'?type=db85e64b9954428a8720dbaf5a391109');
+	// 		window.open(wyxxlink+'?sourceId=5926625655a04a8c8686868afbd8e218');
+	// 	}
+	// })
+
+});

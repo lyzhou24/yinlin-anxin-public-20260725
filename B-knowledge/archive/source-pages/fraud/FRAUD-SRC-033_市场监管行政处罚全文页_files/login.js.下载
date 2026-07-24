@@ -1,0 +1,276 @@
+// 邮箱正则
+var emailRegex = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+// $('.region ul,.index_divchildcourt_center').perfectScrollbar();
+// $('.list-input .jstree').jstree();
+$(function() {
+	// 打开登陆弹窗
+	// $(document).on('click','.loadBtn',function(){
+	// $('.mask_box').fadeIn();
+	// $('.load-content').fadeIn();
+	// return false;
+	// }).on('click',function(e){
+	// var rcPop = $('.load-pop');
+	// if(!rcPop.is(e.target) && rcPop.has(e.target).length === 0) {
+	// $('.load-pop').fadeOut();
+	// $('.mask_box').fadeOut();
+	// }
+	// })
+	// 打开注册弹窗
+	// $(document).on('click','.registerBtn',function(){
+	// $('.mask_box').fadeIn();
+	// $('.register-content').fadeIn();
+	// return false;
+	// }).on('click',function(e){
+	// var rcPop = $('.load-pop');
+	// if(!rcPop.is(e.target) && rcPop.has(e.target).length === 0) {
+	// $('.load-pop').fadeOut();
+	// $('.mask_box').fadeOut();
+	// }
+	// })
+	// 登陆成功
+	$(".load-content .load-btn").on('click', function() {
+		$('.mask_box').fadeOut();
+		$('.load-content').fadeOut();
+	})
+
+	// 注册成功
+	$(".register-content .load-btn").on('click', function() {
+
+	})
+	// 注销
+	$(".logout").on('click', function() {
+
+		location.href = "/logout";
+	})
+
+	$('.load-pop .tab-way').on('click', function() {
+		$(this).parents('.load-pop').hide().siblings('.load-pop').show();
+	})
+	// 注册同意用户协议事件
+	$('.yhxy-way span').on('click', function() {
+		$(this).find('i').toggleClass('on');
+	})
+	// 案件展示隐藏
+	$('.navlist_aj_ul .switch-btn').on('click', function() {
+		$(this).toggleClass('on');
+		$('.other-list').stop().slideToggle();
+	})
+	$('.navlist_aj li a').on(
+			'click',
+			function() {
+				$(this).addClass('on').parents('li').siblings().find('a')
+						.removeClass('on');
+				$(this).parents('ul').siblings().find('li').find('a')
+						.removeClass('on');
+			})
+	// 登录
+	$("#login").on('click',function(){
+		var reqUrl = window.location.href;
+		$.ajax({
+			type : "post",
+			async : false,
+			url :  $ctx + "/dologin",
+			//url :  $ctx + "/dologin_nw",
+			datatype : "json",
+			data : {
+				"reqUrl" : reqUrl
+			},
+			success : function(data) {
+				if (data.code == 0) {
+					window.open(data.loginUrl,'_blank');
+				} else {
+					alert(data.msg);
+				}
+			}
+		})
+	})
+	
+	// 注册
+	/*$("#register_id").on('click',function(){
+		$.ajax({
+			type : "post",
+			url : $ctx + "/register",
+			datatype : "json",
+			async : false,
+			cache: false,
+			data : {},
+			success : function(data) {
+				if(data.code == 0) {
+					window.open(data.regUrl,'_blank');
+				}
+			}
+		})
+	})*/
+	
+	/**
+	 * 注册逻辑调整为与登录一直（这样可以进行法人注册）
+	 * 
+	 * header-detail.html
+	 */
+	$("#register_id").on('click',function(){
+		var reqUrl = window.location.href;
+		$.ajax({
+			type : "post",
+			async : false,
+			url :  $ctx + "/dologin",
+			datatype : "json",
+			data : {
+				"reqUrl" : reqUrl
+			},
+			success : function(data) {
+				if (data.code == 0) {
+					window.open(data.loginUrl,'_blank');
+				} else {
+					alert(data.msg);
+				}
+			}
+		})
+	})
+	
+	// 登出
+	$("#logout").on('click',function(){
+		layer.confirm("是否退出当前账号?",{btn:['确定','取消']},
+		 function(){
+			var reqUrl = window.location.href;
+			$.ajax({
+				type : "post",
+				url : $ctx + "/logout",
+				datatype : "json",
+				async : false,
+				cache: false,
+				data : {},
+				success : function(data) {
+					if(data.code == 0) {
+						location.href = reqUrl;
+					}
+				}
+			})
+		});
+	})
+	
+	// 内网登录
+	$("#login_nw").on('click',function(){
+		var reqUrl = window.location.href;
+		// var userName = $('input.userName').val().trim();
+		// var passWord = $('input.passWord').val().trim();
+		$.ajax({
+			type : "post",
+			async : false,
+			url :  "/dologin_nw",
+			datatype : "json",
+			data : {
+				"reqUrl" : reqUrl
+			},
+			success : function(data) {
+				if (data.code == 0) {
+					$.ajax({
+						type : "post",
+						async : false,
+						url : "/user/getUserName",
+						datatype : "json",
+						data : {},
+						success : function(data) {
+							if (data.code == "1") {
+								$(".wdl").attr("style", "display:none");
+								$(".ydl").attr("style", "");
+								$("#user").text(data.result);
+//								alert(0);
+								location.reload();
+							}
+						}
+					})
+				} else {
+					alert(data.msg);
+				}
+			}
+		})
+	})
+})
+
+// 登录
+function login() {
+	// 获取当前请求地址
+	var reqUrl = window.location.href;
+	// var userName = $('input.userName').val().trim();
+	// var passWord = $('input.passWord').val().trim();
+	$.ajax({
+		type : "post",
+		async : false,
+		url :  "/dologin",
+		datatype : "json",
+		data : {
+			"reqUrl" : reqUrl
+		},
+		success : function(data) {
+			if (data.code == 0) {
+				$.ajax({
+					type : "post",
+					async : false,
+					url : "/user/getUserName",
+					datatype : "json",
+					data : {},
+					success : function(data) {
+						if (data.code == "1") {
+							$(".wdl").attr("style", "display:none");
+							$(".ydl").attr("style", "");
+							$("#user").text(data.result);
+						}
+					}
+				})
+				// location.href = "/getUserName";
+				// location.href = data.loginUrl;
+			} else {
+				alert(data.msg);
+			}
+		}
+	})
+
+}
+
+// 注册
+function register() {
+	// 注册跳转到总局页面
+	$.ajax({
+		type : "post",
+		url : $ctx + "/register",
+		datatype : "json",
+		async : false,
+		cache : false,
+		data : {},
+		success : function(data) {
+			if (data.code == 0) {
+				location.href = data.regUrl;
+			} else {
+				alert(data.msg);
+			}
+		}
+	});
+}
+
+// 获取邮箱验证码
+function getCode(type) {
+	// 用户名
+	var r_username = $("#r_username").val().trim();
+	if (r_username == "" || r_username == null) {
+		alert("请输入用户名");
+		return false;
+	} else if (!emailRegex.test(r_username)) {
+		alert("邮箱格式不正确");
+		return false;
+	} else {
+		$.ajax({
+			type : "post",
+			url : "/getCode",
+			datatype : "json",
+			async : false,
+			cache : false,
+			data : {
+				"username" : r_username,
+				'type' : type
+			},
+			success : function(data) {
+				alert(data.code);
+			}
+		});
+	}
+}

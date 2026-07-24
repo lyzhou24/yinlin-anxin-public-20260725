@@ -1,0 +1,18 @@
+﻿document.writeln("<form>");
+document.writeln("    <input type=\'text\' id=\'searchword\' placeholder=\'请输入关键词\' class=\'top_search_text\'>");
+document.writeln("    <input type=\'button\' class=\'top_search_btn\' onclick=\'search()\' value=\'搜 索\' id=\'tongyongsoso\'>");
+document.writeln("</form>");
+document.writeln("<form name=\'hysearch\' id=\'hysearch\' action=\'https://searching.hunan.gov.cn/hunan/972205000/news\' target=\'_blank\' style=\'display:none;\'>");
+    document.writeln("    <input id=\'wd\' name=\'q\' type=\'text\' maxlength=\'50\'>");
+    document.writeln("</form>");
+// 搜索
+var tongyongsoso = document.getElementById("tongyongsoso");
+tongyongsoso.onclick=function(){
+    var value=$("#searchword").val();
+    if (value == "请输入关键词") {
+        alert("请输入关键字");
+    } else {
+        $("#wd").val(value);
+        $('#hysearch').submit();
+    }
+}

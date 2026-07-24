@@ -1,0 +1,261 @@
+$(document).ready(function () {
+    //选项卡
+    if ($(".js-tab").length > 0) {
+        $(".js-tab").slide({
+			titCell: ".js-hd li",
+			mainCell: ".js-bd",
+            delayTime: 0,
+            triggerTime: 0,
+            targetCell: ".js-more a"
+        });
+    }
+    if ($(".js-tab-hs").length > 0) {
+        $(".js-tab-hs").slide({
+			titCell: ".js-hd li.hs",
+			mainCell: ".js-bd",
+            delayTime: 0,
+            triggerTime: 0,
+            targetCell: ".js-more a"
+        });
+    }
+	
+	if ($(".pagelist").length > 0) {
+	    addLine();
+	}
+	
+	if($('.set-emline').length > 0){
+	  setEmline();
+	  $(window).resize(function(){
+		setEmline();
+	  });	
+	}
+    
+	//返回顶部
+    $(".gotop").click(function(e){
+        e.preventDefault();
+        scrollToTop(500);
+    });
+    function scrollToTop(time){
+        var time = time || 0;
+        $("html,body").animate({scrollTop:0}, time);
+    }
+	
+    //easybtn
+    $(".easybtn dl").hover(function(){
+        $(this).addClass("on");
+        $(this).find("dd").show();
+    },function(){
+        $(this).removeClass("on");
+        $(this).find("dd").hide();
+    })
+    // 当网页向下滑动200px 侧边栏出现"返回顶部" 按钮
+    window.onscroll = function() {scrollFunction()};
+    function scrollFunction() {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            $("#goTop").slideDown("fast");
+			$("#toggle").removeClass("show");
+        } else {
+            $("#goTop").slideUp("fast");
+			$("#toggle").addClass("show");
+        }
+		var a = window.pageYOffset,
+			c = Number($(".header").height());
+		a > c ? $(".easybtn").addClass("fixed") : $(".easybtn").removeClass("fixed") ;
+    }
+	
+	
+	$("#easybtnToggle").click(function(e){
+      $(".easybtn").toggleClass("easybtn-opened");
+      e.stopPropagation(); 
+    });
+
+    $("#quickPanel").click(function(e){
+      e.stopPropagation(); 
+    });
+
+    //非政府网站跳转提示: 点击外链询问离开
+    //截取URL域名部份
+    var getHost = function (url) {
+        var host = "null";
+        if (typeof url == "undefined" || null == url) url = window.location.href;
+        var regex = /.*\:\/\/([^\/]*).*/;
+        var match = url.match(regex);
+        if (typeof match != "undefined" && null != match) host = match[1];
+        return host;
+    };
+    //外链跳转弹框
+    _outHtml = '<div class="alert-warning"><div class="alert-delete"><span id="closets">X</span></div><div class="alert-wzsm"><P>您即将访问非政府网站链接，是否继续？</P></div><div class="alert-footer"><span class="continue">继续访问</span><span class="fangqi">放弃</span></div></div><div class="alert-mengban"></div>', $("body").append(_outHtml);
+
+    $(document).on('click', 'a', function (e) {
+        if ($(this).hasClass('selflink')) return;
+        var o = $(this),
+            host, ckhost;
+        var href = o.attr('href');
+        if (href && !/^(?=javascript:)/.test(href) && /^(?=http)/.test(href)) {
+            host = getHost(href);
+            ckhost = host.indexOf('gov.cn');
+        }
+        if (href && host) {
+            if (host != document.domain) {
+                o.attr('target', '_blank');
+                if (ckhost <= 0 && o.data('ask') != '1') {
+                    $(".alert-mengban").fadeIn("fast");
+                    $(".alert-warning").fadeIn("fast");
+                    $("#closets,.fangqi, .alert-mengban").click(function () {
+                        $(".alert-warning").fadeOut(300);
+                        $(".alert-mengban").fadeOut(300);
+                    });
+                    $(".continue").one("click", function () {
+                        $(".alert-warning").fadeOut(300);
+                        $(".alert-mengban").fadeOut(200);
+                        o.data('ask', '1');
+                        o[0].click();
+                        $("#closets").click();
+                    });
+                    return false;
+                }
+            }
+        }
+    });
+
+});
+
+function AddFavorite(sTitle,sURL){
+  try{
+	  window.external.addFavorite(sURL, sTitle);
+  }catch (e){
+	  try{
+		  window.sidebar.addPanel(sTitle, sURL, "");
+	  }
+	  catch (e){
+		  alert("加入收藏失败，请使用Ctrl+D进行添加");
+	  }
+  }
+}
+//日期格式化
+function timestampToTime(time) {
+  var date = new Date(time * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+  Y = date.getFullYear() + '-';
+  M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+  D = (date.getDate() < 10 ? '0'+(date.getDate()) : date.getDate()) + ' ';
+  h = date.getHours() + ':';
+  m = date.getMinutes() + ':';
+  s = date.getSeconds();
+  return Y+M+D;
+}
+
+
+//设置每5个<li>就用一个<ul>包裹住
+function addLine(){
+  var li5n = $(".pagelist li.item:nth-child(5n)");
+  li5n.each(function(i) {
+	$(".pagelist li.item").slice(i*5,i*5+5).wrapAll("<ul class='addline clearfix'></ul>");
+  });
+  $(".pagelist li.item").slice(li5n.length * 5).wrapAll("<ul class='addline clearfix'></ul>");
+}
+
+//设备判断方法
+function getClientType(){
+	var type = new Array("Android","iPhone","Windows Phone","iPod","BlackBerry","MeeGo","SymbianOS");
+	var info = navigator.userAgent;
+	for(var i=0; i<type.length; i++){
+		if(info.indexOf(type[i])>0){
+			return "Mobile";
+		}
+	}
+	return "PC";
+}
+
+// IE9及以下版本
+// isie9();
+isie9();
+function isie9(flag){
+  var isIe9 = false;
+  if(flag){
+    if(navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion.split(";")[1].replace(/[ ]/g, "").replace("MSIE",""))<10){
+      isIe9 = true;
+    }
+    return isIe9;
+  }else{
+    var ua = navigator.userAgent.toLocaleLowerCase();
+    if (ua.match(/msie/) != null || ua.match(/trident/) != null) { 
+      var browserVersion = ua.match(/msie ([\d.]+)/) != null ? ua.match(/msie ([\d.]+)/)[1] : ua.match(/rv:([\d.]+)/)[1];
+      var $htm = document.getElementsByTagName('html')[0];
+      
+      var ishasIe = hasClass ($htm, 'ie');
+      if(!ishasIe){
+        $htm.className += 'ie';
+      }
+
+      if(parseInt(browserVersion)<10){
+        var ishasLt10 = hasClass ($htm, 'ie9');
+		$htm.className += ' setIE';
+        if(!ishasLt10){
+          $htm.className += ' ie' + parseInt(browserVersion);
+        }
+      }
+    }
+  }
+
+  function hasClass (ele, className) {
+    var reg = new RegExp('(^|\\s)' + className + '(\\s|$)')
+    return reg.test(ele.className)
+  }
+}
+
+//根据参数名获得该参数  pname等于想要的参数名
+function getParam(pname) {
+  var params = location.search.substr(1); //  获取参数并且去掉？
+  var ArrParam = params.split('&');
+  if (ArrParam.length == 1) {
+	//只有一个参数的情况
+	return params.split('=')[1];
+  }
+  else {
+	//多个参数参数的情况
+	for (var i = 0; i < ArrParam.length; i++) {
+	  if (ArrParam[i].split('=')[0] == pname) {
+		return ArrParam[i].split('=')[1];
+	  }
+	}
+  }
+}
+
+// 阻止冒泡
+function stopPropagation(e){
+  e=window.event||e;
+  if(document.all){  //只有ie识别
+	e.cancelBubble=true;
+  }else{
+	e.stopPropagation();
+  }
+}
+
+/*栏目选中效果*/
+if($(".current-menu").length > 0){
+  $(".current-menu a").each(function(){
+	if($.trim($(this).attr("id"))== "menuId_" + codeName){
+	  $(this).addClass("on");
+	}
+  });
+}
+
+/*设置修饰线*/
+function setEmline(){
+  $('.set-emline .hd').each(function() {
+	$(this).find('i').css({
+	  width: ($(this).width() - $(this).find('a').outerWidth()) / 2
+	});
+	$(this).find('.hr').css({
+	  width: ($(this).width() - $(this).find('a').outerWidth())
+	});
+  });
+}
+
+$(document).ready(function(){
+	$('#xinjiangYw li a').each(function(index,item){
+		if(item.href.indexOf('/xinjiang/') != -1){
+			item.href= item.attributes[0].value.replace('/xinjiang/','https://www.xinjiang.gov.cn/xinjiang/');
+		}
+	})
+})
